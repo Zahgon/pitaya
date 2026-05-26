@@ -25,16 +25,24 @@ type Base struct{}
 
 // Init was called to initialize the component.
 func (c *Base) Init() error {
+	_ = "STUB: not implemented"
+
+	// AfterInit was called after the component is initialized.
 	return nil
 }
 
-// AfterInit was called after the component is initialized.
-func (c *Base) AfterInit() {}
+func (c *Base) AfterInit() {
+	_ = "STUB: not implemented"
 
-// BeforeShutdown was called before the component to shutdown.
-func (c *Base) BeforeShutdown() {}
-
-// Shutdown was called to shutdown the component.
-func (c *Base) Shutdown() error {
-	return nil
+	// BeforeShutdown was called before the component to shutdown.
+	return
 }
+
+func (c *Base) BeforeShutdown() {
+	_ = "STUB: not implemented"
+
+	// Shutdown was called to shutdown the component.
+	return
+}
+
+func (c *Base) Shutdown() error { _ = "STUB: not implemented"; return nil }

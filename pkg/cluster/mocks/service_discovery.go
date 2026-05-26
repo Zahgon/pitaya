@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	cluster "github.com/topfreegames/pitaya/v3/pkg/cluster"
@@ -25,148 +24,121 @@ type MockServiceDiscoveryMockRecorder struct {
 
 // NewMockServiceDiscovery creates a new mock instance.
 func NewMockServiceDiscovery(ctrl *gomock.Controller) *MockServiceDiscovery {
-	mock := &MockServiceDiscovery{ctrl: ctrl}
-	mock.recorder = &MockServiceDiscoveryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockServiceDiscovery) EXPECT() *MockServiceDiscoveryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddListener mocks base method.
+	return nil
 }
 
-// AddListener mocks base method.
 func (m *MockServiceDiscovery) AddListener(listener cluster.SDListener) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AddListener", listener)
+	_ = "STUB: not implemented"
+	return
 }
 
 // AddListener indicates an expected call of AddListener.
 func (mr *MockServiceDiscoveryMockRecorder) AddListener(listener interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddListener", reflect.TypeOf((*MockServiceDiscovery)(nil).AddListener), listener)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AfterInit mocks base method.
-func (m *MockServiceDiscovery) AfterInit() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AfterInit")
-}
+func (m *MockServiceDiscovery) AfterInit() { _ = "STUB: not implemented"; return }
 
 // AfterInit indicates an expected call of AfterInit.
 func (mr *MockServiceDiscoveryMockRecorder) AfterInit() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AfterInit", reflect.TypeOf((*MockServiceDiscovery)(nil).AfterInit))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BeforeShutdown mocks base method.
-func (m *MockServiceDiscovery) BeforeShutdown() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "BeforeShutdown")
-}
+func (m *MockServiceDiscovery) BeforeShutdown() { _ = "STUB: not implemented"; return }
 
 // BeforeShutdown indicates an expected call of BeforeShutdown.
 func (mr *MockServiceDiscoveryMockRecorder) BeforeShutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeforeShutdown", reflect.TypeOf((*MockServiceDiscovery)(nil).BeforeShutdown))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetServer mocks base method.
 func (m *MockServiceDiscovery) GetServer(id string) (*cluster.Server, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetServer", id)
-	ret0, _ := ret[0].(*cluster.Server)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetServer indicates an expected call of GetServer.
 func (mr *MockServiceDiscoveryMockRecorder) GetServer(id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetServer", reflect.TypeOf((*MockServiceDiscovery)(nil).GetServer), id)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetServers mocks base method.
 func (m *MockServiceDiscovery) GetServers() []*cluster.Server {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetServers")
-	ret0, _ := ret[0].([]*cluster.Server)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetServers indicates an expected call of GetServers.
 func (mr *MockServiceDiscoveryMockRecorder) GetServers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetServers", reflect.TypeOf((*MockServiceDiscovery)(nil).GetServers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetServersByType mocks base method.
 func (m *MockServiceDiscovery) GetServersByType(serverType string) (map[string]*cluster.Server, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetServersByType", serverType)
-	ret0, _ := ret[0].(map[string]*cluster.Server)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetServersByType indicates an expected call of GetServersByType.
 func (mr *MockServiceDiscoveryMockRecorder) GetServersByType(serverType interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetServersByType", reflect.TypeOf((*MockServiceDiscovery)(nil).GetServersByType), serverType)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
-func (m *MockServiceDiscovery) Init() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockServiceDiscovery) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init.
 func (mr *MockServiceDiscoveryMockRecorder) Init() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockServiceDiscovery)(nil).Init))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsConnected mocks base method.
 func (m *MockServiceDiscovery) IsConnected(arg0 context.Context) bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsConnected", arg0)
-	ret0, _ := ret[0].(bool)
-	return ret0
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsConnected indicates an expected call of IsConnected.
 func (mr *MockServiceDiscoveryMockRecorder) IsConnected(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsConnected", reflect.TypeOf((*MockServiceDiscovery)(nil).IsConnected), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Shutdown mocks base method.
-func (m *MockServiceDiscovery) Shutdown() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Shutdown")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockServiceDiscovery) Shutdown() error { _ = "STUB: not implemented"; return nil }
 
 // Shutdown indicates an expected call of Shutdown.
 func (mr *MockServiceDiscoveryMockRecorder) Shutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Shutdown", reflect.TypeOf((*MockServiceDiscovery)(nil).Shutdown))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SyncServers mocks base method.
 func (m *MockServiceDiscovery) SyncServers(firstSync bool) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SyncServers", firstSync)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SyncServers indicates an expected call of SyncServers.
 func (mr *MockServiceDiscoveryMockRecorder) SyncServers(firstSync interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncServers", reflect.TypeOf((*MockServiceDiscovery)(nil).SyncServers), firstSync)
+	_ = "STUB: not implemented"
+	return nil
 }

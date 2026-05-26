@@ -29,9 +29,7 @@ type PomeloPacketEncoder struct {
 }
 
 // NewPomeloPacketEncoder ctor
-func NewPomeloPacketEncoder() *PomeloPacketEncoder {
-	return &PomeloPacketEncoder{}
-}
+func NewPomeloPacketEncoder() *PomeloPacketEncoder { _ = "STUB: not implemented"; return nil }
 
 // Encode create a packet.Packet from  the raw bytes slice and then encode to network bytes slice
 // Protocol refs: https://github.com/NetEase/pomelo/wiki/Communication-Protocol
@@ -40,20 +38,6 @@ func NewPomeloPacketEncoder() *PomeloPacketEncoder {
 // --------|------------------------|--------
 // 1 byte packet type, 3 bytes packet data length(big end), and data segment
 func (e *PomeloPacketEncoder) Encode(typ packet.Type, data []byte) ([]byte, error) {
-	if typ < packet.Handshake || typ > packet.Kick {
-		return nil, packet.ErrWrongPomeloPacketType
-	}
-
-	if len(data) > MaxPacketSize {
-		return nil, ErrPacketSizeExcced
-	}
-
-	p := &packet.Packet{Type: typ, Length: len(data)}
-	buf := make([]byte, p.Length+HeadLength)
-	buf[0] = byte(p.Type)
-
-	copy(buf[1:HeadLength], IntToBytes(p.Length))
-	copy(buf[HeadLength:], data)
-
-	return buf, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

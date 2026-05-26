@@ -62,117 +62,10 @@ type PitayaConfig struct {
 }
 
 // NewDefaultPitayaConfig provides default configuration for Pitaya App
-func NewDefaultPitayaConfig() *PitayaConfig {
-	return &PitayaConfig{
-		SerializerType: 1,
-		DefaultPipelines: struct {
-			StructValidation struct {
-				Enabled bool `mapstructure:"enabled"`
-			} `mapstructure:"structvalidation"`
-		}{
-			StructValidation: struct {
-				Enabled bool `mapstructure:"enabled"`
-			}{
-				Enabled: false,
-			},
-		},
-		Heartbeat: struct {
-			Interval time.Duration `mapstructure:"interval"`
-		}{
-			Interval: time.Duration(30 * time.Second),
-		},
-		Handler: struct {
-			Messages struct {
-				Compression bool `mapstructure:"compression"`
-			} `mapstructure:"messages"`
-		}{
-			Messages: struct {
-				Compression bool `mapstructure:"compression"`
-			}{
-				Compression: true,
-			},
-		},
-		Buffer: struct {
-			Agent struct {
-				Messages     int           `mapstructure:"messages"`
-				WriteTimeout time.Duration `mapstructure:"conntimeout"`
-			} `mapstructure:"agent"`
-			Handler struct {
-				LocalProcess  int `mapstructure:"localprocess"`
-				RemoteProcess int `mapstructure:"remoteprocess"`
-			} `mapstructure:"handler"`
-		}{
-			Agent: struct {
-				Messages     int           `mapstructure:"messages"`
-				WriteTimeout time.Duration `mapstructure:"conntimeout"`
-			}{
-				Messages:     100,
-				WriteTimeout: DefaultWriteTimeout,
-			},
-			Handler: struct {
-				LocalProcess  int `mapstructure:"localprocess"`
-				RemoteProcess int `mapstructure:"remoteprocess"`
-			}{
-				LocalProcess:  20,
-				RemoteProcess: 20,
-			},
-		},
-		Concurrency: struct {
-			Handler struct {
-				Dispatch int `mapstructure:"dispatch"`
-			} `mapstructure:"handler"`
-		}{
-			Handler: struct {
-				Dispatch int `mapstructure:"dispatch"`
-			}{
-				Dispatch: 25,
-			},
-		},
-		Session: struct {
-			Unique bool `mapstructure:"unique"`
-			Drain  struct {
-				Enabled bool          `mapstructure:"enabled"`
-				Timeout time.Duration `mapstructure:"timeout"`
-				Period  time.Duration `mapstructure:"period"`
-			} `mapstructure:"drain"`
-		}{
-			Unique: true,
-			Drain: struct {
-				Enabled bool          `mapstructure:"enabled"`
-				Timeout time.Duration `mapstructure:"timeout"`
-				Period  time.Duration `mapstructure:"period"`
-			}{
-				Enabled: false,
-				Timeout: time.Duration(6 * time.Hour),
-				Period:  time.Duration(5 * time.Second),
-			},
-		},
-		Metrics: *newDefaultMetricsConfig(),
-		Cluster: *newDefaultClusterConfig(),
-		Groups:  *newDefaultGroupsConfig(),
-		Worker:  *newDefaultWorkerConfig(),
-		Modules: *newDefaultModulesConfig(),
-		Acceptor: struct {
-			ProxyProtocol bool `mapstructure:"proxyprotocol"`
-		}{
-			ProxyProtocol: false,
-		},
-		Conn: struct {
-			RateLimiting RateLimitingConfig `mapstructure:"rateLimiting"`
-		}{
-			RateLimiting: *newDefaultRateLimitingConfig(),
-		},
-	}
-}
+func NewDefaultPitayaConfig() *PitayaConfig { _ = "STUB: not implemented"; return nil }
 
 // NewPitayaConfig returns a config instance with values extracted from default config paths
-func NewPitayaConfig(config *Config) *PitayaConfig {
-	conf := NewDefaultPitayaConfig()
-	if err := config.UnmarshalKey("pitaya", &conf); err != nil {
-		panic(err)
-	}
-	return conf
-}
+func NewPitayaConfig(config *Config) *PitayaConfig { _ = "STUB: not implemented"; return nil }
 
 // GRPCClientConfig rpc client config struct
 type GRPCClientConfig struct {
@@ -182,13 +75,7 @@ type GRPCClientConfig struct {
 }
 
 // newDefaultGRPCClientConfig rpc client default config struct
-func newDefaultGRPCClientConfig() *GRPCClientConfig {
-	return &GRPCClientConfig{
-		DialTimeout:    time.Duration(5 * time.Second),
-		LazyConnection: false,
-		RequestTimeout: time.Duration(5 * time.Second),
-	}
-}
+func newDefaultGRPCClientConfig() *GRPCClientConfig { _ = "STUB: not implemented"; return nil }
 
 // GRPCServerConfig provides configuration for GRPCServer
 type GRPCServerConfig struct {
@@ -196,11 +83,7 @@ type GRPCServerConfig struct {
 }
 
 // newDefaultGRPCServerConfig returns a default GRPCServerConfig
-func newDefaultGRPCServerConfig() *GRPCServerConfig {
-	return &GRPCServerConfig{
-		Port: 3434,
-	}
-}
+func newDefaultGRPCServerConfig() *GRPCServerConfig { _ = "STUB: not implemented"; return nil }
 
 // NatsRPCClientConfig provides nats client configuration
 type NatsRPCClientConfig struct {
@@ -217,20 +100,7 @@ type NatsRPCClientConfig struct {
 }
 
 // newDefaultNatsRPCClientConfig provides default nats client configuration
-func newDefaultNatsRPCClientConfig() *NatsRPCClientConfig {
-	return &NatsRPCClientConfig{
-		Connect:                "nats://localhost:4222",
-		MaxReconnectionRetries: 15,
-		RequestTimeout:         time.Duration(5 * time.Second),
-		ConnectionTimeout:      time.Duration(2 * time.Second),
-		WebsocketCompression:   true,
-		ReconnectJitter:        time.Duration(100 * time.Millisecond),
-		ReconnectJitterTLS:     time.Duration(1 * time.Second),
-		ReconnectWait:          time.Duration(time.Second),
-		PingInterval:           time.Duration(2 * time.Minute),
-		MaxPingsOutstanding:    3,
-	}
-}
+func newDefaultNatsRPCClientConfig() *NatsRPCClientConfig { _ = "STUB: not implemented"; return nil }
 
 // NatsRPCServerConfig provides nats server configuration
 type NatsRPCServerConfig struct {
@@ -251,27 +121,7 @@ type NatsRPCServerConfig struct {
 }
 
 // newDefaultNatsRPCServerConfig provides default nats server configuration
-func newDefaultNatsRPCServerConfig() *NatsRPCServerConfig {
-	return &NatsRPCServerConfig{
-		Connect:                "nats://localhost:4222",
-		MaxReconnectionRetries: 15,
-		Buffer: struct {
-			Messages int `mapstructure:"messages"`
-			Push     int `mapstructure:"push"`
-		}{
-			Messages: 75,
-			Push:     100,
-		},
-		Services:             30,
-		ConnectionTimeout:    time.Duration(2 * time.Second),
-		WebsocketCompression: true,
-		ReconnectJitter:      time.Duration(100 * time.Millisecond),
-		ReconnectJitterTLS:   time.Duration(1 * time.Second),
-		ReconnectWait:        time.Duration(time.Second),
-		PingInterval:         time.Duration(2 * time.Minute),
-		MaxPingsOutstanding:  3,
-	}
-}
+func newDefaultNatsRPCServerConfig() *NatsRPCServerConfig { _ = "STUB: not implemented"; return nil }
 
 // InfoRetrieverConfig provides InfoRetriever configuration
 type InfoRetrieverConfig struct {
@@ -279,11 +129,7 @@ type InfoRetrieverConfig struct {
 }
 
 // newDefaultInfoRetrieverConfig provides default configuration for InfoRetriever
-func newDefaultInfoRetrieverConfig() *InfoRetrieverConfig {
-	return &InfoRetrieverConfig{
-		Region: "",
-	}
-}
+func newDefaultInfoRetrieverConfig() *InfoRetrieverConfig { _ = "STUB: not implemented"; return nil }
 
 // EtcdServiceDiscoveryConfig Etcd service discovery config
 type EtcdServiceDiscoveryConfig struct {
@@ -316,67 +162,17 @@ type EtcdServiceDiscoveryConfig struct {
 
 // newDefaultEtcdServiceDiscoveryConfig Etcd service discovery default config
 func newDefaultEtcdServiceDiscoveryConfig() *EtcdServiceDiscoveryConfig {
-	return &EtcdServiceDiscoveryConfig{
-		Endpoints:   []string{"localhost:2379"},
-		User:        "",
-		Pass:        "",
-		DialTimeout: time.Duration(5 * time.Second),
-		Prefix:      "pitaya/",
-		Heartbeat: struct {
-			TTL time.Duration `mapstructure:"ttl"`
-			Log bool          `mapstructure:"log"`
-		}{
-			TTL: time.Duration(60 * time.Second),
-			Log: false,
-		},
-		SyncServers: struct {
-			Interval    time.Duration `mapstructure:"interval"`
-			Parallelism int           `mapstructure:"parallelism"`
-		}{
-			Interval:    time.Duration(120 * time.Second),
-			Parallelism: 10,
-		},
-		Revoke: struct {
-			Timeout time.Duration `mapstructure:"timeout"`
-		}{
-			Timeout: time.Duration(5 * time.Second),
-		},
-		GrantLease: struct {
-			Timeout       time.Duration `mapstructure:"timeout"`
-			MaxRetries    int           `mapstructure:"maxretries"`
-			RetryInterval time.Duration `mapstructure:"retryinterval"`
-		}{
-			Timeout:       time.Duration(60 * time.Second),
-			MaxRetries:    15,
-			RetryInterval: time.Duration(5 * time.Second),
-		},
-		Shutdown: struct {
-			Delay time.Duration `mapstructure:"delay"`
-		}{
-			Delay: time.Duration(300 * time.Millisecond),
-		},
-		ServerTypesBlacklist: nil,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewDefaultCustomMetricsSpec returns an empty *CustomMetricsSpec
-func NewDefaultCustomMetricsSpec() *models.CustomMetricsSpec {
-	return &models.CustomMetricsSpec{
-		Summaries: []*models.Summary{},
-		Gauges:    []*models.Gauge{},
-		Counters:  []*models.Counter{},
-	}
-}
+func NewDefaultCustomMetricsSpec() *models.CustomMetricsSpec { _ = "STUB: not implemented"; return nil }
 
 // NewCustomMetricsSpec returns a *CustomMetricsSpec by reading config key (DEPRECATED)
 func NewCustomMetricsSpec(config *Config) *models.CustomMetricsSpec {
-	spec := &models.CustomMetricsSpec{}
-
-	if err := config.UnmarshalKey("pitaya.metrics.custom", &spec); err != nil {
-		return NewDefaultCustomMetricsSpec()
-	}
-
-	return spec
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Metrics provides configuration for all metrics related configurations
@@ -391,16 +187,7 @@ type MetricsConfig struct {
 }
 
 // newDefaultPrometheusConfig provides default configuration for PrometheusReporter
-func newDefaultMetricsConfig() *MetricsConfig {
-	return &MetricsConfig{
-		Period:           time.Duration(15 * time.Second),
-		ConstLabels:      map[string]string{},
-		AdditionalLabels: map[string]string{},
-		Custom:           *NewDefaultCustomMetricsSpec(),
-		Prometheus:       newDefaultPrometheusConfig(),
-		Statsd:           newDefaultStatsdConfig(),
-	}
-}
+func newDefaultMetricsConfig() *MetricsConfig { _ = "STUB: not implemented"; return nil }
 
 // PrometheusConfig provides configuration for PrometheusReporter
 type PrometheusConfig struct {
@@ -409,12 +196,7 @@ type PrometheusConfig struct {
 }
 
 // newDefaultPrometheusConfig provides default configuration for PrometheusReporter
-func newDefaultPrometheusConfig() *PrometheusConfig {
-	return &PrometheusConfig{
-		Port:    9090,
-		Enabled: false,
-	}
-}
+func newDefaultPrometheusConfig() *PrometheusConfig { _ = "STUB: not implemented"; return nil }
 
 // StatsdConfig provides configuration for statsd
 type StatsdConfig struct {
@@ -425,23 +207,10 @@ type StatsdConfig struct {
 }
 
 // newDefaultStatsdConfig provides default configuration for statsd
-func newDefaultStatsdConfig() *StatsdConfig {
-	return &StatsdConfig{
-		Enabled: false,
-		Host:    "localhost:9125",
-		Prefix:  "pitaya.",
-		Rate:    1,
-	}
-}
+func newDefaultStatsdConfig() *StatsdConfig { _ = "STUB: not implemented"; return nil }
 
 // newDefaultStatsdConfig provides default configuration for statsd
-func newDefaultClusterConfig() *ClusterConfig {
-	return &ClusterConfig{
-		Info: *newDefaultInfoRetrieverConfig(),
-		RPC:  *newDefaultClusterRPCConfig(),
-		SD:   *newDefaultClusterSDConfig(),
-	}
-}
+func newDefaultClusterConfig() *ClusterConfig { _ = "STUB: not implemented"; return nil }
 
 type ClusterConfig struct {
 	Info InfoRetrieverConfig `mapstructure:"info"`
@@ -460,33 +229,13 @@ type ClusterRPCConfig struct {
 	} `mapstructure:"server"`
 }
 
-func newDefaultClusterRPCConfig() *ClusterRPCConfig {
-	return &ClusterRPCConfig{
-		Client: struct {
-			Grpc GRPCClientConfig    `mapstructure:"grpc"`
-			Nats NatsRPCClientConfig `mapstructure:"nats"`
-		}{
-			Grpc: *newDefaultGRPCClientConfig(),
-			Nats: *newDefaultNatsRPCClientConfig(),
-		},
-		Server: struct {
-			Grpc GRPCServerConfig    `mapstructure:"grpc"`
-			Nats NatsRPCServerConfig `mapstructure:"nats"`
-		}{
-			Grpc: *newDefaultGRPCServerConfig(),
-			Nats: *newDefaultNatsRPCServerConfig(),
-		},
-	}
-
-}
+func newDefaultClusterRPCConfig() *ClusterRPCConfig { _ = "STUB: not implemented"; return nil }
 
 type ClusterSDConfig struct {
 	Etcd EtcdServiceDiscoveryConfig `mapstructure:"etcd"`
 }
 
-func newDefaultClusterSDConfig() *ClusterSDConfig {
-	return &ClusterSDConfig{Etcd: *newDefaultEtcdServiceDiscoveryConfig()}
-}
+func newDefaultClusterSDConfig() *ClusterSDConfig { _ = "STUB: not implemented"; return nil }
 
 // WorkerConfig provides worker configuration
 type WorkerConfig struct {
@@ -501,20 +250,7 @@ type WorkerConfig struct {
 }
 
 // newDefaultWorkerConfig provides worker default configuration
-func newDefaultWorkerConfig() *WorkerConfig {
-	return &WorkerConfig{
-		Redis: struct {
-			ServerURL string `mapstructure:"serverurl"`
-			Pool      string `mapstructure:"pool"`
-			Password  string `mapstructure:"password"`
-		}{
-			ServerURL: "localhost:6379",
-			Pool:      "10",
-		},
-		Concurrency: 1,
-		Retry:       *newDefaultEnqueueOpts(),
-	}
-}
+func newDefaultWorkerConfig() *WorkerConfig { _ = "STUB: not implemented"; return nil }
 
 // EnqueueOpts has retry options for worker
 type EnqueueOpts struct {
@@ -527,16 +263,7 @@ type EnqueueOpts struct {
 }
 
 // newDefaultEnqueueOpts provides default EnqueueOpts
-func newDefaultEnqueueOpts() *EnqueueOpts {
-	return &EnqueueOpts{
-		Enabled:     true,
-		Max:         2,
-		Exponential: 5,
-		MinDelay:    10,
-		MaxDelay:    10,
-		MaxRandom:   0,
-	}
-}
+func newDefaultEnqueueOpts() *EnqueueOpts { _ = "STUB: not implemented"; return nil }
 
 // MemoryGroupConfig provides configuration for MemoryGroup
 type MemoryGroupConfig struct {
@@ -544,9 +271,7 @@ type MemoryGroupConfig struct {
 }
 
 // newDefaultMemoryGroupConfig returns a new, default group instance
-func newDefaultMemoryGroupConfig() *MemoryGroupConfig {
-	return &MemoryGroupConfig{TickDuration: time.Duration(30 * time.Second)}
-}
+func newDefaultMemoryGroupConfig() *MemoryGroupConfig { _ = "STUB: not implemented"; return nil }
 
 // EtcdGroupServiceConfig provides ETCD configuration
 type EtcdGroupServiceConfig struct {
@@ -558,21 +283,14 @@ type EtcdGroupServiceConfig struct {
 
 // newDefaultEtcdGroupServiceConfig provides default ETCD configuration
 func newDefaultEtcdGroupServiceConfig() *EtcdGroupServiceConfig {
-	return &EtcdGroupServiceConfig{
-		DialTimeout:        time.Duration(5 * time.Second),
-		Endpoints:          []string{"localhost:2379"},
-		Prefix:             "pitaya/",
-		TransactionTimeout: time.Duration(5 * time.Second),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewEtcdGroupServiceConfig reads from config to build ETCD configuration
 func newEtcdGroupServiceConfig(config *Config) *EtcdGroupServiceConfig {
-	conf := newDefaultEtcdGroupServiceConfig()
-	if err := config.UnmarshalKey("pitaya.groups.etcd", &conf); err != nil {
-		panic(err)
-	}
-	return conf
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GroupsConfig struct {
@@ -581,12 +299,7 @@ type GroupsConfig struct {
 }
 
 // NewDefaultGroupConfig provides default ETCD configuration
-func newDefaultGroupsConfig() *GroupsConfig {
-	return &GroupsConfig{
-		Etcd:   *newDefaultEtcdGroupServiceConfig(),
-		Memory: *newDefaultMemoryGroupConfig(),
-	}
-}
+func newDefaultGroupsConfig() *GroupsConfig { _ = "STUB: not implemented"; return nil }
 
 // ETCDBindingConfig provides configuration for ETCDBindingStorage
 type ETCDBindingConfig struct {
@@ -597,14 +310,7 @@ type ETCDBindingConfig struct {
 }
 
 // NewDefaultETCDBindingConfig provides default configuration for ETCDBindingStorage
-func newDefaultETCDBindingConfig() *ETCDBindingConfig {
-	return &ETCDBindingConfig{
-		DialTimeout: time.Duration(5 * time.Second),
-		Endpoints:   []string{"localhost:2379"},
-		Prefix:      "pitaya/",
-		LeaseTTL:    time.Duration(5 * time.Hour),
-	}
-}
+func newDefaultETCDBindingConfig() *ETCDBindingConfig { _ = "STUB: not implemented"; return nil }
 
 // ModulesConfig provides configuration for Pitaya Modules
 type ModulesConfig struct {
@@ -614,15 +320,7 @@ type ModulesConfig struct {
 }
 
 // NewDefaultModulesConfig provides default configuration for Pitaya Modules
-func newDefaultModulesConfig() *ModulesConfig {
-	return &ModulesConfig{
-		BindingStorage: struct {
-			Etcd ETCDBindingConfig `mapstructure:"etcd"`
-		}{
-			Etcd: *newDefaultETCDBindingConfig(),
-		},
-	}
-}
+func newDefaultModulesConfig() *ModulesConfig { _ = "STUB: not implemented"; return nil }
 
 // RateLimitingConfig rate limits config
 type RateLimitingConfig struct {
@@ -632,10 +330,4 @@ type RateLimitingConfig struct {
 }
 
 // newDefaultRateLimitingConfig rate limits default config
-func newDefaultRateLimitingConfig() *RateLimitingConfig {
-	return &RateLimitingConfig{
-		Limit:        20,
-		Interval:     time.Duration(time.Second),
-		ForceDisable: false,
-	}
-}
+func newDefaultRateLimitingConfig() *RateLimitingConfig { _ = "STUB: not implemented"; return nil }

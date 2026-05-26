@@ -19,20 +19,8 @@ type DefaultValidator struct {
 // This function has the pipeline.Handler signature so
 // it is possible to use it as a pipeline function
 func (v *DefaultValidator) Validate(ctx context.Context, in interface{}) (context.Context, interface{}, error) {
-	if in == nil {
-		return ctx, in, nil
-	}
-
-	v.lazyinit()
-	if err := v.validate.Struct(in); err != nil {
-		return ctx, nil, err
-	}
-
-	return ctx, in, nil
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil, nil
 }
 
-func (v *DefaultValidator) lazyinit() {
-	v.once.Do(func() {
-		v.validate = validator.New()
-	})
-}
+func (v *DefaultValidator) lazyinit() { _ = "STUB: not implemented"; return }

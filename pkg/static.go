@@ -29,7 +29,6 @@ import (
 	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
 	"github.com/topfreegames/pitaya/v3/pkg/interfaces"
 	"github.com/topfreegames/pitaya/v3/pkg/metrics"
 	"github.com/topfreegames/pitaya/v3/pkg/router"
@@ -47,189 +46,173 @@ func Configure(
 	serverMetadata map[string]string,
 	cfgs ...*viper.Viper,
 ) {
-	builder := NewBuilderWithConfigs(
-		isFrontend,
-		serverType,
-		serverMode,
-		serverMetadata,
-		config.NewConfig(cfgs...),
-	)
-	DefaultApp = builder.Build()
-	session.DefaultSessionPool = builder.SessionPool
+	_ = "STUB: not implemented"
+	return
 }
 
-func GetDieChan() chan bool {
-	return DefaultApp.GetDieChan()
-}
+func GetDieChan() chan bool { _ = "STUB: not implemented"; return nil }
 
-func SetDebug(debug bool) {
-	DefaultApp.SetDebug(debug)
-}
+func SetDebug(debug bool) { _ = "STUB: not implemented"; return }
 
-func SetHeartbeatTime(interval time.Duration) {
-	DefaultApp.SetHeartbeatTime(interval)
-}
+func SetHeartbeatTime(interval time.Duration) { _ = "STUB: not implemented"; return }
 
-func GetServerID() string {
-	return DefaultApp.GetServerID()
-}
+func GetServerID() string { _ = "STUB: not implemented"; return "" }
 
-func GetMetricsReporters() []metrics.Reporter {
-	return DefaultApp.GetMetricsReporters()
-}
+func GetMetricsReporters() []metrics.Reporter { _ = "STUB: not implemented"; return nil }
 
-func GetServer() *cluster.Server {
-	return DefaultApp.GetServer()
-}
+func GetServer() *cluster.Server { _ = "STUB: not implemented"; return nil }
 
-func GetServerByID(id string) (*cluster.Server, error) {
-	return DefaultApp.GetServerByID(id)
-}
+func GetServerByID(id string) (*cluster.Server, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func GetServersByType(t string) (map[string]*cluster.Server, error) {
-	return DefaultApp.GetServersByType(t)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func GetServers() []*cluster.Server {
-	return DefaultApp.GetServers()
-}
+func GetServers() []*cluster.Server { _ = "STUB: not implemented"; return nil }
 
 func GetSessionFromCtx(ctx context.Context) session.Session {
-	sessionVal := ctx.Value(constants.SessionCtxKey)
-	if sessionVal == nil {
-		return nil
-	}
-	return sessionVal.(session.Session)
+	_ = "STUB: not implemented"
+	return *new(session.Session)
 }
 
-func Start() {
-	DefaultApp.Start()
-}
+func Start() { _ = "STUB: not implemented"; return }
 
-func SetDictionary(dict map[string]uint16) error {
-	return DefaultApp.SetDictionary(dict)
-}
+func SetDictionary(dict map[string]uint16) error { _ = "STUB: not implemented"; return nil }
 
 func AddRoute(serverType string, routingFunction router.RoutingFunc) error {
-	return DefaultApp.AddRoute(serverType, routingFunction)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func Shutdown() {
-	DefaultApp.Shutdown()
-}
+func Shutdown() { _ = "STUB: not implemented"; return }
 
-func StartWorker() {
-	DefaultApp.StartWorker()
-}
+func StartWorker() { _ = "STUB: not implemented"; return }
 
-func RegisterRPCJob(rpcJob worker.RPCJob) error {
-	return DefaultApp.RegisterRPCJob(rpcJob)
-}
+func RegisterRPCJob(rpcJob worker.RPCJob) error { _ = "STUB: not implemented"; return nil }
 
 func Documentation(getPtrNames bool) (map[string]interface{}, error) {
-	return DefaultApp.Documentation(getPtrNames)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func IsRunning() bool {
-	return DefaultApp.IsRunning()
-}
+func IsRunning() bool { _ = "STUB: not implemented"; return false }
 
 func RPC(ctx context.Context, routeStr string, reply proto.Message, arg proto.Message) error {
-	return DefaultApp.RPC(ctx, routeStr, reply, arg)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func RPCTo(ctx context.Context, serverID, routeStr string, reply proto.Message, arg proto.Message) error {
-	return DefaultApp.RPCTo(ctx, serverID, routeStr, reply, arg)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func ReliableRPC(routeStr string, metadata map[string]interface{}, reply, arg proto.Message) (jid string, err error) {
-	return DefaultApp.ReliableRPC(routeStr, metadata, reply, arg)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func ReliableRPCWithOptions(routeStr string, metadata map[string]interface{}, reply, arg proto.Message, opts *config.EnqueueOpts) (jid string, err error) {
-	return DefaultApp.ReliableRPCWithOptions(routeStr, metadata, reply, arg, opts)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func SendPushToUsers(route string, v interface{}, uids []string, frontendType string) ([]string, error) {
-	return DefaultApp.SendPushToUsers(route, v, uids, frontendType)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func SendKickToUsers(uids []string, frontendType string) ([]string, error) {
-	return DefaultApp.SendKickToUsers(uids, frontendType)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func GroupCreate(ctx context.Context, groupName string) error {
-	return DefaultApp.GroupCreate(ctx, groupName)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupCreateWithTTL(ctx context.Context, groupName string, ttlTime time.Duration) error {
-	return DefaultApp.GroupCreateWithTTL(ctx, groupName, ttlTime)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupMembers(ctx context.Context, groupName string) ([]string, error) {
-	return DefaultApp.GroupMembers(ctx, groupName)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func GroupBroadcast(ctx context.Context, frontendType, groupName, route string, v interface{}) error {
-	return DefaultApp.GroupBroadcast(ctx, frontendType, groupName, route, v)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupContainsMember(ctx context.Context, groupName, uid string) (bool, error) {
-	return DefaultApp.GroupContainsMember(ctx, groupName, uid)
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 func GroupAddMember(ctx context.Context, groupName, uid string) error {
-	return DefaultApp.GroupAddMember(ctx, groupName, uid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupRemoveMember(ctx context.Context, groupName, uid string) error {
-	return DefaultApp.GroupRemoveMember(ctx, groupName, uid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupRemoveAll(ctx context.Context, groupName string) error {
-	return DefaultApp.GroupRemoveAll(ctx, groupName)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupCountMembers(ctx context.Context, groupName string) (int, error) {
-	return DefaultApp.GroupCountMembers(ctx, groupName)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func GroupRenewTTL(ctx context.Context, groupName string) error {
-	return DefaultApp.GroupRenewTTL(ctx, groupName)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GroupDelete(ctx context.Context, groupName string) error {
-	return DefaultApp.GroupDelete(ctx, groupName)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func Register(c component.Component, options ...component.Option) {
-	DefaultApp.Register(c, options...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func RegisterRemote(c component.Component, options ...component.Option) {
-	DefaultApp.RegisterRemote(c, options...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func RegisterModule(module interfaces.Module, name string) error {
-	return DefaultApp.RegisterModule(module, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func RegisterModuleAfter(module interfaces.Module, name string) error {
-	return DefaultApp.RegisterModuleAfter(module, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func RegisterModuleBefore(module interfaces.Module, name string) error {
-	return DefaultApp.RegisterModuleBefore(module, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func GetModule(name string) (interfaces.Module, error) {
-	return DefaultApp.GetModule(name)
+	_ = "STUB: not implemented"
+	return *new(interfaces.Module), nil
 }
 
-func GetNumberOfConnectedClients() int64 {
-	return DefaultApp.GetNumberOfConnectedClients()
-}
+func GetNumberOfConnectedClients() int64 { _ = "STUB: not implemented"; return 0 }
 
-func IsReady(ctx context.Context) bool {
-	return DefaultApp.IsReady(ctx)
-}
+func IsReady(ctx context.Context) bool { _ = "STUB: not implemented"; return false }

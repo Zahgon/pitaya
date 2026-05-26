@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,43 +30,29 @@ type Response struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Response) Reset()         { *m = Response{} }
-func (m *Response) String() string { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()    {}
-func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_response_eb66de3736cab2fc, []int{0}
-}
-func (m *Response) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Response.Unmarshal(m, b)
-}
+func (m *Response) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Response) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Response) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Response) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Response) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Response.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Response.Merge(dst, src)
-}
-func (m *Response) XXX_Size() int {
-	return xxx_messageInfo_Response.Size(m)
-}
-func (m *Response) XXX_DiscardUnknown() {
-	xxx_messageInfo_Response.DiscardUnknown(m)
-}
+
+func (dst *Response) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Response) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Response) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Response proto.InternalMessageInfo
 
-func (m *Response) GetData() []byte {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
+func (m *Response) GetData() []byte { _ = "STUB: not implemented"; return nil }
 
-func (m *Response) GetError() *Error {
-	if m != nil {
-		return m.Error
-	}
-	return nil
-}
+func (m *Response) GetError() *Error { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*Response)(nil), "protos.Response")

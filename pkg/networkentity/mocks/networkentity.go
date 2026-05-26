@@ -7,7 +7,6 @@ package mocks
 import (
 	context "context"
 	net "net"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	protos "github.com/topfreegames/pitaya/v3/pkg/protos"
@@ -26,102 +25,76 @@ type MockNetworkEntityMockRecorder struct {
 
 // NewMockNetworkEntity creates a new mock instance.
 func NewMockNetworkEntity(ctrl *gomock.Controller) *MockNetworkEntity {
-	mock := &MockNetworkEntity{ctrl: ctrl}
-	mock.recorder = &MockNetworkEntityMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockNetworkEntity) EXPECT() *MockNetworkEntityMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MockNetworkEntity) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockNetworkEntity) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
 func (mr *MockNetworkEntityMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockNetworkEntity)(nil).Close))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Kick mocks base method.
-func (m *MockNetworkEntity) Kick(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Kick", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockNetworkEntity) Kick(arg0 context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Kick indicates an expected call of Kick.
 func (mr *MockNetworkEntityMockRecorder) Kick(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Kick", reflect.TypeOf((*MockNetworkEntity)(nil).Kick), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Push mocks base method.
 func (m *MockNetworkEntity) Push(arg0 string, arg1 interface{}) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Push", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Push indicates an expected call of Push.
 func (mr *MockNetworkEntityMockRecorder) Push(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Push", reflect.TypeOf((*MockNetworkEntity)(nil).Push), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoteAddr mocks base method.
-func (m *MockNetworkEntity) RemoteAddr() net.Addr {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemoteAddr")
-	ret0, _ := ret[0].(net.Addr)
-	return ret0
-}
+func (m *MockNetworkEntity) RemoteAddr() net.Addr { _ = "STUB: not implemented"; return *new(net.Addr) }
 
 // RemoteAddr indicates an expected call of RemoteAddr.
 func (mr *MockNetworkEntityMockRecorder) RemoteAddr() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoteAddr", reflect.TypeOf((*MockNetworkEntity)(nil).RemoteAddr))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ResponseMID mocks base method.
 func (m *MockNetworkEntity) ResponseMID(arg0 context.Context, arg1 uint, arg2 interface{}, arg3 ...bool) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ResponseMID", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ResponseMID indicates an expected call of ResponseMID.
 func (mr *MockNetworkEntityMockRecorder) ResponseMID(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResponseMID", reflect.TypeOf((*MockNetworkEntity)(nil).ResponseMID), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendRequest mocks base method.
 func (m *MockNetworkEntity) SendRequest(arg0 context.Context, arg1, arg2 string, arg3 interface{}) (*protos.Response, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SendRequest", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*protos.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SendRequest indicates an expected call of SendRequest.
 func (mr *MockNetworkEntityMockRecorder) SendRequest(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendRequest", reflect.TypeOf((*MockNetworkEntity)(nil).SendRequest), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }

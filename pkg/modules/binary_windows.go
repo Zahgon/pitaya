@@ -1,4 +1,5 @@
 //go:build windows
+
 // Copyright (c) TFG Co. All Rights Reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,14 +23,8 @@
 package modules
 
 import (
-	"bufio"
 	"os/exec"
-	"runtime"
-	"syscall"
 	"time"
-
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // Binary is a pitaya module that starts a binary as a child process and
@@ -45,83 +40,26 @@ type Binary struct {
 
 // NewBinary creates a new binary module with the given path
 func NewBinary(binPath string, args []string, gracefulShutdownInterval ...time.Duration) *Binary {
-	gracefulTime := 15 * time.Second
-	if len(gracefulShutdownInterval) > 0 {
-		gracefulTime = gracefulShutdownInterval[0]
-	}
-	return &Binary{
-		binPath:                  binPath,
-		args:                     args,
-		gracefulShutdownInterval: gracefulTime,
-		exitCh:                   make(chan struct{}),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetExitChannel gets a channel that is closed when the binary dies
 func (b *Binary) GetExitChannel() chan struct{} {
-	return b.exitCh
-}
+	_ = "STUB: not implemented"
 
-// Init initializes the binary
-func (b *Binary) Init() error {
-	b.cmd = exec.Command(b.binPath, b.args...)
-	stdout, _ := b.cmd.StdoutPipe()
-	stdOutScanner := bufio.NewScanner(stdout)
-	stderr, _ := b.cmd.StderrPipe()
-	stdErrScanner := bufio.NewScanner(stderr)
-	go func() {
-		for stdOutScanner.Scan() {
-			logger.Log.Info(stdOutScanner.Text())
-		}
-	}()
-	go func() {
-		for stdErrScanner.Scan() {
-			logger.Log.Error(stdErrScanner.Text())
-		}
-	}()
-	err := b.cmd.Start()
-	go func() {
-		b.cmd.Wait()
-		close(b.exitCh)
-	}()
-	return err
-}
-
-// sendCtrlBreak sends a ctrl break signal to the process, this is a replacement for syscall.SIGTERM in windows
-func sendCtrlBreak(pid int) error {
-	d, e := syscall.LoadDLL("kernel32.dll")
-	if e != nil {
-		return e
-	}
-	p, e := d.FindProc("GenerateConsoleCtrlEvent")
-	if e != nil {
-		return e
-	}
-	r, _, e := p.Call(uintptr(syscall.CTRL_BREAK_EVENT), uintptr(pid))
-	if r == 0 {
-		return e // syscall.GetLastError()
-	}
+	// Init initializes the binary
 	return nil
 }
 
+func (b *Binary) Init() error { _ = "STUB: not implemented"; return nil }
+
+// sendCtrlBreak sends a ctrl break signal to the process, this is a replacement for syscall.SIGTERM in windows
+func sendCtrlBreak(pid int) error { _ = "STUB: not implemented"; return nil }
+
+// syscall.GetLastError()
+
 // Shutdown shutdowns the binary module
-func (b *Binary) Shutdown() error {
-	if runtime.GOOS == "windows" { // windows does not support SIGTERM
-		if err := sendCtrlBreak(b.cmd.Process.Pid); err != nil {
-			return err
-		}
-	} else {
-		err := b.cmd.Process.Signal(syscall.SIGTERM)
-		if err != nil {
-			return err
-		}
-	}
-	timeout := time.After(b.gracefulShutdownInterval)
-	select {
-	case <-b.exitCh:
-		return nil
-	case <-timeout:
-		b.cmd.Process.Kill()
-		return constants.ErrTimeoutTerminatingBinaryModule
-	}
-}
+func (b *Binary) Shutdown() error { _ = "STUB: not implemented"; return nil }
+
+// windows does not support SIGTERM

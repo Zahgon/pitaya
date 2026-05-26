@@ -21,80 +21,15 @@
 package repl
 
 import (
-	"crypto/tls"
-	"encoding/json"
-	"fmt"
-	"os"
-
 	"github.com/abiosoft/ishell/v2"
-	"github.com/mitchellh/go-homedir"
-	"github.com/sirupsen/logrus"
-	"github.com/topfreegames/pitaya/v3/pkg/client"
 )
 
-func protoClient(log Log, addr string) error {
-	log.Println("Using protobuf client")
-	protoclient := client.NewProto(docsString, logrus.InfoLevel)
-	pClient = protoclient
+func protoClient(log Log, addr string) error { _ = "STUB: not implemented"; return nil }
 
-	for k, v := range pushInfo {
-		protoclient.AddPushResponse(k, v)
-	}
+func tryConnect(addr string) error { _ = "STUB: not implemented"; return nil }
 
-	if err := protoclient.LoadServerInfo(addr); err != nil {
-		log.Println("Failed to load server info")
-		return err
-	}
+func readServerMessages(callback func(data []byte)) { _ = "STUB: not implemented"; return }
 
-	return nil
-}
+func configure(c *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-func tryConnect(addr string) error {
-	if err := pClient.ConnectToWS(addr, "", &tls.Config{
-		InsecureSkipVerify: true,
-	}); err != nil {
-		if err := pClient.ConnectToWS(addr, ""); err != nil {
-			if err := pClient.ConnectTo(addr, &tls.Config{
-				InsecureSkipVerify: true,
-			}); err != nil {
-				if err := pClient.ConnectTo(addr); err != nil {
-					return err
-				}
-			}
-		}
-	}
-	return nil
-}
-
-func readServerMessages(callback func(data []byte)) {
-	channel := pClient.MsgChannel()
-	for {
-		select {
-		case <-disconnectedCh:
-			close(disconnectedCh)
-			return
-		case m := <-channel:
-			callback(parseData(m.Data))
-		}
-	}
-}
-
-func configure(c *ishell.Shell) {
-	historyPath := os.Getenv("PITAYACLI_HISTORY_PATH")
-	if historyPath == "" {
-		home, _ := homedir.Dir()
-		historyPath = fmt.Sprintf("%s/.pitayacli_history", home)
-	}
-
-	c.SetHistoryPath(historyPath)
-}
-
-func parseData(data []byte) []byte {
-	if prettyJSON {
-		var m interface{}
-		_ = json.Unmarshal(data, &m)
-		data, _ = json.MarshalIndent(m, "", "\t")
-	}
-
-	return data
-}
+func parseData(data []byte) []byte { _ = "STUB: not implemented"; return nil }

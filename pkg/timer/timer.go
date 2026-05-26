@@ -22,10 +22,7 @@ package timer
 
 import (
 	"sync"
-	"sync/atomic"
 	"time"
-
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 var timerBacklog int
@@ -84,107 +81,47 @@ func init() {
 }
 
 // AddTimer adds a timer to the manager
-func AddTimer(t *Timer) {
-	Manager.timers.Store(t.ID, t)
-}
+func AddTimer(t *Timer) { _ = "STUB: not implemented"; return }
 
 // RemoveTimer removes a timer to the manager
-func RemoveTimer(id int64) {
-	Manager.timers.Delete(id)
-}
+func RemoveTimer(id int64) { _ = "STUB: not implemented"; return }
 
 // NewTimer creates a cron job
 func NewTimer(fn Func, interval time.Duration, counter int) *Timer {
-	id := atomic.AddInt64(&Manager.incrementID, 1)
-	t := &Timer{
-		ID:       id,
-		fn:       fn,
-		createAt: time.Now().UnixNano(),
-		interval: interval,
-		elapse:   int64(interval), // first execution will be after interval
-		counter:  counter,
-	}
-
-	// add to manager
-	Manager.ChCreatedTimer <- t
-	return t
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// first execution will be after interval
+
+// add to manager
 
 // SetCondition sets the condition used for verifying when the cron job should run
-func (t *Timer) SetCondition(condition Condition) {
-	t.condition = condition
-}
+func (t *Timer) SetCondition(condition Condition) { _ = "STUB: not implemented"; return }
 
 // Stop turns off a timer. After Stop, fn will not be called forever
-func (t *Timer) Stop() {
-	if atomic.LoadInt32(&t.closed) > 0 {
-		return
-	}
+func (t *Timer) Stop() { _ = "STUB: not implemented"; return }
 
-	// guarantee that logic is not blocked
-	if len(Manager.ChClosingTimer) < timerBacklog {
-		Manager.ChClosingTimer <- t.ID
-		atomic.StoreInt32(&t.closed, 1)
-	} else {
-		t.counter = 0 // automatically closed in next Cron
-	}
-}
+// guarantee that logic is not blocked
+
+// automatically closed in next Cron
 
 // execute job function with protection
-func pexec(id int64, fn Func) {
-	defer func() {
-		if err := recover(); err != nil {
-			logger.Log.Errorf("Call timer function error, TimerID=%d, Error=%v", id, err)
-		}
-	}()
-
-	fn()
-}
+func pexec(id int64, fn Func) { _ = "STUB: not implemented"; return }
 
 // Cron executes scheduled tasks
 // TODO: if closing Timers'count in single cron call more than timerBacklog will case problem.
-func Cron() {
-	now := time.Now()
-	unn := now.UnixNano()
-	Manager.timers.Range(func(idInterface, tInterface interface{}) bool {
-		t := tInterface.(*Timer)
-		id := idInterface.(int64)
-		// prevent ChClosingTimer exceed
-		if t.counter == 0 {
-			if len(Manager.ChClosingTimer) < timerBacklog {
-				t.Stop()
-			}
-			return true
-		}
+func Cron() { _ = "STUB: not implemented"; return }
 
-		// condition timer
-		if t.condition != nil {
-			if t.condition.Check(now) {
-				pexec(id, t.fn)
-			}
-			return true
-		}
+// prevent ChClosingTimer exceed
 
-		// execute job
-		if t.createAt+t.elapse <= unn {
-			pexec(id, t.fn)
-			t.elapse += int64(t.interval)
+// condition timer
 
-			// update timer counter
-			if t.counter != LoopForever && t.counter > 0 {
-				t.counter--
-			}
-		}
-		return true
-	})
-}
+// execute job
+
+// update timer counter
 
 // SetTimerBacklog set the timer created/closing channel backlog, A small backlog
 // may cause the logic to be blocked when call NewTimer/NewCountTimer/timer.Stop
 // in main logic gorontine.
-func SetTimerBacklog(c int) {
-	if c < 16 {
-		c = 16
-	}
-	timerBacklog = c
-}
+func SetTimerBacklog(c int) { _ = "STUB: not implemented"; return }

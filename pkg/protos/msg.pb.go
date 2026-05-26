@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -40,12 +44,9 @@ var MsgType_value = map[string]int32{
 	"MsgPush":     3,
 }
 
-func (x MsgType) String() string {
-	return proto.EnumName(MsgType_name, int32(x))
-}
-func (MsgType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_msg_40ab112f05d06c13, []int{0}
-}
+func (x MsgType) String() string { _ = "STUB: not implemented"; return "" }
+
+func (MsgType) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 type Msg struct {
 	Id                   uint64   `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
@@ -58,64 +59,35 @@ type Msg struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Msg) Reset()         { *m = Msg{} }
-func (m *Msg) String() string { return proto.CompactTextString(m) }
-func (*Msg) ProtoMessage()    {}
-func (*Msg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_msg_40ab112f05d06c13, []int{0}
-}
-func (m *Msg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Msg.Unmarshal(m, b)
-}
+func (m *Msg) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Msg) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Msg) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Msg) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Msg) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Msg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Msg.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Msg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Msg.Merge(dst, src)
-}
-func (m *Msg) XXX_Size() int {
-	return xxx_messageInfo_Msg.Size(m)
-}
-func (m *Msg) XXX_DiscardUnknown() {
-	xxx_messageInfo_Msg.DiscardUnknown(m)
-}
+
+func (dst *Msg) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Msg) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Msg) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Msg proto.InternalMessageInfo
 
-func (m *Msg) GetId() uint64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
+func (m *Msg) GetId() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *Msg) GetRoute() string {
-	if m != nil {
-		return m.Route
-	}
-	return ""
-}
+func (m *Msg) GetRoute() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Msg) GetData() []byte {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
+func (m *Msg) GetData() []byte { _ = "STUB: not implemented"; return nil }
 
-func (m *Msg) GetReply() string {
-	if m != nil {
-		return m.Reply
-	}
-	return ""
-}
+func (m *Msg) GetReply() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Msg) GetType() MsgType {
-	if m != nil {
-		return m.Type
-	}
-	return MsgType_MsgRequest
-}
+func (m *Msg) GetType() MsgType { _ = "STUB: not implemented"; return *new(MsgType) }
 
 func init() {
 	proto.RegisterType((*Msg)(nil), "protos.Msg")

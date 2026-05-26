@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,36 +30,27 @@ type ProtoDescriptor struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProtoDescriptor) Reset()         { *m = ProtoDescriptor{} }
-func (m *ProtoDescriptor) String() string { return proto.CompactTextString(m) }
-func (*ProtoDescriptor) ProtoMessage()    {}
-func (*ProtoDescriptor) Descriptor() ([]byte, []int) {
-	return fileDescriptor_protodescriptor_d1dc0afa30ee5672, []int{0}
-}
-func (m *ProtoDescriptor) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProtoDescriptor.Unmarshal(m, b)
-}
+func (m *ProtoDescriptor) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ProtoDescriptor) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ProtoDescriptor) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ProtoDescriptor) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *ProtoDescriptor) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *ProtoDescriptor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProtoDescriptor.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *ProtoDescriptor) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProtoDescriptor.Merge(dst, src)
-}
-func (m *ProtoDescriptor) XXX_Size() int {
-	return xxx_messageInfo_ProtoDescriptor.Size(m)
-}
-func (m *ProtoDescriptor) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProtoDescriptor.DiscardUnknown(m)
-}
+
+func (dst *ProtoDescriptor) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *ProtoDescriptor) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *ProtoDescriptor) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_ProtoDescriptor proto.InternalMessageInfo
 
-func (m *ProtoDescriptor) GetDesc() []byte {
-	if m != nil {
-		return m.Desc
-	}
-	return nil
-}
+func (m *ProtoDescriptor) GetDesc() []byte { _ = "STUB: not implemented"; return nil }
 
 type ProtoName struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
@@ -64,36 +59,27 @@ type ProtoName struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProtoName) Reset()         { *m = ProtoName{} }
-func (m *ProtoName) String() string { return proto.CompactTextString(m) }
-func (*ProtoName) ProtoMessage()    {}
-func (*ProtoName) Descriptor() ([]byte, []int) {
-	return fileDescriptor_protodescriptor_d1dc0afa30ee5672, []int{1}
-}
-func (m *ProtoName) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProtoName.Unmarshal(m, b)
-}
+func (m *ProtoName) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ProtoName) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ProtoName) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ProtoName) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *ProtoName) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *ProtoName) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProtoName.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *ProtoName) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProtoName.Merge(dst, src)
-}
-func (m *ProtoName) XXX_Size() int {
-	return xxx_messageInfo_ProtoName.Size(m)
-}
-func (m *ProtoName) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProtoName.DiscardUnknown(m)
-}
+
+func (dst *ProtoName) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *ProtoName) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *ProtoName) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_ProtoName proto.InternalMessageInfo
 
-func (m *ProtoName) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
+func (m *ProtoName) GetName() string { _ = "STUB: not implemented"; return "" }
 
 type ProtoDescriptors struct {
 	Desc                 [][]byte `protobuf:"bytes,1,rep,name=desc,proto3" json:"desc,omitempty"`
@@ -102,36 +88,27 @@ type ProtoDescriptors struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProtoDescriptors) Reset()         { *m = ProtoDescriptors{} }
-func (m *ProtoDescriptors) String() string { return proto.CompactTextString(m) }
-func (*ProtoDescriptors) ProtoMessage()    {}
-func (*ProtoDescriptors) Descriptor() ([]byte, []int) {
-	return fileDescriptor_protodescriptor_d1dc0afa30ee5672, []int{2}
-}
-func (m *ProtoDescriptors) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProtoDescriptors.Unmarshal(m, b)
-}
+func (m *ProtoDescriptors) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ProtoDescriptors) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ProtoDescriptors) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ProtoDescriptors) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *ProtoDescriptors) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *ProtoDescriptors) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProtoDescriptors.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *ProtoDescriptors) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProtoDescriptors.Merge(dst, src)
-}
-func (m *ProtoDescriptors) XXX_Size() int {
-	return xxx_messageInfo_ProtoDescriptors.Size(m)
-}
-func (m *ProtoDescriptors) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProtoDescriptors.DiscardUnknown(m)
-}
+
+func (dst *ProtoDescriptors) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *ProtoDescriptors) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *ProtoDescriptors) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_ProtoDescriptors proto.InternalMessageInfo
 
-func (m *ProtoDescriptors) GetDesc() [][]byte {
-	if m != nil {
-		return m.Desc
-	}
-	return nil
-}
+func (m *ProtoDescriptors) GetDesc() [][]byte { _ = "STUB: not implemented"; return nil }
 
 type ProtoNames struct {
 	Name                 []string `protobuf:"bytes,1,rep,name=name" json:"name,omitempty"`
@@ -140,36 +117,27 @@ type ProtoNames struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProtoNames) Reset()         { *m = ProtoNames{} }
-func (m *ProtoNames) String() string { return proto.CompactTextString(m) }
-func (*ProtoNames) ProtoMessage()    {}
-func (*ProtoNames) Descriptor() ([]byte, []int) {
-	return fileDescriptor_protodescriptor_d1dc0afa30ee5672, []int{3}
-}
-func (m *ProtoNames) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProtoNames.Unmarshal(m, b)
-}
+func (m *ProtoNames) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ProtoNames) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ProtoNames) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ProtoNames) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *ProtoNames) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *ProtoNames) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProtoNames.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *ProtoNames) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProtoNames.Merge(dst, src)
-}
-func (m *ProtoNames) XXX_Size() int {
-	return xxx_messageInfo_ProtoNames.Size(m)
-}
-func (m *ProtoNames) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProtoNames.DiscardUnknown(m)
-}
+
+func (dst *ProtoNames) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *ProtoNames) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *ProtoNames) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_ProtoNames proto.InternalMessageInfo
 
-func (m *ProtoNames) GetName() []string {
-	if m != nil {
-		return m.Name
-	}
-	return nil
-}
+func (m *ProtoNames) GetName() []string { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*ProtoDescriptor)(nil), "protos.ProtoDescriptor")

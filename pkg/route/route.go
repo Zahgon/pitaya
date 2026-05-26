@@ -22,10 +22,6 @@ package route
 
 import (
 	"errors"
-	"fmt"
-	"strings"
-
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 var (
@@ -43,38 +39,13 @@ type Route struct {
 }
 
 // NewRoute creates a new route
-func NewRoute(server, service, method string) *Route {
-	return &Route{server, service, method}
-}
+func NewRoute(server, service, method string) *Route { _ = "STUB: not implemented"; return nil }
 
 // String transforms the route into a string
-func (r *Route) String() string {
-	if r.SvType != "" {
-		return fmt.Sprintf("%s.%s.%s", r.SvType, r.Service, r.Method)
-	}
-	return r.Short()
-}
+func (r *Route) String() string { _ = "STUB: not implemented"; return "" }
 
 // Short transforms the route into a string without the server type
-func (r *Route) Short() string {
-	return fmt.Sprintf("%s.%s", r.Service, r.Method)
-}
+func (r *Route) Short() string { _ = "STUB: not implemented"; return "" }
 
 // Decode decodes the route
-func Decode(route string) (*Route, error) {
-	r := strings.Split(route, ".")
-	for _, s := range r {
-		if strings.TrimSpace(s) == "" {
-			return nil, ErrRouteFieldCantEmpty
-		}
-	}
-	switch len(r) {
-	case 3:
-		return NewRoute(r[0], r[1], r[2]), nil
-	case 2:
-		return NewRoute("", r[0], r[1]), nil
-	default:
-		logger.Log.Errorf("invalid route: " + route)
-		return nil, ErrInvalidRoute
-	}
-}
+func Decode(route string) (*Route, error) { _ = "STUB: not implemented"; return nil, nil }

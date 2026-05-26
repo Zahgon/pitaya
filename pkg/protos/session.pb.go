@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -27,50 +31,31 @@ type Session struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Session) Reset()         { *m = Session{} }
-func (m *Session) String() string { return proto.CompactTextString(m) }
-func (*Session) ProtoMessage()    {}
-func (*Session) Descriptor() ([]byte, []int) {
-	return fileDescriptor_session_4ab38c3ef8b6fd7a, []int{0}
-}
-func (m *Session) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Session.Unmarshal(m, b)
-}
+func (m *Session) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Session) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Session) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Session) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Session) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Session) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Session.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Session) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Session.Merge(dst, src)
-}
-func (m *Session) XXX_Size() int {
-	return xxx_messageInfo_Session.Size(m)
-}
-func (m *Session) XXX_DiscardUnknown() {
-	xxx_messageInfo_Session.DiscardUnknown(m)
-}
+
+func (dst *Session) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Session) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Session) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Session proto.InternalMessageInfo
 
-func (m *Session) GetId() int64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
+func (m *Session) GetId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *Session) GetUid() string {
-	if m != nil {
-		return m.Uid
-	}
-	return ""
-}
+func (m *Session) GetUid() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Session) GetData() []byte {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
+func (m *Session) GetData() []byte { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*Session)(nil), "protos.Session")

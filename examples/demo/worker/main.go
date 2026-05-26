@@ -16,10 +16,7 @@ import (
 
 var app pitaya.Pitaya
 
-func configureWorker() {
-	worker := services.Worker{}
-	worker.Configure(app)
-}
+func configureWorker() { _ = "STUB: not implemented"; return }
 
 func main() {
 	port := flag.Int("port", 3250, "the port to listen")

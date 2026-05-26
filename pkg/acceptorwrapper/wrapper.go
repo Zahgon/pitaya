@@ -37,8 +37,6 @@ func WithWrappers(
 	a acceptor.Acceptor,
 	wrappers ...Wrapper,
 ) acceptor.Acceptor {
-	for _, w := range wrappers {
-		a = w.Wrap(a)
-	}
-	return a
+	_ = "STUB: not implemented"
+	return *new(acceptor.Acceptor)
 }

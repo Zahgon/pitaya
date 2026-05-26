@@ -7,7 +7,6 @@ package mocks
 import (
 	gomock "github.com/golang/mock/gomock"
 	packet "github.com/topfreegames/pitaya/v3/pkg/conn/packet"
-	reflect "reflect"
 )
 
 // MockPacketDecoder is a mock of PacketDecoder interface
@@ -23,25 +22,25 @@ type MockPacketDecoderMockRecorder struct {
 
 // NewMockPacketDecoder creates a new mock instance
 func NewMockPacketDecoder(ctrl *gomock.Controller) *MockPacketDecoder {
-	mock := &MockPacketDecoder{ctrl: ctrl}
-	mock.recorder = &MockPacketDecoderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockPacketDecoder) EXPECT() *MockPacketDecoderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Decode mocks base method
+	return nil
 }
 
-// Decode mocks base method
 func (m *MockPacketDecoder) Decode(data []byte) ([]*packet.Packet, error) {
-	ret := m.ctrl.Call(m, "Decode", data)
-	ret0, _ := ret[0].([]*packet.Packet)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Decode indicates an expected call of Decode
 func (mr *MockPacketDecoderMockRecorder) Decode(data interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decode", reflect.TypeOf((*MockPacketDecoder)(nil).Decode), data)
+	_ = "STUB: not implemented"
+	return nil
 }

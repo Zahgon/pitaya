@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -25,36 +29,27 @@ type Doc struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Doc) Reset()         { *m = Doc{} }
-func (m *Doc) String() string { return proto.CompactTextString(m) }
-func (*Doc) ProtoMessage()    {}
-func (*Doc) Descriptor() ([]byte, []int) {
-	return fileDescriptor_doc_ddb39afaa46ee6d6, []int{0}
-}
-func (m *Doc) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Doc.Unmarshal(m, b)
-}
+func (m *Doc) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Doc) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Doc) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Doc) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Doc) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Doc) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Doc.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Doc) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Doc.Merge(dst, src)
-}
-func (m *Doc) XXX_Size() int {
-	return xxx_messageInfo_Doc.Size(m)
-}
-func (m *Doc) XXX_DiscardUnknown() {
-	xxx_messageInfo_Doc.DiscardUnknown(m)
-}
+
+func (dst *Doc) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Doc) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Doc) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Doc proto.InternalMessageInfo
 
-func (m *Doc) GetDoc() string {
-	if m != nil {
-		return m.Doc
-	}
-	return ""
-}
+func (m *Doc) GetDoc() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*Doc)(nil), "protos.Doc")

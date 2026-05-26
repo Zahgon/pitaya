@@ -22,8 +22,6 @@ package pipeline
 
 import (
 	"context"
-
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 type (
@@ -61,94 +59,43 @@ type (
 )
 
 // NewHandlerHooks ctor
-func NewHandlerHooks() *HandlerHooks {
-	return &HandlerHooks{
-		Hooks: Hooks{
-			BeforeHandler: NewChannel(),
-			AfterHandler:  NewAfterChannel(),
-		},
-	}
-}
+func NewHandlerHooks() *HandlerHooks { _ = "STUB: not implemented"; return nil }
 
 // NewRemoteHooks ctor
-func NewRemoteHooks() *RemoteHooks {
-	return &RemoteHooks{
-		Hooks: Hooks{
-			BeforeHandler: NewChannel(),
-			AfterHandler:  NewAfterChannel(),
-		},
-	}
-}
+func NewRemoteHooks() *RemoteHooks { _ = "STUB: not implemented"; return nil }
 
 // NewChannel ctor
-func NewChannel() *Channel {
-	return &Channel{Handlers: []HandlerTempl{}}
-}
+func NewChannel() *Channel { _ = "STUB: not implemented"; return nil }
 
 // NewAfterChannel ctor
-func NewAfterChannel() *AfterChannel {
-	return &AfterChannel{Handlers: []AfterHandlerTempl{}}
-}
+func NewAfterChannel() *AfterChannel { _ = "STUB: not implemented"; return nil }
 
 // ExecuteBeforePipeline calls registered handlers
 func (p *Channel) ExecuteBeforePipeline(ctx context.Context, data interface{}) (context.Context, interface{}, error) {
-	var err error
-	res := data
-	if len(p.Handlers) > 0 {
-		for _, h := range p.Handlers {
-			ctx, res, err = h(ctx, res)
-			if err != nil {
-				logger.Log.Debugf("pitaya/handler: broken pipeline: %s", err.Error())
-				return ctx, res, err
-			}
-		}
-	}
-	return ctx, res, nil
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil, nil
 }
 
 // ExecuteAfterPipeline calls registered handlers
 func (p *AfterChannel) ExecuteAfterPipeline(ctx context.Context, res interface{}, err error) (interface{}, error) {
-	ret := res
-	if len(p.Handlers) > 0 {
-		for _, h := range p.Handlers {
-			ret, err = h(ctx, ret, err)
-		}
-	}
-	return ret, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PushFront should not be used after pitaya is running
-func (p *Channel) PushFront(h HandlerTempl) {
-	Handlers := make([]HandlerTempl, len(p.Handlers)+1)
-	Handlers[0] = h
-	copy(Handlers[1:], p.Handlers)
-	p.Handlers = Handlers
-}
+func (p *Channel) PushFront(h HandlerTempl) { _ = "STUB: not implemented"; return }
 
 // PushBack should not be used after pitaya is running
-func (p *Channel) PushBack(h HandlerTempl) {
-	p.Handlers = append(p.Handlers, h)
-}
+func (p *Channel) PushBack(h HandlerTempl) { _ = "STUB: not implemented"; return }
 
 // Clear should not be used after pitaya is running
-func (p *Channel) Clear() {
-	p.Handlers = make([]HandlerTempl, 0)
-}
+func (p *Channel) Clear() { _ = "STUB: not implemented"; return }
 
 // PushFront should not be used after pitaya is running
-func (p *AfterChannel) PushFront(h AfterHandlerTempl) {
-	Handlers := make([]AfterHandlerTempl, len(p.Handlers)+1)
-	Handlers[0] = h
-	copy(Handlers[1:], p.Handlers)
-	p.Handlers = Handlers
-}
+func (p *AfterChannel) PushFront(h AfterHandlerTempl) { _ = "STUB: not implemented"; return }
 
 // PushBack should not be used after pitaya is running
-func (p *AfterChannel) PushBack(h AfterHandlerTempl) {
-	p.Handlers = append(p.Handlers, h)
-}
+func (p *AfterChannel) PushBack(h AfterHandlerTempl) { _ = "STUB: not implemented"; return }
 
 // Clear should not be used after pitaya is running
-func (p *AfterChannel) Clear() {
-	p.Handlers = make([]AfterHandlerTempl, 0)
-}
+func (p *AfterChannel) Clear() { _ = "STUB: not implemented"; return }

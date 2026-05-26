@@ -36,26 +36,15 @@ type BaseWrapper struct {
 
 // NewBaseWrapper returns an instance of BaseWrapper.
 func NewBaseWrapper(wrapConn func(acceptor.PlayerConn) acceptor.PlayerConn) BaseWrapper {
-	return BaseWrapper{
-		connChan: make(chan acceptor.PlayerConn),
-		wrapConn: wrapConn,
-	}
+	_ = "STUB: not implemented"
+	return *new(BaseWrapper)
 }
 
 // ListenAndServe starts a goroutine that wraps acceptor's conn
 // and calls acceptor's listenAndServe
-func (b *BaseWrapper) ListenAndServe() {
-	go b.pipe()
-	b.Acceptor.ListenAndServe()
-}
+func (b *BaseWrapper) ListenAndServe() { _ = "STUB: not implemented"; return }
 
 // GetConnChan returns the wrapper conn chan
-func (b *BaseWrapper) GetConnChan() chan acceptor.PlayerConn {
-	return b.connChan
-}
+func (b *BaseWrapper) GetConnChan() chan acceptor.PlayerConn { _ = "STUB: not implemented"; return nil }
 
-func (b *BaseWrapper) pipe() {
-	for conn := range b.Acceptor.GetConnChan() {
-		b.connChan <- b.wrapConn(conn)
-	}
-}
+func (b *BaseWrapper) pipe() { _ = "STUB: not implemented"; return }

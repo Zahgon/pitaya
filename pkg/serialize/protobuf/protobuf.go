@@ -20,39 +20,24 @@
 
 package protobuf
 
-import (
-	"github.com/golang/protobuf/proto"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-)
-
 // Serializer implements the serialize.Serializer interface
 type Serializer struct{}
 
 // NewSerializer returns a new Serializer.
-func NewSerializer() *Serializer {
-	return &Serializer{}
-}
+func NewSerializer() *Serializer { _ = "STUB: not implemented"; return nil }
 
 // Marshal returns the protobuf encoding of v.
 func (s *Serializer) Marshal(v interface{}) ([]byte, error) {
-	pb, ok := v.(proto.Message)
-	if !ok {
-		return nil, constants.ErrWrongValueType
-	}
-	return proto.Marshal(pb)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Unmarshal parses the protobuf-encoded data and stores the result
 // in the value pointed to by v.
 func (s *Serializer) Unmarshal(data []byte, v interface{}) error {
-	pb, ok := v.(proto.Message)
-	if !ok {
-		return constants.ErrWrongValueType
-	}
-	return proto.Unmarshal(data, pb)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetName returns the name of the serializer.
-func (s *Serializer) GetName() string {
-	return "protobuf"
-}
+func (s *Serializer) GetName() string { _ = "STUB: not implemented"; return "" }

@@ -22,13 +22,7 @@ package acceptor
 
 import (
 	"crypto/tls"
-	"fmt"
-	"io"
 	"net"
-
-	"github.com/topfreegames/pitaya/v3/pkg/conn/codec"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // TCPAcceptor struct
@@ -47,159 +41,71 @@ type tcpPlayerConn struct {
 }
 
 func (t *tcpPlayerConn) RemoteAddr() net.Addr {
-	return t.remoteAddr
+	_ = "STUB: not implemented"
+	return *
+
+	// GetNextMessage reads the next message available in the stream
+	new(net.Addr)
 }
 
-// GetNextMessage reads the next message available in the stream
 func (t *tcpPlayerConn) GetNextMessage() (b []byte, err error) {
-	header, err := io.ReadAll(io.LimitReader(t.Conn, codec.HeadLength))
-	if err != nil {
-		return nil, err
-	}
-	// if the header has no data, we can consider it as a closed connection
-	if len(header) == 0 {
-		return nil, constants.ErrConnectionClosed
-	}
-	msgSize, _, err := codec.ParseHeader(header)
-	if err != nil {
-		return nil, err
-	}
-	msgData, err := io.ReadAll(io.LimitReader(t.Conn, int64(msgSize)))
-	if err != nil {
-		return nil, err
-	}
-	if len(msgData) < msgSize {
-		return nil, constants.ErrReceivedMsgSmallerThanExpected
-	}
-	return append(header, msgData...), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// if the header has no data, we can consider it as a closed connection
 
 // NewTCPAcceptor creates a new instance of tcp acceptor
 func NewTCPAcceptor(addr string, certs ...string) *TCPAcceptor {
-	certificates := []tls.Certificate{}
-	if len(certs) != 2 && len(certs) != 0 {
-		panic(constants.ErrIncorrectNumberOfCertificates)
-	} else if len(certs) == 2 && certs[0] != "" && certs[1] != "" {
-		cert, err := tls.LoadX509KeyPair(certs[0], certs[1])
-		if err != nil {
-			panic(fmt.Errorf("%w: %v", constants.ErrInvalidCertificates, err))
-		}
-		certificates = append(certificates, cert)
-	}
-
-	return NewTLSAcceptor(addr, certificates...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func NewTLSAcceptor(addr string, certs ...tls.Certificate) *TCPAcceptor {
-	return &TCPAcceptor{
-		addr:          addr,
-		connChan:      make(chan PlayerConn),
-		running:       false,
-		certs:         certs,
-		proxyProtocol: false,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetAddr returns the addr the acceptor will listen on
-func (a *TCPAcceptor) GetAddr() string {
-	if a.listener != nil {
-		return a.listener.Addr().String()
-	}
-	return ""
-}
+func (a *TCPAcceptor) GetAddr() string { _ = "STUB: not implemented"; return "" }
 
 // GetConnChan gets a connection channel
 func (a *TCPAcceptor) GetConnChan() chan PlayerConn {
-	return a.connChan
+	_ = "STUB: not implemented"
+
+	// Stop stops the acceptor
+	return nil
 }
 
-// Stop stops the acceptor
-func (a *TCPAcceptor) Stop() {
-	a.running = false
-	a.listener.Close()
-}
+func (a *TCPAcceptor) Stop() { _ = "STUB: not implemented"; return }
 
-func (a *TCPAcceptor) hasTLSCertificates() bool {
-	return len(a.certs) > 0
-}
+func (a *TCPAcceptor) hasTLSCertificates() bool { _ = "STUB: not implemented"; return false }
 
 // ListenAndServe using tcp acceptor
-func (a *TCPAcceptor) ListenAndServe() {
-
-	listener := a.createBaseListener()
-
-	if a.hasTLSCertificates() {
-		listener = a.listenAndServeTLS(listener)
-	}
-
-	a.listener = listener
-	a.running = true
-	a.serve()
-}
+func (a *TCPAcceptor) ListenAndServe() { _ = "STUB: not implemented"; return }
 
 // ListenAndServeTLS listens using tls
-func (a *TCPAcceptor) ListenAndServeTLS(cert, key string) {
-	listener := a.createBaseListener()
-
-	crt, err := tls.LoadX509KeyPair(cert, key)
-	if err != nil {
-		logger.Log.Fatalf("Failed to listen: %s", err.Error())
-	}
-
-	a.certs = append(a.certs, crt)
-
-	a.listener = a.listenAndServeTLS(listener)
-	a.running = true
-	a.serve()
-}
+func (a *TCPAcceptor) ListenAndServeTLS(cert, key string) { _ = "STUB: not implemented"; return }
 
 // Create base listener
 func (a *TCPAcceptor) createBaseListener() net.Listener {
+	_ = "STUB: not implemented"
 	// Create raw listener
-	baseListener, err := net.Listen("tcp", a.addr)
-	if err != nil {
-		logger.Log.Fatalf("Failed to listen: %s", err.Error())
-	}
-
-	// Wrap listener in ProxyProto
-	baseListener = &ProxyProtocolListener{Listener: baseListener, proxyProtocolEnabled: &a.proxyProtocol}
-
-	return baseListener
+	return *new(net.Listener)
 }
+
+// Wrap listener in ProxyProto
 
 // ListenAndServeTLS listens using tls
 func (a *TCPAcceptor) listenAndServeTLS(listener net.Listener) net.Listener {
-
-	tlsCfg := &tls.Config{Certificates: a.certs}
-	tlsListener := tls.NewListener(listener, tlsCfg)
-
-	return tlsListener
+	_ = "STUB: not implemented"
+	return *new(net.Listener)
 }
 
-func (a *TCPAcceptor) EnableProxyProtocol() {
-	a.proxyProtocol = true
-}
+func (a *TCPAcceptor) EnableProxyProtocol() { _ = "STUB: not implemented"; return }
 
-func (a *TCPAcceptor) serve() {
-	defer a.Stop()
-	for a.running {
-		conn, err := a.listener.Accept()
-		if err != nil {
-			logger.Log.Errorf("Failed to accept TCP connection: %s", err.Error())
-			continue
-		}
+func (a *TCPAcceptor) serve() { _ = "STUB: not implemented"; return }
 
-		a.connChan <- &tcpPlayerConn{
-			Conn:       conn,
-			remoteAddr: conn.RemoteAddr(),
-		}
-	}
-}
+func (a *TCPAcceptor) IsRunning() bool { _ = "STUB: not implemented"; return false }
 
-func (a *TCPAcceptor) IsRunning() bool {
-	return a.running
-}
-
-func (a *TCPAcceptor) GetConfiguredAddress() string {
-	return a.addr
-}
+func (a *TCPAcceptor) GetConfiguredAddress() string { _ = "STUB: not implemented"; return "" }

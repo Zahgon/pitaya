@@ -22,13 +22,9 @@ package router
 
 import (
 	"context"
-	"math/rand"
-	"time"
 
 	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/protos"
 	"github.com/topfreegames/pitaya/v3/pkg/route"
 )
@@ -48,28 +44,19 @@ type RoutingFunc func(
 ) (*cluster.Server, error)
 
 // New returns the router
-func New() *Router {
-	return &Router{
-		routesMap: make(map[string]RoutingFunc),
-	}
-}
+func New() *Router { _ = "STUB: not implemented"; return nil }
 
 // SetServiceDiscovery sets the sd client
 func (r *Router) SetServiceDiscovery(sd cluster.ServiceDiscovery) {
-	r.serviceDiscovery = sd
+	_ = "STUB: not implemented"
+	return
 }
 
 func (r *Router) defaultRoute(
 	servers map[string]*cluster.Server,
 ) *cluster.Server {
-	srvList := make([]*cluster.Server, 0)
-	s := rand.NewSource(time.Now().Unix())
-	rnd := rand.New(s)
-	for _, v := range servers {
-		srvList = append(srvList, v)
-	}
-	server := srvList[rnd.Intn(len(srvList))]
-	return server
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Route gets the right server to use in the call
@@ -80,24 +67,8 @@ func (r *Router) Route(
 	route *route.Route,
 	msg *message.Message,
 ) (*cluster.Server, error) {
-	if r.serviceDiscovery == nil {
-		return nil, constants.ErrServiceDiscoveryNotInitialized
-	}
-	serversOfType, err := r.serviceDiscovery.GetServersByType(svType)
-	if err != nil {
-		return nil, err
-	}
-	if rpcType == protos.RPCType_User {
-		server := r.defaultRoute(serversOfType)
-		return server, nil
-	}
-	routeFunc, ok := r.routesMap[svType]
-	if !ok {
-		logger.Log.Debugf("no specific route for svType: %s, using default route", svType)
-		server := r.defaultRoute(serversOfType)
-		return server, nil
-	}
-	return routeFunc(ctx, route, msg.Data, serversOfType)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddRoute adds a routing function to a server type
@@ -105,8 +76,6 @@ func (r *Router) AddRoute(
 	serverType string,
 	routingFunction RoutingFunc,
 ) {
-	if _, ok := r.routesMap[serverType]; ok {
-		logger.Log.Warnf("overriding the route to svType %s", serverType)
-	}
-	r.routesMap[serverType] = routingFunction
+	_ = "STUB: not implemented"
+	return
 }

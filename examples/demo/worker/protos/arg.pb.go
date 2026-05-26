@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -25,36 +29,27 @@ type Arg struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Arg) Reset()         { *m = Arg{} }
-func (m *Arg) String() string { return proto.CompactTextString(m) }
-func (*Arg) ProtoMessage()    {}
-func (*Arg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_arg_e1b1c8888ddf9d6e, []int{0}
-}
-func (m *Arg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Arg.Unmarshal(m, b)
-}
+func (m *Arg) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Arg) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Arg) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Arg) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Arg) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Arg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Arg.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Arg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Arg.Merge(dst, src)
-}
-func (m *Arg) XXX_Size() int {
-	return xxx_messageInfo_Arg.Size(m)
-}
-func (m *Arg) XXX_DiscardUnknown() {
-	xxx_messageInfo_Arg.DiscardUnknown(m)
-}
+
+func (dst *Arg) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Arg) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Arg) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Arg proto.InternalMessageInfo
 
-func (m *Arg) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
+func (m *Arg) GetMsg() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*Arg)(nil), "protos.Arg")

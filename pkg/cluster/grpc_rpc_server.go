@@ -21,9 +21,6 @@
 package cluster
 
 import (
-	"fmt"
-	"net"
-
 	"google.golang.org/grpc"
 
 	"github.com/topfreegames/pitaya/v3/pkg/config"
@@ -42,43 +39,35 @@ type GRPCServer struct {
 
 // NewGRPCServer constructor
 func NewGRPCServer(config config.GRPCServerConfig, server *Server, metricsReporters []metrics.Reporter) (*GRPCServer, error) {
-	gs := &GRPCServer{
-		port:             config.Port,
-		server:           server,
-		metricsReporters: metricsReporters,
-	}
-	return gs, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Init inits grpc rpc server
-func (gs *GRPCServer) Init() error {
-	port := gs.port
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
-	if err != nil {
-		return err
-	}
-	gs.grpcSv = grpc.NewServer()
-	protos.RegisterPitayaServer(gs.grpcSv, gs.pitayaServer)
-	go gs.grpcSv.Serve(lis)
-	return nil
-}
+func (gs *GRPCServer) Init() error { _ = "STUB: not implemented"; return nil }
 
 // SetPitayaServer sets the pitaya server
-func (gs *GRPCServer) SetPitayaServer(ps protos.PitayaServer) {
-	gs.pitayaServer = ps
-}
+func (gs *GRPCServer) SetPitayaServer(ps protos.PitayaServer) { _ = "STUB: not implemented"; return }
 
 // AfterInit runs after initialization
-func (gs *GRPCServer) AfterInit() {}
+func (gs *GRPCServer) AfterInit() {
+	_ = "STUB: not implemented"
 
-// BeforeShutdown runs before shutdown
-func (gs *GRPCServer) BeforeShutdown() {}
+	// BeforeShutdown runs before shutdown
+	return
+}
 
-// Shutdown stops grpc rpc server
+func (gs *GRPCServer) BeforeShutdown() {
+	_ = "STUB: not implemented"
+
+	// Shutdown stops grpc rpc server
+	return
+}
+
 func (gs *GRPCServer) Shutdown() error {
+	_ = "STUB: not implemented"
 	// graceful: stops the server from accepting new connections and RPCs and
 	// blocks until all the pending RPCs are finished.
 	// source: https://godoc.org/google.golang.org/grpc#Server.GracefulStop
-	gs.grpcSv.GracefulStop()
 	return nil
 }

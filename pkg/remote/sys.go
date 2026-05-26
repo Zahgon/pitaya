@@ -24,7 +24,6 @@ import (
 	"context"
 
 	"github.com/topfreegames/pitaya/v3/pkg/component"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
 	"github.com/topfreegames/pitaya/v3/pkg/protos"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
 )
@@ -36,47 +35,22 @@ type Sys struct {
 }
 
 // NewSys returns a new Sys instance
-func NewSys(sessionPool session.SessionPool) *Sys {
-	return &Sys{sessionPool: sessionPool}
-}
+func NewSys(sessionPool session.SessionPool) *Sys { _ = "STUB: not implemented"; return nil }
 
 // BindSession binds the local session
 func (s *Sys) BindSession(ctx context.Context, sessionData *protos.Session) (*protos.Response, error) {
-	sess := s.sessionPool.GetSessionByID(sessionData.Id)
-	if sess == nil {
-		return nil, constants.ErrSessionNotFound
-	}
-	if err := sess.Bind(ctx, sessionData.Uid); err != nil {
-		return nil, err
-	}
-	return &protos.Response{Data: []byte("ack")}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PushSession updates the local session
 func (s *Sys) PushSession(ctx context.Context, sessionData *protos.Session) (*protos.Response, error) {
-	sess := s.sessionPool.GetSessionByID(sessionData.Id)
-	if sess == nil {
-		return nil, constants.ErrSessionNotFound
-	}
-	if err := sess.SetDataEncoded(sessionData.Data); err != nil {
-		return nil, err
-	}
-	return &protos.Response{Data: []byte("ack")}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Kick kicks a local user
 func (s *Sys) Kick(ctx context.Context, msg *protos.KickMsg) (*protos.KickAnswer, error) {
-	res := &protos.KickAnswer{
-		Kicked: false,
-	}
-	sess := s.sessionPool.GetSessionByUID(msg.GetUserId())
-	if sess == nil {
-		return res, constants.ErrSessionNotFound
-	}
-	err := sess.Kick(ctx)
-	if err != nil {
-		return res, err
-	}
-	res.Kicked = true
-	return res, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -24,14 +24,10 @@ import (
 	"context"
 
 	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	pcontext "github.com/topfreegames/pitaya/v3/pkg/context"
 	"github.com/topfreegames/pitaya/v3/pkg/interfaces"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/protos"
 	"github.com/topfreegames/pitaya/v3/pkg/route"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
-	"github.com/topfreegames/pitaya/v3/pkg/tracing"
 )
 
 // RPCServer interface
@@ -85,46 +81,6 @@ func buildRequest(
 	msg *message.Message,
 	thisServer *Server,
 ) (protos.Request, error) {
-	req := protos.Request{
-		Type: rpcType,
-		Msg: &protos.Msg{
-			Route: route.String(),
-			Data:  msg.Data,
-		},
-	}
-	ctx, err := tracing.InjectSpan(ctx)
-	if err != nil {
-		logger.Log.Errorf("failed to inject span: %s", err)
-	}
-	ctx = pcontext.AddToPropagateCtx(ctx, constants.PeerIDKey, thisServer.ID)
-	ctx = pcontext.AddToPropagateCtx(ctx, constants.PeerServiceKey, thisServer.Type)
-	req.Metadata, err = pcontext.Encode(ctx)
-	if err != nil {
-		return req, err
-	}
-	if thisServer.Frontend {
-		req.FrontendID = thisServer.ID
-	}
-
-	switch msg.Type {
-	case message.Request:
-		req.Msg.Type = protos.MsgType_MsgRequest
-	case message.Notify:
-		req.Msg.Type = protos.MsgType_MsgNotify
-	}
-
-	if rpcType == protos.RPCType_Sys {
-		mid := uint(0)
-		if msg.Type == message.Request {
-			mid = msg.ID
-		}
-		req.Msg.Id = uint64(mid)
-		req.Session = &protos.Session{
-			Id:   session.ID(),
-			Uid:  session.UID(),
-			Data: session.GetDataEncoded(),
-		}
-	}
-
-	return req, nil
+	_ = "STUB: not implemented"
+	return *new(protos.Request), nil
 }

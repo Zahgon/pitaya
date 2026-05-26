@@ -7,7 +7,6 @@ package mocks
 import (
 	gomock "github.com/golang/mock/gomock"
 	message "github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	reflect "reflect"
 )
 
 // MockEncoder is a mock of Encoder interface
@@ -22,38 +21,32 @@ type MockEncoderMockRecorder struct {
 }
 
 // NewMockEncoder creates a new mock instance
-func NewMockEncoder(ctrl *gomock.Controller) *MockEncoder {
-	mock := &MockEncoder{ctrl: ctrl}
-	mock.recorder = &MockEncoderMockRecorder{mock}
-	return mock
-}
+func NewMockEncoder(ctrl *gomock.Controller) *MockEncoder { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockEncoder) EXPECT() *MockEncoderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// IsCompressionEnabled mocks base method
+	return nil
 }
 
-// IsCompressionEnabled mocks base method
-func (m *MockEncoder) IsCompressionEnabled() bool {
-	ret := m.ctrl.Call(m, "IsCompressionEnabled")
-	ret0, _ := ret[0].(bool)
-	return ret0
-}
+func (m *MockEncoder) IsCompressionEnabled() bool { _ = "STUB: not implemented"; return false }
 
 // IsCompressionEnabled indicates an expected call of IsCompressionEnabled
 func (mr *MockEncoderMockRecorder) IsCompressionEnabled() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCompressionEnabled", reflect.TypeOf((*MockEncoder)(nil).IsCompressionEnabled))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Encode mocks base method
 func (m *MockEncoder) Encode(message *message.Message) ([]byte, error) {
-	ret := m.ctrl.Call(m, "Encode", message)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Encode indicates an expected call of Encode
 func (mr *MockEncoderMockRecorder) Encode(message interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Encode", reflect.TypeOf((*MockEncoder)(nil).Encode), message)
+	_ = "STUB: not implemented"
+	return nil
 }

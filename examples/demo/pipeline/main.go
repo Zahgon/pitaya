@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/topfreegames/pitaya/v3/pkg"
 	"github.com/topfreegames/pitaya/v3/pkg/acceptor"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
@@ -17,9 +16,7 @@ type MetagameServer struct {
 }
 
 // NewMetagameMock ...
-func NewMetagameMock() *MetagameServer {
-	return &MetagameServer{}
-}
+func NewMetagameMock() *MetagameServer { _ = "STUB: not implemented"; return nil }
 
 // CreatePlayerCheatArgs is the struct used as parameter for the CreatePlayerCheat handler
 // Using the 'validate' tag it's possible to add validations on all struct fields.
@@ -39,13 +36,13 @@ type CreatePlayerCheatResponse struct {
 
 // CreatePlayerCheat ...
 func (g *MetagameServer) CreatePlayerCheat(ctx context.Context, args *CreatePlayerCheatArgs) (*CreatePlayerCheatResponse, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx) // The default logger contains a requestId, the route being executed and the sessionId
-	logger.Info("CreatePlayerChest called")
-	// Do nothing. This is just an example of how pipelines can be helpful
-	return &CreatePlayerCheatResponse{
-		Msg: "ok",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// The default logger contains a requestId, the route being executed and the sessionId
+
+// Do nothing. This is just an example of how pipelines can be helpful
 
 // HandlerNoArgResponse ...
 type HandlerNoArgResponse struct {
@@ -54,9 +51,8 @@ type HandlerNoArgResponse struct {
 
 // HandlerNoArg is a simple handler that do not have any arguments
 func (g *MetagameServer) HandlerNoArg(ctx context.Context) (*HandlerNoArgResponse, error) {
-	return &HandlerNoArgResponse{
-		Msg: "ok",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Simple example of a before pipeline that actually asserts the type of the
@@ -65,26 +61,14 @@ func (g *MetagameServer) HandlerNoArg(ctx context.Context) (*HandlerNoArgRespons
 // as a pipeline function executes for every handler and each of them
 // most probably have different parameter types.
 func (g *MetagameServer) simpleBefore(ctx context.Context, in interface{}) (context.Context, interface{}, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	logger.Info("Simple Before exec")
-
-	if in != nil {
-		createPlayerArgs := in.(*CreatePlayerCheatArgs)
-
-		logger.Infof("Name: %s", createPlayerArgs.Name)
-		logger.Infof("Email: %s", createPlayerArgs.Email)
-		logger.Infof("SoftCurrency: %d", createPlayerArgs.SoftCurrency)
-		logger.Infof("HardCurrency: %d", createPlayerArgs.HardCurrency)
-	}
-	return ctx, in, nil
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil, nil
 }
 
 // Simple example of an after pipeline. The 2nd argument is the handler response.
 func (g *MetagameServer) simpleAfter(ctx context.Context, resp interface{}, err error) (interface{}, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	logger.Infof("Simple After exec - response: %v , error: %v", resp, err)
-
-	return resp, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var app pitaya.Pitaya

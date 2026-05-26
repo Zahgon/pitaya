@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -27,50 +31,31 @@ type Push struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Push) Reset()         { *m = Push{} }
-func (m *Push) String() string { return proto.CompactTextString(m) }
-func (*Push) ProtoMessage()    {}
-func (*Push) Descriptor() ([]byte, []int) {
-	return fileDescriptor_push_77d28476f32095f7, []int{0}
-}
-func (m *Push) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Push.Unmarshal(m, b)
-}
+func (m *Push) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Push) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Push) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Push) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Push) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Push) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Push.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Push) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Push.Merge(dst, src)
-}
-func (m *Push) XXX_Size() int {
-	return xxx_messageInfo_Push.Size(m)
-}
-func (m *Push) XXX_DiscardUnknown() {
-	xxx_messageInfo_Push.DiscardUnknown(m)
-}
+
+func (dst *Push) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Push) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Push) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Push proto.InternalMessageInfo
 
-func (m *Push) GetRoute() string {
-	if m != nil {
-		return m.Route
-	}
-	return ""
-}
+func (m *Push) GetRoute() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Push) GetUid() string {
-	if m != nil {
-		return m.Uid
-	}
-	return ""
-}
+func (m *Push) GetUid() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Push) GetData() []byte {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
+func (m *Push) GetData() []byte { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*Push)(nil), "protos.Push")

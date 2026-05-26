@@ -20,10 +20,6 @@
 
 package packet
 
-import (
-	"fmt"
-)
-
 // Packet represents a network packet.
 type Packet struct {
 	Type   Type
@@ -31,12 +27,12 @@ type Packet struct {
 	Data   []byte
 }
 
-//New create a Packet instance.
+// New create a Packet instance.
 func New() *Packet {
-	return &Packet{}
+	_ = "STUB: not implemented"
+
+	// String represents the Packet's in text mode.
+	return nil
 }
 
-//String represents the Packet's in text mode.
-func (p *Packet) String() string {
-	return fmt.Sprintf("Type: %d, Length: %d, Data: %s", p.Type, p.Length, string(p.Data))
-}
+func (p *Packet) String() string { _ = "STUB: not implemented"; return "" }

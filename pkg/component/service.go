@@ -21,11 +21,9 @@
 package component
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
 )
 
 type (
@@ -59,25 +57,9 @@ type (
 )
 
 // NewService creates a new service
-func NewService(comp Component, opts []Option) *Service {
-	s := &Service{
-		Type:     reflect.TypeOf(comp),
-		Receiver: reflect.ValueOf(comp),
-	}
+func NewService(comp Component, opts []Option) *Service { _ = "STUB: not implemented"; return nil }
 
-	// apply options
-	for i := range opts {
-		opt := opts[i]
-		opt(&s.Options)
-	}
-	if name := s.Options.name; name != "" {
-		s.Name = name
-	} else {
-		s.Name = reflect.Indirect(s.Receiver).Type().Name()
-	}
-
-	return s
-}
+// apply options
 
 // ExtractHandler extract the set of methods from the
 // receiver value which satisfy the following conditions:
@@ -88,36 +70,11 @@ func NewService(comp Component, opts []Option) *Service {
 // - zero or two outputs
 // - the first output is [] or a pointer
 // - the second output is an error
-func (s *Service) ExtractHandler() error {
-	typeName := reflect.Indirect(s.Receiver).Type().Name()
-	if typeName == "" {
-		return errors.New("no service name for type " + s.Type.String())
-	}
-	if !isExported(typeName) {
-		return errors.New("type " + typeName + " is not exported")
-	}
+func (s *Service) ExtractHandler() error { _ = "STUB: not implemented"; return nil }
 
-	// Install the methods
-	s.Handlers = suitableHandlerMethods(s.Type, s.Options.nameFunc)
+// Install the methods
 
-	if len(s.Handlers) == 0 {
-		str := ""
-		// To help the user, see if a pointer receiver would work.
-		method := suitableHandlerMethods(reflect.PtrTo(s.Type), s.Options.nameFunc)
-		if len(method) != 0 {
-			str = "type " + s.Name + " has no exported methods of handler type (hint: pass a pointer to value of that type)"
-		} else {
-			str = "type " + s.Name + " has no exported methods of handler type"
-		}
-		return errors.New(str)
-	}
-
-	for i := range s.Handlers {
-		s.Handlers[i].Receiver = s.Receiver
-	}
-
-	return nil
-}
+// To help the user, see if a pointer receiver would work.
 
 // ExtractRemote extract the set of methods from the
 // receiver value which satisfy the following conditions:
@@ -125,49 +82,16 @@ func (s *Service) ExtractHandler() error {
 // - two return values
 // - the first return implements protobuf interface
 // - the second return is an error
-func (s *Service) ExtractRemote() error {
-	typeName := reflect.Indirect(s.Receiver).Type().Name()
-	if typeName == "" {
-		return errors.New("no service name for type " + s.Type.String())
-	}
-	if !isExported(typeName) {
-		return errors.New("type " + typeName + " is not exported")
-	}
+func (s *Service) ExtractRemote() error { _ = "STUB: not implemented"; return nil }
 
-	// Install the methods
-	s.Remotes = suitableRemoteMethods(s.Type, s.Options.nameFunc)
+// Install the methods
 
-	if len(s.Remotes) == 0 {
-		str := ""
-		// To help the user, see if a pointer receiver would work.
-		method := suitableRemoteMethods(reflect.PtrTo(s.Type), s.Options.nameFunc)
-		if len(method) != 0 {
-			str = "type " + s.Name + " has no exported methods of remote type (hint: pass a pointer to value of that type)"
-		} else {
-			str = "type " + s.Name + " has no exported methods of remote type"
-		}
-		return errors.New(str)
-	}
-
-	for i := range s.Remotes {
-		s.Remotes[i].Receiver = s.Receiver
-	}
-	return nil
-}
+// To help the user, see if a pointer receiver would work.
 
 // ValidateMessageType validates a given message type against the handler's one
 // and returns an error if it is a mismatch and a boolean indicating if the caller should
 // exit in the presence of this error or not.
 func (h *Handler) ValidateMessageType(msgType message.Type) (exitOnError bool, err error) {
-	if h.MessageType != msgType {
-		switch msgType {
-		case message.Request:
-			err = constants.ErrRequestOnNotify
-			exitOnError = true
-
-		case message.Notify:
-			err = constants.ErrNotifyOnRequest
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return false, nil
 }

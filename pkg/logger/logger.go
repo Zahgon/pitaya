@@ -21,28 +21,13 @@
 package logger
 
 import (
-	"github.com/sirupsen/logrus"
 	"github.com/topfreegames/pitaya/v3/pkg/logger/interfaces"
-	logruswrapper "github.com/topfreegames/pitaya/v3/pkg/logger/logrus"
 )
 
 // Log is the default logger
 var Log = initLogger()
 
-func initLogger() interfaces.Logger {
-	plog := logrus.New()
-	plog.Formatter = new(logrus.TextFormatter)
-	plog.Level = logrus.DebugLevel
-
-	log := plog.WithFields(logrus.Fields{
-		"source": "pitaya",
-	})
-	return logruswrapper.NewWithFieldLogger(log)
-}
+func initLogger() interfaces.Logger { _ = "STUB: not implemented"; return *new(interfaces.Logger) }
 
 // SetLogger rewrites the default logger
-func SetLogger(l interfaces.Logger) {
-	if l != nil {
-		Log = l
-	}
-}
+func SetLogger(l interfaces.Logger) { _ = "STUB: not implemented"; return }

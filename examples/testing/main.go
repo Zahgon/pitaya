@@ -22,27 +22,19 @@ package main
 
 import (
 	"context"
-	"errors"
 	"flag"
 	"fmt"
 	"strings"
 
-	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/topfreegames/pitaya/v3/examples/testing/protos"
 	pitaya "github.com/topfreegames/pitaya/v3/pkg"
-	"github.com/topfreegames/pitaya/v3/pkg/acceptor"
-	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
-	"github.com/topfreegames/pitaya/v3/pkg/config"
 	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/groups"
 	logruswrapper "github.com/topfreegames/pitaya/v3/pkg/logger/logrus"
 	"github.com/topfreegames/pitaya/v3/pkg/modules"
 	"github.com/topfreegames/pitaya/v3/pkg/protos/test"
-	"github.com/topfreegames/pitaya/v3/pkg/serialize/json"
-	"github.com/topfreegames/pitaya/v3/pkg/serialize/protobuf"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
 )
 
@@ -72,176 +64,130 @@ type TestSendToUsers struct {
 
 // RPCTestRawPtrReturnsPtr remote for e2e tests
 func (tr *TestRemoteSvc) RPCTestRawPtrReturnsPtr(ctx context.Context, data *test.TestRequest) (*test.TestResponse, error) {
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  fmt.Sprintf("got %s", data.GetMsg()),
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RPCTestPtrReturnsPtr remote for e2e tests
 func (tr *TestRemoteSvc) RPCTestPtrReturnsPtr(ctx context.Context, req *test.TestRequest) (*test.TestResponse, error) {
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  fmt.Sprintf("got %s", req.Msg),
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RPCTestReturnsError remote for e2e tests
 func (tr *TestRemoteSvc) RPCTestReturnsError(ctx context.Context, data *test.TestRequest) (*test.TestResponse, error) {
-	return nil, pitaya.Error(errors.New("test error"), "PIT-433", map[string]string{"some": "meta"})
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RPCTestNoArgs remote for e2e tests
 func (tr *TestRemoteSvc) RPCTestNoArgs(ctx context.Context) (*test.TestResponse, error) {
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  "got nothing",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Init inits testsvc
-func (t *TestSvc) Init() {
-	err := t.app.GroupCreate(context.Background(), "g1")
-	if err != nil {
-		panic(err)
-	}
-}
+func (t *TestSvc) Init() { _ = "STUB: not implemented"; return }
 
 // TestRequestKickUser handler for e2e tests
 func (t *TestSvc) TestRequestKickUser(ctx context.Context, userID []byte) (*test.TestResponse, error) {
-	s := t.sessionPool.GetSessionByUID(string(userID))
-	if s == nil {
-		return nil, pitaya.Error(constants.ErrSessionNotFound, "PIT-404")
-	}
-	err := s.Kick(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  "ok",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestRequestKickMe handler for e2e tests
 func (t *TestSvc) TestRequestKickMe(ctx context.Context) (*test.TestResponse, error) {
-	s := t.app.GetSessionFromCtx(ctx)
-	if s == nil {
-		return nil, pitaya.Error(constants.ErrSessionNotFound, "PIT-404")
-	}
-	err := s.Kick(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  "ok",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestRequestOnlySessionReturnsPtr handler for e2e tests
 func (t *TestSvc) TestRequestOnlySessionReturnsPtr(ctx context.Context) (*test.TestResponse, error) {
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  "hello",
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestRequestOnlySessionReturnsPtrNil handler for e2e tests
 func (t *TestSvc) TestRequestOnlySessionReturnsPtrNil(ctx context.Context) (*test.TestResponse, error) {
+	_ = "STUB: not implemented"
+
+	// TestRequestReturnsPtr handler for e2e tests
 	return nil, nil
 }
 
-// TestRequestReturnsPtr handler for e2e tests
 func (t *TestSvc) TestRequestReturnsPtr(ctx context.Context, in *test.TestRequest) (*test.TestResponse, error) {
-	return &test.TestResponse{
-		Code: 200,
-		Msg:  in.Msg,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestRequestOnlySessionReturnsRawNil handler for e2e tests
 func (t *TestSvc) TestRequestOnlySessionReturnsRawNil(ctx context.Context) ([]byte, error) {
+	_ = "STUB: not implemented"
+
+	// TestRequestReturnsRaw handler for e2e tests
 	return nil, nil
 }
 
-// TestRequestReturnsRaw handler for e2e tests
 func (t *TestSvc) TestRequestReturnsRaw(ctx context.Context, in *test.TestRequest) ([]byte, error) {
-	return []byte(in.Msg), nil
+	_ = "STUB: not implemented"
+	return nil,
+
+		// TestRequestReceiveReturnsRaw handler for e2e tests
+		nil
 }
 
-// TestRequestReceiveReturnsRaw handler for e2e tests
 func (t *TestSvc) TestRequestReceiveReturnsRaw(ctx context.Context, in []byte) ([]byte, error) {
-	return in, nil
+	_ = "STUB: not implemented"
+
+	// TestRequestReturnsError handler for e2e tests
+	return nil, nil
 }
 
-// TestRequestReturnsError handler for e2e tests
 func (t *TestSvc) TestRequestReturnsError(ctx context.Context, in []byte) ([]byte, error) {
-	return nil, pitaya.Error(errors.New("somerror"), "PIT-555")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestBind handler for e2e tests
 func (t *TestSvc) TestBind(ctx context.Context) ([]byte, error) {
-	uid := uuid.New().String()
-	s := t.app.GetSessionFromCtx(ctx)
-	err := s.Bind(ctx, uid)
-	if err != nil {
-		return nil, pitaya.Error(err, "PIT-444")
-	}
-	err = t.app.GroupAddMember(ctx, "g1", s.UID())
-	if err != nil {
-		return nil, pitaya.Error(err, "PIT-441")
-	}
-	return []byte("ack"), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestBindID handler for e2e tests
 func (t *TestSvc) TestBindID(ctx context.Context, byteUID []byte) ([]byte, error) {
-	s := t.app.GetSessionFromCtx(ctx)
-	err := s.Bind(ctx, string(byteUID))
-	if err != nil {
-		return nil, pitaya.Error(err, "PIT-444")
-	}
-	err = t.app.GroupAddMember(ctx, "g1", s.UID())
-	if err != nil {
-		return nil, pitaya.Error(err, "PIT-441")
-	}
-	return []byte("ack"), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestSendGroupMsg handler for e2e tests
 func (t *TestSvc) TestSendGroupMsg(ctx context.Context, msg []byte) {
-	t.app.GroupBroadcast(ctx, "connector", "g1", "route.test", msg)
+	_ = "STUB: not implemented"
+	return
 }
 
 // TestSendGroupMsgPtr handler for e2e tests
 func (t *TestSvc) TestSendGroupMsgPtr(ctx context.Context, msg *test.TestRequest) {
-	t.app.GroupBroadcast(ctx, "connector", "g1", "route.testptr", msg)
+	_ = "STUB: not implemented"
+	return
 }
 
 // TestSendToUsers handler for e2e tests
 func (t *TestSvc) TestSendToUsers(ctx context.Context, msg *TestSendToUsers) {
-	t.app.SendPushToUsers("route.sendtousers", []byte(msg.Msg), msg.UIDs, "connector")
+	_ = "STUB: not implemented"
+	return
 }
 
 // TestSendRPC tests sending a RPC
 func (t *TestSvc) TestSendRPC(ctx context.Context, msg *TestRPCRequest) (*protos.TestResponse, error) {
-	rep := &protos.TestResponse{}
-	err := t.app.RPC(ctx, msg.Route, rep, &protos.TestRequest{Msg: msg.Data})
-	if err != nil {
-		return nil, err
-	}
-	return rep, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TestSendRPCNoArgs tests sending a RPC
 func (t *TestSvc) TestSendRPCNoArgs(ctx context.Context, msg *TestRPCRequest) (*protos.TestResponse, error) {
-	rep := &protos.TestResponse{}
-	err := t.app.RPC(ctx, msg.Route, rep, nil)
-	if err != nil {
-		return nil, err
-	}
-	return rep, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // var app pitaya.Pitaya
@@ -299,48 +245,6 @@ func main() {
 }
 
 func createApp(serializer string, port int, grpc bool, isFrontend bool, svType string, serverMode pitaya.ServerMode, metadata map[string]string, cfg ...*viper.Viper) (pitaya.Pitaya, *modules.ETCDBindingStorage, session.SessionPool) {
-	conf := config.NewConfig(cfg...)
-	builder := pitaya.NewBuilderWithConfigs(isFrontend, svType, serverMode, metadata, conf)
-
-	if isFrontend {
-		tcp := acceptor.NewTCPAcceptor(fmt.Sprintf(":%d", port))
-		builder.AddAcceptor(tcp)
-	}
-
-	builder.Groups = groups.NewMemoryGroupService(builder.Config.Groups.Memory)
-
-	if serializer == "json" {
-		builder.Serializer = json.NewSerializer()
-	} else if serializer == "protobuf" {
-		builder.Serializer = protobuf.NewSerializer()
-	} else {
-		panic("serializer should be either json or protobuf")
-	}
-
-	pitayaConfig := config.NewPitayaConfig(conf)
-
-	var bs *modules.ETCDBindingStorage
-	if grpc {
-		gs, err := cluster.NewGRPCServer(pitayaConfig.Cluster.RPC.Server.Grpc, builder.Server, builder.MetricsReporters)
-		if err != nil {
-			panic(err)
-		}
-
-		bs = modules.NewETCDBindingStorage(builder.Server, builder.SessionPool, pitayaConfig.Modules.BindingStorage.Etcd)
-
-		gc, err := cluster.NewGRPCClient(
-			pitayaConfig.Cluster.RPC.Client.Grpc,
-			builder.Server,
-			builder.MetricsReporters,
-			bs,
-			cluster.NewInfoRetriever(pitayaConfig.Cluster.Info),
-		)
-		if err != nil {
-			panic(err)
-		}
-		builder.RPCServer = gs
-		builder.RPCClient = gc
-	}
-
-	return builder.Build(), bs, builder.SessionPool
+	_ = "STUB: not implemented"
+	return *new(pitaya.Pitaya), nil, *new(session.SessionPool)
 }

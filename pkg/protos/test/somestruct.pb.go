@@ -3,9 +3,13 @@
 
 package test
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,43 +30,29 @@ type SomeStruct struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SomeStruct) Reset()         { *m = SomeStruct{} }
-func (m *SomeStruct) String() string { return proto.CompactTextString(m) }
-func (*SomeStruct) ProtoMessage()    {}
-func (*SomeStruct) Descriptor() ([]byte, []int) {
-	return fileDescriptor_somestruct_0b613b601297f11c, []int{0}
-}
-func (m *SomeStruct) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SomeStruct.Unmarshal(m, b)
-}
+func (m *SomeStruct) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *SomeStruct) String() string            { _ = "STUB: not implemented"; return "" }
+func (*SomeStruct) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*SomeStruct) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *SomeStruct) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *SomeStruct) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SomeStruct.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *SomeStruct) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SomeStruct.Merge(dst, src)
-}
-func (m *SomeStruct) XXX_Size() int {
-	return xxx_messageInfo_SomeStruct.Size(m)
-}
-func (m *SomeStruct) XXX_DiscardUnknown() {
-	xxx_messageInfo_SomeStruct.DiscardUnknown(m)
-}
+
+func (dst *SomeStruct) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *SomeStruct) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *SomeStruct) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_SomeStruct proto.InternalMessageInfo
 
-func (m *SomeStruct) GetA() int32 {
-	if m != nil {
-		return m.A
-	}
-	return 0
-}
+func (m *SomeStruct) GetA() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *SomeStruct) GetB() string {
-	if m != nil {
-		return m.B
-	}
-	return ""
-}
+func (m *SomeStruct) GetB() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*SomeStruct)(nil), "test.SomeStruct")

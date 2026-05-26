@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	cluster "github.com/topfreegames/pitaya/v3/pkg/cluster"
@@ -29,79 +28,58 @@ type MockRPCServerMockRecorder struct {
 
 // NewMockRPCServer creates a new mock instance.
 func NewMockRPCServer(ctrl *gomock.Controller) *MockRPCServer {
-	mock := &MockRPCServer{ctrl: ctrl}
-	mock.recorder = &MockRPCServerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRPCServer) EXPECT() *MockRPCServerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AfterInit mocks base method.
+	return nil
 }
 
-// AfterInit mocks base method.
-func (m *MockRPCServer) AfterInit() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AfterInit")
-}
+func (m *MockRPCServer) AfterInit() { _ = "STUB: not implemented"; return }
 
 // AfterInit indicates an expected call of AfterInit.
 func (mr *MockRPCServerMockRecorder) AfterInit() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AfterInit", reflect.TypeOf((*MockRPCServer)(nil).AfterInit))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BeforeShutdown mocks base method.
-func (m *MockRPCServer) BeforeShutdown() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "BeforeShutdown")
-}
+func (m *MockRPCServer) BeforeShutdown() { _ = "STUB: not implemented"; return }
 
 // BeforeShutdown indicates an expected call of BeforeShutdown.
 func (mr *MockRPCServerMockRecorder) BeforeShutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeforeShutdown", reflect.TypeOf((*MockRPCServer)(nil).BeforeShutdown))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
-func (m *MockRPCServer) Init() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockRPCServer) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init.
-func (mr *MockRPCServerMockRecorder) Init() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockRPCServer)(nil).Init))
-}
+func (mr *MockRPCServerMockRecorder) Init() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // SetPitayaServer mocks base method.
 func (m *MockRPCServer) SetPitayaServer(arg0 protos.PitayaServer) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetPitayaServer", arg0)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetPitayaServer indicates an expected call of SetPitayaServer.
 func (mr *MockRPCServerMockRecorder) SetPitayaServer(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPitayaServer", reflect.TypeOf((*MockRPCServer)(nil).SetPitayaServer), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Shutdown mocks base method.
-func (m *MockRPCServer) Shutdown() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Shutdown")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockRPCServer) Shutdown() error { _ = "STUB: not implemented"; return nil }
 
 // Shutdown indicates an expected call of Shutdown.
-func (mr *MockRPCServerMockRecorder) Shutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Shutdown", reflect.TypeOf((*MockRPCServer)(nil).Shutdown))
-}
+func (mr *MockRPCServerMockRecorder) Shutdown() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // MockRPCClient is a mock of RPCClient interface.
 type MockRPCClient struct {
@@ -116,138 +94,106 @@ type MockRPCClientMockRecorder struct {
 
 // NewMockRPCClient creates a new mock instance.
 func NewMockRPCClient(ctrl *gomock.Controller) *MockRPCClient {
-	mock := &MockRPCClient{ctrl: ctrl}
-	mock.recorder = &MockRPCClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRPCClient) EXPECT() *MockRPCClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AfterInit mocks base method.
+	return nil
 }
 
-// AfterInit mocks base method.
-func (m *MockRPCClient) AfterInit() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AfterInit")
-}
+func (m *MockRPCClient) AfterInit() { _ = "STUB: not implemented"; return }
 
 // AfterInit indicates an expected call of AfterInit.
 func (mr *MockRPCClientMockRecorder) AfterInit() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AfterInit", reflect.TypeOf((*MockRPCClient)(nil).AfterInit))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BeforeShutdown mocks base method.
-func (m *MockRPCClient) BeforeShutdown() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "BeforeShutdown")
-}
+func (m *MockRPCClient) BeforeShutdown() { _ = "STUB: not implemented"; return }
 
 // BeforeShutdown indicates an expected call of BeforeShutdown.
 func (mr *MockRPCClientMockRecorder) BeforeShutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeforeShutdown", reflect.TypeOf((*MockRPCClient)(nil).BeforeShutdown))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BroadcastSessionBind mocks base method.
 func (m *MockRPCClient) BroadcastSessionBind(uid string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BroadcastSessionBind", uid)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BroadcastSessionBind indicates an expected call of BroadcastSessionBind.
 func (mr *MockRPCClientMockRecorder) BroadcastSessionBind(uid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BroadcastSessionBind", reflect.TypeOf((*MockRPCClient)(nil).BroadcastSessionBind), uid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Call mocks base method.
 func (m *MockRPCClient) Call(ctx context.Context, rpcType protos.RPCType, route *route.Route, session session.Session, msg *message.Message, server *cluster.Server) (*protos.Response, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Call", ctx, rpcType, route, session, msg, server)
-	ret0, _ := ret[0].(*protos.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Call indicates an expected call of Call.
 func (mr *MockRPCClientMockRecorder) Call(ctx, rpcType, route, session, msg, server interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Call", reflect.TypeOf((*MockRPCClient)(nil).Call), ctx, rpcType, route, session, msg, server)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
-func (m *MockRPCClient) Init() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockRPCClient) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init.
-func (mr *MockRPCClientMockRecorder) Init() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockRPCClient)(nil).Init))
-}
+func (mr *MockRPCClientMockRecorder) Init() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Send mocks base method.
 func (m *MockRPCClient) Send(route string, data []byte) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Send", route, data)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Send indicates an expected call of Send.
 func (mr *MockRPCClientMockRecorder) Send(route, data interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockRPCClient)(nil).Send), route, data)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendKick mocks base method.
 func (m *MockRPCClient) SendKick(userID, serverType string, kick *protos.KickMsg) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SendKick", userID, serverType, kick)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendKick indicates an expected call of SendKick.
 func (mr *MockRPCClientMockRecorder) SendKick(userID, serverType, kick interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKick", reflect.TypeOf((*MockRPCClient)(nil).SendKick), userID, serverType, kick)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendPush mocks base method.
 func (m *MockRPCClient) SendPush(userID string, frontendSv *cluster.Server, push *protos.Push) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SendPush", userID, frontendSv, push)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendPush indicates an expected call of SendPush.
 func (mr *MockRPCClientMockRecorder) SendPush(userID, frontendSv, push interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendPush", reflect.TypeOf((*MockRPCClient)(nil).SendPush), userID, frontendSv, push)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Shutdown mocks base method.
-func (m *MockRPCClient) Shutdown() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Shutdown")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockRPCClient) Shutdown() error { _ = "STUB: not implemented"; return nil }
 
 // Shutdown indicates an expected call of Shutdown.
-func (mr *MockRPCClientMockRecorder) Shutdown() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Shutdown", reflect.TypeOf((*MockRPCClient)(nil).Shutdown))
-}
+func (mr *MockRPCClientMockRecorder) Shutdown() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // MockSDListener is a mock of SDListener interface.
 type MockSDListener struct {
@@ -262,38 +208,33 @@ type MockSDListenerMockRecorder struct {
 
 // NewMockSDListener creates a new mock instance.
 func NewMockSDListener(ctrl *gomock.Controller) *MockSDListener {
-	mock := &MockSDListener{ctrl: ctrl}
-	mock.recorder = &MockSDListenerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSDListener) EXPECT() *MockSDListenerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddServer mocks base method.
+	return nil
 }
 
-// AddServer mocks base method.
-func (m *MockSDListener) AddServer(arg0 *cluster.Server) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AddServer", arg0)
-}
+func (m *MockSDListener) AddServer(arg0 *cluster.Server) { _ = "STUB: not implemented"; return }
 
 // AddServer indicates an expected call of AddServer.
 func (mr *MockSDListenerMockRecorder) AddServer(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddServer", reflect.TypeOf((*MockSDListener)(nil).AddServer), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveServer mocks base method.
-func (m *MockSDListener) RemoveServer(arg0 *cluster.Server) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "RemoveServer", arg0)
-}
+func (m *MockSDListener) RemoveServer(arg0 *cluster.Server) { _ = "STUB: not implemented"; return }
 
 // RemoveServer indicates an expected call of RemoveServer.
 func (mr *MockSDListenerMockRecorder) RemoveServer(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveServer", reflect.TypeOf((*MockSDListener)(nil).RemoveServer), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockRemoteBindingListener is a mock of RemoteBindingListener interface.
@@ -309,26 +250,24 @@ type MockRemoteBindingListenerMockRecorder struct {
 
 // NewMockRemoteBindingListener creates a new mock instance.
 func NewMockRemoteBindingListener(ctrl *gomock.Controller) *MockRemoteBindingListener {
-	mock := &MockRemoteBindingListener{ctrl: ctrl}
-	mock.recorder = &MockRemoteBindingListenerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRemoteBindingListener) EXPECT() *MockRemoteBindingListenerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// OnUserBind mocks base method.
+	return nil
 }
 
-// OnUserBind mocks base method.
-func (m *MockRemoteBindingListener) OnUserBind(uid, fid string) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "OnUserBind", uid, fid)
-}
+func (m *MockRemoteBindingListener) OnUserBind(uid, fid string) { _ = "STUB: not implemented"; return }
 
 // OnUserBind indicates an expected call of OnUserBind.
 func (mr *MockRemoteBindingListenerMockRecorder) OnUserBind(uid, fid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "OnUserBind", reflect.TypeOf((*MockRemoteBindingListener)(nil).OnUserBind), uid, fid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockInfoRetriever is a mock of InfoRetriever interface.
@@ -344,26 +283,22 @@ type MockInfoRetrieverMockRecorder struct {
 
 // NewMockInfoRetriever creates a new mock instance.
 func NewMockInfoRetriever(ctrl *gomock.Controller) *MockInfoRetriever {
-	mock := &MockInfoRetriever{ctrl: ctrl}
-	mock.recorder = &MockInfoRetrieverMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockInfoRetriever) EXPECT() *MockInfoRetrieverMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Region mocks base method.
+	return nil
 }
 
-// Region mocks base method.
-func (m *MockInfoRetriever) Region() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Region")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockInfoRetriever) Region() string { _ = "STUB: not implemented"; return "" }
 
 // Region indicates an expected call of Region.
 func (mr *MockInfoRetrieverMockRecorder) Region() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Region", reflect.TypeOf((*MockInfoRetriever)(nil).Region))
+	_ = "STUB: not implemented"
+	return nil
 }

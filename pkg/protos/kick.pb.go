@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -25,36 +29,27 @@ type KickMsg struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KickMsg) Reset()         { *m = KickMsg{} }
-func (m *KickMsg) String() string { return proto.CompactTextString(m) }
-func (*KickMsg) ProtoMessage()    {}
-func (*KickMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_kick_71de7c6289e550fd, []int{0}
-}
-func (m *KickMsg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_KickMsg.Unmarshal(m, b)
-}
+func (m *KickMsg) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *KickMsg) String() string            { _ = "STUB: not implemented"; return "" }
+func (*KickMsg) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*KickMsg) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *KickMsg) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *KickMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_KickMsg.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *KickMsg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KickMsg.Merge(dst, src)
-}
-func (m *KickMsg) XXX_Size() int {
-	return xxx_messageInfo_KickMsg.Size(m)
-}
-func (m *KickMsg) XXX_DiscardUnknown() {
-	xxx_messageInfo_KickMsg.DiscardUnknown(m)
-}
+
+func (dst *KickMsg) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *KickMsg) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *KickMsg) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_KickMsg proto.InternalMessageInfo
 
-func (m *KickMsg) GetUserId() string {
-	if m != nil {
-		return m.UserId
-	}
-	return ""
-}
+func (m *KickMsg) GetUserId() string { _ = "STUB: not implemented"; return "" }
 
 type KickAnswer struct {
 	Kicked               bool     `protobuf:"varint,1,opt,name=kicked" json:"kicked,omitempty"`
@@ -63,36 +58,27 @@ type KickAnswer struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KickAnswer) Reset()         { *m = KickAnswer{} }
-func (m *KickAnswer) String() string { return proto.CompactTextString(m) }
-func (*KickAnswer) ProtoMessage()    {}
-func (*KickAnswer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_kick_71de7c6289e550fd, []int{1}
-}
-func (m *KickAnswer) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_KickAnswer.Unmarshal(m, b)
-}
+func (m *KickAnswer) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *KickAnswer) String() string            { _ = "STUB: not implemented"; return "" }
+func (*KickAnswer) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*KickAnswer) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *KickAnswer) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *KickAnswer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_KickAnswer.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *KickAnswer) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KickAnswer.Merge(dst, src)
-}
-func (m *KickAnswer) XXX_Size() int {
-	return xxx_messageInfo_KickAnswer.Size(m)
-}
-func (m *KickAnswer) XXX_DiscardUnknown() {
-	xxx_messageInfo_KickAnswer.DiscardUnknown(m)
-}
+
+func (dst *KickAnswer) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *KickAnswer) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *KickAnswer) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_KickAnswer proto.InternalMessageInfo
 
-func (m *KickAnswer) GetKicked() bool {
-	if m != nil {
-		return m.Kicked
-	}
-	return false
-}
+func (m *KickAnswer) GetKicked() bool { _ = "STUB: not implemented"; return false }
 
 func init() {
 	proto.RegisterType((*KickMsg)(nil), "protos.KickMsg")

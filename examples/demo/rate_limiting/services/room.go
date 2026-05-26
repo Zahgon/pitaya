@@ -13,10 +13,13 @@ type Room struct {
 
 // NewRoom returns a new room
 func NewRoom() *Room {
-	return &Room{}
+	_ = "STUB: not implemented"
+
+	// Ping returns a pong
+	return nil
 }
 
-// Ping returns a pong
 func (r *Room) Ping(ctx context.Context) ([]byte, error) {
-	return []byte("pong"), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

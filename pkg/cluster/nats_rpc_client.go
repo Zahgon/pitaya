@@ -22,25 +22,15 @@ package cluster
 
 import (
 	"context"
-	"fmt"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/google/uuid"
 	nats "github.com/nats-io/nats.go"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
 	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	pcontext "github.com/topfreegames/pitaya/v3/pkg/context"
-	"github.com/topfreegames/pitaya/v3/pkg/errors"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/metrics"
 	"github.com/topfreegames/pitaya/v3/pkg/protos"
 	"github.com/topfreegames/pitaya/v3/pkg/route"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
-	"github.com/topfreegames/pitaya/v3/pkg/tracing"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 )
 
 // NatsRPCClient struct
@@ -69,78 +59,37 @@ func NewNatsRPCClient(
 	metricsReporters []metrics.Reporter,
 	appDieChan chan bool,
 ) (*NatsRPCClient, error) {
-	ns := &NatsRPCClient{
-		server:            server,
-		running:           false,
-		metricsReporters:  metricsReporters,
-		appDieChan:        appDieChan,
-		connectionTimeout: nats.DefaultTimeout,
-	}
-	if err := ns.configure(config); err != nil {
-		return nil, err
-	}
-	return ns, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (ns *NatsRPCClient) configure(config config.NatsRPCClientConfig) error {
-	ns.connString = config.Connect
-	if ns.connString == "" {
-		return constants.ErrNoNatsConnectionString
-	}
-	ns.connectionTimeout = config.ConnectionTimeout
-	ns.maxReconnectionRetries = config.MaxReconnectionRetries
-	ns.reqTimeout = config.RequestTimeout
-	if ns.reqTimeout == 0 {
-		return constants.ErrNatsNoRequestTimeout
-	}
-	ns.websocketCompression = config.WebsocketCompression
-	ns.reconnectJitter = config.ReconnectJitter
-	ns.reconnectJitterTLS = config.ReconnectJitterTLS
-	ns.reconnectWait = config.ReconnectWait
-	ns.pingInterval = config.PingInterval
-	ns.maxPingsOutstanding = config.MaxPingsOutstanding
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // BroadcastSessionBind sends the binding information to other servers that may be interested in this info
 func (ns *NatsRPCClient) BroadcastSessionBind(uid string) error {
-	msg := &protos.BindMsg{
-		Uid: uid,
-		Fid: ns.server.ID,
-	}
-	msgData, err := proto.Marshal(msg)
-	if err != nil {
-		return err
-	}
-	return ns.Send(GetBindBroadcastTopic(ns.server.Type), msgData)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Send publishes a message in a given topic
 func (ns *NatsRPCClient) Send(topic string, data []byte) error {
-	if !ns.running {
-		return constants.ErrRPCClientNotInitialized
-	}
-	return ns.conn.Publish(topic, data)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendPush sends a message to a user
 func (ns *NatsRPCClient) SendPush(userID string, frontendSv *Server, push *protos.Push) error {
-	topic := GetUserMessagesTopic(userID, frontendSv.Type)
-	msg, err := proto.Marshal(push)
-	if err != nil {
-		return err
-	}
-	return ns.Send(topic, msg)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SendKick kicks an user
 func (ns *NatsRPCClient) SendKick(userID string, serverType string, kick *protos.KickMsg) error {
-	topic := GetUserKickTopic(userID, serverType)
-	msg, err := proto.Marshal(kick)
-	if err != nil {
-		return err
-	}
-	return ns.Send(topic, msg)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Call calls a method remotely
@@ -152,166 +101,43 @@ func (ns *NatsRPCClient) Call(
 	msg *message.Message,
 	server *Server,
 ) (*protos.Response, error) {
-	parent, err := tracing.ExtractSpan(ctx)
-	if err != nil {
-		logger.Log.Warnf("failed to retrieve parent span: %s", err.Error())
-	}
-	ctx = trace.ContextWithRemoteSpanContext(ctx, parent)
-	attributes := []attribute.KeyValue{
-		attribute.String("span.kind", "client"),
-		attribute.String("local.id", ns.server.ID),
-		attribute.String("peer.serverType", server.Type),
-		attribute.String("peer.id", server.ID),
-	}
-	ctx, _ = tracing.StartSpan(ctx, "NATS RPC Call", attributes...)
-	defer tracing.FinishSpan(ctx, err)
-
-	if !ns.running {
-		err = constants.ErrRPCClientNotInitialized
-		return nil, err
-	}
-
-	if session != nil {
-		requestID := uuid.New().String()
-		requestInfo := ""
-		if route != nil {
-			requestInfo = route.Method
-		}
-
-		session.SetRequestInFlight(requestID, requestInfo, true)
-		defer session.SetRequestInFlight(requestID, "", false)
-	}
-
-	reqTimeout := pcontext.GetFromPropagateCtx(ctx, constants.RequestTimeout)
-	if reqTimeout == nil {
-		reqTimeout = ns.reqTimeout.String()
-		ctx = pcontext.AddToPropagateCtx(ctx, constants.RequestTimeout, reqTimeout)
-	}
-	logger.Log.Debugf("[rpc_client] sending remote nats request for route %s with timeout of %s", route, reqTimeout)
-
-	req, err := buildRequest(ctx, rpcType, route, session, msg, ns.server)
-	if err != nil {
-		return nil, err
-	}
-	marshalledData, err := proto.Marshal(&req)
-	if err != nil {
-		return nil, err
-	}
-
-	var m *nats.Msg
-
-	if ns.metricsReporters != nil {
-		startTime := time.Now()
-		ctx = pcontext.AddToPropagateCtx(ctx, constants.StartTimeKey, startTime.UnixNano())
-		ctx = pcontext.AddToPropagateCtx(ctx, constants.RouteKey, route.String())
-		defer func() {
-			typ := "rpc"
-			metrics.ReportTimingFromCtx(ctx, ns.metricsReporters, typ, err)
-		}()
-	}
-
-	var timeout time.Duration
-	timeout, _ = time.ParseDuration(reqTimeout.(string))
-	m, err = ns.conn.Request(getChannel(server.Type, server.ID), marshalledData, timeout)
-	if err != nil {
-		if err == nats.ErrTimeout {
-			err = errors.NewError(constants.ErrRPCRequestTimeout, "PIT-408", map[string]string{
-				"timeout": timeout.String(),
-				"route":   route.String(),
-				"server":  ns.server.ID,
-				"peer.id": server.ID,
-			})
-		}
-		return nil, err
-	}
-
-	res := &protos.Response{}
-	err = proto.Unmarshal(m.Data, res)
-	if err != nil {
-		return nil, err
-	}
-
-	if res.Error != nil {
-		if res.Error.Code == "" {
-			res.Error.Code = errors.ErrUnknownCode
-		}
-		err = &errors.Error{
-			Code:     res.Error.Code,
-			Message:  res.Error.Msg,
-			Metadata: res.Error.Metadata,
-		}
-		return nil, err
-	}
-	return res, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // replaceConnection replaces the NATS connection, draining the old one
-func (ns *NatsRPCClient) replaceConnection() error {
-	return replaceNatsConnection(
-		ns.conn,
-		nil, // client doesn't have subscriptions
-		func() error { return ns.initConnection(true) },
-		"client",
-	)
-}
+func (ns *NatsRPCClient) replaceConnection() error { _ = "STUB: not implemented"; return nil }
+
+// client doesn't have subscriptions
 
 // Init inits nats rpc client
-func (ns *NatsRPCClient) Init() error {
-	return ns.initConnection(false)
-}
+func (ns *NatsRPCClient) Init() error { _ = "STUB: not implemented"; return nil }
 
 // initConnection initializes or replaces the NATS connection
 func (ns *NatsRPCClient) initConnection(isReplacement bool) error {
-	if !isReplacement {
-		ns.running = true
-		logger.Log.Debugf("connecting to nats (client) with timeout of %s", ns.connectionTimeout)
-	} else {
-		logger.Log.Debugf("re-initializing nats client connection")
-	}
-
-	conn, err := setupNatsConn(
-		ns.connString,
-		ns.appDieChan,
-		ns.replaceConnection,
-		nats.RetryOnFailedConnect(true),
-		nats.MaxReconnects(ns.maxReconnectionRetries),
-		nats.Timeout(ns.connectionTimeout),
-		nats.Compression(ns.websocketCompression),
-		nats.ReconnectJitter(ns.reconnectJitter, ns.reconnectJitterTLS),
-		nats.ReconnectWait(ns.reconnectWait),
-		nats.PingInterval(ns.pingInterval),
-		nats.MaxPingsOutstanding(ns.maxPingsOutstanding),
-	)
-	if err != nil {
-		return err
-	}
-	ns.conn = conn
-
-	if isReplacement {
-		logger.Log.Infof("successfully replaced nats client connection")
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // AfterInit runs after initialization
-func (ns *NatsRPCClient) AfterInit() {}
+func (ns *NatsRPCClient) AfterInit() {
+	_ = "STUB: not implemented"
 
-// BeforeShutdown runs before shutdown
-func (ns *NatsRPCClient) BeforeShutdown() {}
-
-// Shutdown stops nats rpc server
-func (ns *NatsRPCClient) Shutdown() error {
-	return nil
+	// BeforeShutdown runs before shutdown
+	return
 }
 
-func (ns *NatsRPCClient) stop() {
-	ns.running = false
+func (ns *NatsRPCClient) BeforeShutdown() {
+	_ = "STUB: not implemented"
+
+	// Shutdown stops nats rpc server
+	return
 }
 
-func (ns *NatsRPCClient) getSubscribeChannel() string {
-	return fmt.Sprintf("pitaya/servers/%s/%s", ns.server.Type, ns.server.ID)
-}
+func (ns *NatsRPCClient) Shutdown() error { _ = "STUB: not implemented"; return nil }
 
-func (ns *NatsRPCClient) IsConnected() bool {
-	return ns.conn != nil && ns.conn.IsConnected()
-}
+func (ns *NatsRPCClient) stop() { _ = "STUB: not implemented"; return }
+
+func (ns *NatsRPCClient) getSubscribeChannel() string { _ = "STUB: not implemented"; return "" }
+
+func (ns *NatsRPCClient) IsConnected() bool { _ = "STUB: not implemented"; return false }

@@ -20,13 +20,6 @@
 
 package cluster
 
-import (
-	"encoding/json"
-	"os"
-
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
-)
-
 // Server struct
 type Server struct {
 	ID       string            `json:"id"`
@@ -38,29 +31,9 @@ type Server struct {
 
 // NewServer ctor
 func NewServer(id, serverType string, frontend bool, metadata ...map[string]string) *Server {
-	d := make(map[string]string)
-	h, err := os.Hostname()
-	if err != nil {
-		logger.Log.Errorf("failed to get hostname: %s", err.Error())
-	}
-	if len(metadata) > 0 {
-		d = metadata[0]
-	}
-	return &Server{
-		ID:       id,
-		Type:     serverType,
-		Metadata: d,
-		Frontend: frontend,
-		Hostname: h,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AsJSONString returns the server as a json string
-func (s *Server) AsJSONString() string {
-	str, err := json.Marshal(s)
-	if err != nil {
-		logger.Log.Errorf("error getting server as json: %s", err.Error())
-		return ""
-	}
-	return string(str)
-}
+func (s *Server) AsJSONString() string { _ = "STUB: not implemented"; return "" }

@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -34,12 +38,9 @@ var RPCType_value = map[string]int32{
 	"User": 1,
 }
 
-func (x RPCType) String() string {
-	return proto.EnumName(RPCType_name, int32(x))
-}
-func (RPCType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_request_af3dbb976ee13f3b, []int{0}
-}
+func (x RPCType) String() string { _ = "STUB: not implemented"; return "" }
+
+func (RPCType) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 type Request struct {
 	Type                 RPCType  `protobuf:"varint,1,opt,name=type,enum=protos.RPCType" json:"type,omitempty"`
@@ -52,64 +53,35 @@ type Request struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Request) Reset()         { *m = Request{} }
-func (m *Request) String() string { return proto.CompactTextString(m) }
-func (*Request) ProtoMessage()    {}
-func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_request_af3dbb976ee13f3b, []int{0}
-}
-func (m *Request) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Request.Unmarshal(m, b)
-}
+func (m *Request) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Request) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Request) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Request) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Request) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Request.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Request.Merge(dst, src)
-}
-func (m *Request) XXX_Size() int {
-	return xxx_messageInfo_Request.Size(m)
-}
-func (m *Request) XXX_DiscardUnknown() {
-	xxx_messageInfo_Request.DiscardUnknown(m)
-}
+
+func (dst *Request) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Request) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Request) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Request proto.InternalMessageInfo
 
-func (m *Request) GetType() RPCType {
-	if m != nil {
-		return m.Type
-	}
-	return RPCType_Sys
-}
+func (m *Request) GetType() RPCType { _ = "STUB: not implemented"; return *new(RPCType) }
 
-func (m *Request) GetSession() *Session {
-	if m != nil {
-		return m.Session
-	}
-	return nil
-}
+func (m *Request) GetSession() *Session { _ = "STUB: not implemented"; return nil }
 
-func (m *Request) GetMsg() *Msg {
-	if m != nil {
-		return m.Msg
-	}
-	return nil
-}
+func (m *Request) GetMsg() *Msg { _ = "STUB: not implemented"; return nil }
 
-func (m *Request) GetFrontendID() string {
-	if m != nil {
-		return m.FrontendID
-	}
-	return ""
-}
+func (m *Request) GetFrontendID() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Request) GetMetadata() []byte {
-	if m != nil {
-		return m.Metadata
-	}
-	return nil
-}
+func (m *Request) GetMetadata() []byte { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*Request)(nil), "protos.Request")

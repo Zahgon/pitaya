@@ -24,104 +24,16 @@ import (
 	"github.com/abiosoft/ishell/v2"
 )
 
-func repl() {
-	shell := ishell.New()
-	configure(shell)
+func repl() { _ = "STUB: not implemented"; return }
 
-	shell.Println("Pitaya REPL Client")
+func registerConnect(shell *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-	registerConnect(shell)
-	registerDisconnect(shell)
-	registerRequest(shell)
-	registerNotify(shell)
-	registerPush(shell)
-	registerSetHandshake(shell)
+func registerPush(shell *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-	pushInfo = make(map[string]string)
+func registerRequest(shell *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-	shell.Run()
-}
+func registerNotify(shell *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-func registerConnect(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "connect",
-		Help: "connects to pitaya",
-		Func: func(c *ishell.Context) {
-			var addr string
-			if len(c.Args) == 0 {
-				c.Print("address: ")
-				addr = c.ReadLine()
-			} else {
-				addr = c.Args[0]
-			}
+func registerDisconnect(shell *ishell.Shell) { _ = "STUB: not implemented"; return }
 
-			if err := connect(c, addr, func(data []byte) {
-				c.Printf("sv->%s\n", string(data))
-			}); err != nil {
-				c.Err(err)
-			}
-		},
-	})
-}
-
-func registerPush(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "push",
-		Help: "insert information of push return",
-		Func: func(c *ishell.Context) {
-			err := push(c, c.RawArgs[1:])
-			if err != nil {
-				c.Err(err)
-			}
-		},
-	})
-}
-
-func registerRequest(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "request",
-		Help: "makes a request to pitaya server",
-		Func: func(c *ishell.Context) {
-			err := request(c, c.RawArgs[1:])
-			if err != nil {
-				c.Err(err)
-			}
-		},
-	})
-}
-
-func registerNotify(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "notify",
-		Help: "makes a notify to pitaya server",
-		Func: func(c *ishell.Context) {
-			err := notify(c, c.RawArgs[1:])
-			if err != nil {
-				c.Err(err)
-			}
-		},
-	})
-}
-
-func registerDisconnect(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "disconnect",
-		Help: "disconnects from pitaya server",
-		Func: func(c *ishell.Context) {
-			disconnect()
-		},
-	})
-}
-
-func registerSetHandshake(shell *ishell.Shell) {
-	shell.AddCmd(&ishell.Cmd{
-		Name: "sethandshake",
-		Help: "sets a handshake parameter",
-		Func: func(c *ishell.Context) {
-			err := setHandshake(c, c.RawArgs[1:])
-			if err != nil {
-				c.Err(err)
-			}
-		},
-	})
-}
+func registerSetHandshake(shell *ishell.Shell) { _ = "STUB: not implemented"; return }

@@ -2,20 +2,15 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
-	"strconv"
-	"time"
 
 	"strings"
 
-	"github.com/topfreegames/pitaya/v3/pkg"
 	"github.com/topfreegames/pitaya/v3/pkg/acceptor"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
 	"github.com/topfreegames/pitaya/v3/pkg/groups"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/timer"
 )
 
@@ -52,55 +47,29 @@ type (
 )
 
 // NewRoom returns a Handler Base implementation
-func NewRoom(app pitaya.Pitaya) *Room {
-	return &Room{
-		app: app,
-	}
-}
+func NewRoom(app pitaya.Pitaya) *Room { _ = "STUB: not implemented"; return nil }
 
 // AfterInit component lifetime callback
-func (r *Room) AfterInit() {
-	r.timer = pitaya.NewTimer(time.Minute, func() {
-		count, err := r.app.GroupCountMembers(context.Background(), "room")
-		logger.Log.Debugf("UserCount: Time=> %s, Count=> %d, Error=> %v", time.Now().String(), count, err)
-	})
-}
+func (r *Room) AfterInit() { _ = "STUB: not implemented"; return }
 
 // Join room
 func (r *Room) Join(ctx context.Context, msg []byte) (*JoinResponse, error) {
-	s := r.app.GetSessionFromCtx(ctx)
-	fakeUID := s.ID()                              // just use s.ID as uid !!!
-	err := s.Bind(ctx, strconv.Itoa(int(fakeUID))) // binding session uid
-
-	if err != nil {
-		return nil, pitaya.Error(err, "RH-000", map[string]string{"failed": "bind"})
-	}
-
-	uids, err := r.app.GroupMembers(ctx, "room")
-	if err != nil {
-		return nil, err
-	}
-	s.Push("onMembers", &AllMembers{Members: uids})
-	// notify others
-	r.app.GroupBroadcast(ctx, "chat", "room", "onNewUser", &NewUser{Content: fmt.Sprintf("New user: %s", s.UID())})
-	// new user join group
-	r.app.GroupAddMember(ctx, "room", s.UID()) // add session to group
-
-	// on session close, remove it from group
-	s.OnClose(func() {
-		r.app.GroupRemoveMember(ctx, "room", s.UID())
-	})
-
-	return &JoinResponse{Result: "success"}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// just use s.ID as uid !!!
+// binding session uid
+
+// notify others
+
+// new user join group
+// add session to group
+
+// on session close, remove it from group
 
 // Message sync last message to all members
-func (r *Room) Message(ctx context.Context, msg *UserMessage) {
-	err := r.app.GroupBroadcast(ctx, "chat", "room", "onMessage", msg)
-	if err != nil {
-		fmt.Println("error broadcasting message", err)
-	}
-}
+func (r *Room) Message(ctx context.Context, msg *UserMessage) { _ = "STUB: not implemented"; return }
 
 var app pitaya.Pitaya
 
@@ -134,11 +103,4 @@ func main() {
 	app.Start()
 }
 
-func configApp() *config.PitayaConfig {
-	conf := config.NewDefaultPitayaConfig()
-	conf.Buffer.Handler.LocalProcess = 15
-	conf.Heartbeat.Interval = time.Duration(15 * time.Second)
-	conf.Buffer.Agent.Messages = 32
-	conf.Handler.Messages.Compression = false
-	return conf
-}
+func configApp() *config.PitayaConfig { _ = "STUB: not implemented"; return nil }

@@ -21,8 +21,6 @@
 package modules
 
 import (
-	"context"
-
 	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
 )
@@ -37,34 +35,14 @@ type UniqueSession struct {
 
 // NewUniqueSession creates a new unique session module
 func NewUniqueSession(server *cluster.Server, rpcServer cluster.RPCServer, rpcClient cluster.RPCClient, sessionPool session.SessionPool) *UniqueSession {
-	return &UniqueSession{
-		server:      server,
-		rpcClient:   rpcClient,
-		sessionPool: sessionPool,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // OnUserBind method should be called when a user binds a session in remote servers
-func (u *UniqueSession) OnUserBind(uid, fid string) {
-	if u.server.ID == fid {
-		return
-	}
-	oldSession := u.sessionPool.GetSessionByUID(uid)
-	if oldSession != nil {
-		// TODO: it would be nice to set this correctly
-		oldSession.Kick(context.Background())
-	}
-}
+func (u *UniqueSession) OnUserBind(uid, fid string) { _ = "STUB: not implemented"; return }
+
+// TODO: it would be nice to set this correctly
 
 // Init initializes the module
-func (u *UniqueSession) Init() error {
-	u.sessionPool.OnSessionBind(func(ctx context.Context, s session.Session) error {
-		oldSession := u.sessionPool.GetSessionByUID(s.UID())
-		if oldSession != nil {
-			return oldSession.Kick(ctx)
-		}
-		err := u.rpcClient.BroadcastSessionBind(s.UID())
-		return err
-	})
-	return nil
-}
+func (u *UniqueSession) Init() error { _ = "STUB: not implemented"; return nil }

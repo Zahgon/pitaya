@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -23,55 +21,43 @@ type MockSerializerMockRecorder struct {
 
 // NewMockSerializer creates a new mock instance.
 func NewMockSerializer(ctrl *gomock.Controller) *MockSerializer {
-	mock := &MockSerializer{ctrl: ctrl}
-	mock.recorder = &MockSerializerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSerializer) EXPECT() *MockSerializerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetName mocks base method.
+	return nil
 }
 
-// GetName mocks base method.
-func (m *MockSerializer) GetName() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetName")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockSerializer) GetName() string { _ = "STUB: not implemented"; return "" }
 
 // GetName indicates an expected call of GetName.
-func (mr *MockSerializerMockRecorder) GetName() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetName", reflect.TypeOf((*MockSerializer)(nil).GetName))
-}
+func (mr *MockSerializerMockRecorder) GetName() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Marshal mocks base method.
 func (m *MockSerializer) Marshal(arg0 interface{}) ([]byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Marshal", arg0)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Marshal indicates an expected call of Marshal.
 func (mr *MockSerializerMockRecorder) Marshal(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Marshal", reflect.TypeOf((*MockSerializer)(nil).Marshal), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Unmarshal mocks base method.
 func (m *MockSerializer) Unmarshal(arg0 []byte, arg1 interface{}) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Unmarshal", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Unmarshal indicates an expected call of Unmarshal.
 func (mr *MockSerializerMockRecorder) Unmarshal(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unmarshal", reflect.TypeOf((*MockSerializer)(nil).Unmarshal), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -27,50 +31,31 @@ type Error struct {
 	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Error) Reset()         { *m = Error{} }
-func (m *Error) String() string { return proto.CompactTextString(m) }
-func (*Error) ProtoMessage()    {}
-func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_error_ea2c1b3dd908475b, []int{0}
-}
-func (m *Error) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Error.Unmarshal(m, b)
-}
+func (m *Error) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Error) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Error) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Error) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *Error) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Error.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *Error) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error.Merge(dst, src)
-}
-func (m *Error) XXX_Size() int {
-	return xxx_messageInfo_Error.Size(m)
-}
-func (m *Error) XXX_DiscardUnknown() {
-	xxx_messageInfo_Error.DiscardUnknown(m)
-}
+
+func (dst *Error) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *Error) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *Error) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_Error proto.InternalMessageInfo
 
-func (m *Error) GetCode() string {
-	if m != nil {
-		return m.Code
-	}
-	return ""
-}
+func (m *Error) GetCode() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Error) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
+func (m *Error) GetMsg() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Error) GetMetadata() map[string]string {
-	if m != nil {
-		return m.Metadata
-	}
-	return nil
-}
+func (m *Error) GetMetadata() map[string]string { _ = "STUB: not implemented"; return nil }
 
 func init() {
 	proto.RegisterType((*Error)(nil), "protos.Error")

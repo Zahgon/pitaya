@@ -21,17 +21,12 @@
 package modules
 
 import (
-	"context"
-	"fmt"
 	"time"
 
-	clientv3 "go.etcd.io/etcd/client/v3"
-	"go.etcd.io/etcd/client/v3/namespace"
 	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // ETCDBindingStorage module that uses etcd to keep in which frontend server each user is bound
@@ -50,138 +45,49 @@ type ETCDBindingStorage struct {
 
 // NewETCDBindingStorage returns a new instance of BindingStorage
 func NewETCDBindingStorage(server *cluster.Server, sessionPool session.SessionPool, conf config.ETCDBindingConfig) *ETCDBindingStorage {
-	b := &ETCDBindingStorage{
-		thisServer:  server,
-		sessionPool: sessionPool,
-		stopChan:    make(chan struct{}),
-	}
-	b.etcdDialTimeout = conf.DialTimeout
-	b.etcdEndpoints = conf.Endpoints
-	b.etcdPrefix = conf.Prefix
-	b.leaseTTL = conf.LeaseTTL
-	return b
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func getUserBindingKey(uid, frontendType string) string {
-	return fmt.Sprintf("bindings/%s/%s", frontendType, uid)
-}
+func getUserBindingKey(uid, frontendType string) string { _ = "STUB: not implemented"; return "" }
 
 // PutBinding puts the binding info into etcd
-func (b *ETCDBindingStorage) PutBinding(uid string) error {
-	_, err := b.cli.Put(context.Background(), getUserBindingKey(uid, b.thisServer.Type), b.thisServer.ID, clientv3.WithLease(b.leaseID))
-	return err
-}
+func (b *ETCDBindingStorage) PutBinding(uid string) error { _ = "STUB: not implemented"; return nil }
 
-func (b *ETCDBindingStorage) removeBinding(uid string) error {
-	_, err := b.cli.Delete(context.Background(), getUserBindingKey(uid, b.thisServer.Type))
-	return err
-}
+func (b *ETCDBindingStorage) removeBinding(uid string) error { _ = "STUB: not implemented"; return nil }
 
 // GetUserFrontendID gets the id of the frontend server a user is connected to
 // TODO: should we set context here?
 // TODO: this could be way more optimized, using watcher and local caching
 func (b *ETCDBindingStorage) GetUserFrontendID(uid, frontendType string) (string, error) {
-	etcdRes, err := b.cli.Get(context.Background(), getUserBindingKey(uid, frontendType))
-	if err != nil {
-		return "", err
-	}
-	if len(etcdRes.Kvs) == 0 {
-		return "", constants.ErrBindingNotFound
-	}
-	return string(etcdRes.Kvs[0].Value), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func (b *ETCDBindingStorage) setupOnSessionCloseCB() {
-	b.sessionPool.OnSessionClose(func(s session.Session) {
-		if s.UID() != "" {
-			err := b.removeBinding(s.UID())
-			if err != nil {
-				logger.Log.Errorf("error removing binding info from storage: %v", err)
-			}
-		}
-	})
-}
+func (b *ETCDBindingStorage) setupOnSessionCloseCB() { _ = "STUB: not implemented"; return }
 
-func (b *ETCDBindingStorage) setupOnAfterSessionBindCB() {
-	b.sessionPool.OnAfterSessionBind(func(ctx context.Context, s session.Session) error {
-		return b.PutBinding(s.UID())
-	})
-}
+func (b *ETCDBindingStorage) setupOnAfterSessionBindCB() { _ = "STUB: not implemented"; return }
 
 func (b *ETCDBindingStorage) watchLeaseChan(c <-chan *clientv3.LeaseKeepAliveResponse) {
-	for {
-		select {
-		case <-b.stopChan:
-			return
-		case kaRes := <-c:
-			if kaRes == nil {
-				logger.Log.Warn("[binding storage] sd: error renewing etcd lease, rebootstrapping")
-				for {
-					err := b.bootstrapLease()
-					if err != nil {
-						logger.Log.Warn("[binding storage] sd: error rebootstrapping lease, will retry in 5 seconds")
-						time.Sleep(5 * time.Second)
-						continue
-					} else {
-						return
-					}
-				}
-			}
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (b *ETCDBindingStorage) bootstrapLease() error {
+	_ = "STUB: not implemented"
 	// grab lease
-	l, err := b.cli.Grant(context.TODO(), int64(b.leaseTTL.Seconds()))
-	if err != nil {
-		return err
-	}
-	b.leaseID = l.ID
-	logger.Log.Debugf("[binding storage] sd: got leaseID: %x", l.ID)
-	// this will keep alive forever, when channel c is closed
-	// it means we probably have to rebootstrap the lease
-	c, err := b.cli.KeepAlive(context.TODO(), b.leaseID)
-	if err != nil {
-		return err
-	}
-	// need to receive here as per etcd docs
-	<-c
-	go b.watchLeaseChan(c)
 	return nil
 }
+
+// this will keep alive forever, when channel c is closed
+// it means we probably have to rebootstrap the lease
+
+// need to receive here as per etcd docs
 
 // Init starts the binding storage module
-func (b *ETCDBindingStorage) Init() error {
-	var cli *clientv3.Client
-	var err error
-	if b.cli == nil {
-		cli, err = clientv3.New(clientv3.Config{
-			Endpoints:   b.etcdEndpoints,
-			DialTimeout: b.etcdDialTimeout,
-		})
-		if err != nil {
-			return err
-		}
-		b.cli = cli
-	}
-	// namespaced etcd :)
-	b.cli.KV = namespace.NewKV(b.cli.KV, b.etcdPrefix)
-	err = b.bootstrapLease()
-	if err != nil {
-		return err
-	}
+func (b *ETCDBindingStorage) Init() error { _ = "STUB: not implemented"; return nil }
 
-	if b.thisServer.Frontend {
-		b.setupOnSessionCloseCB()
-		b.setupOnAfterSessionBindCB()
-	}
-
-	return nil
-}
+// namespaced etcd :)
 
 // Shutdown executes on shutdown and will clean etcd
-func (b *ETCDBindingStorage) Shutdown() error {
-	close(b.stopChan)
-	return b.cli.Close()
-}
+func (b *ETCDBindingStorage) Shutdown() error { _ = "STUB: not implemented"; return nil }

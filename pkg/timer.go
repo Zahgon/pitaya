@@ -21,10 +21,8 @@
 package pitaya
 
 import (
-	"math"
 	"time"
 
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
 	"github.com/topfreegames/pitaya/v3/pkg/timer"
 )
 
@@ -34,7 +32,8 @@ import (
 // The duration d must be greater than zero; if not, NewTimer will panic.
 // Stop the timer to release associated resources.
 func NewTimer(interval time.Duration, fn timer.Func) *timer.Timer {
-	return NewCountTimer(interval, timer.LoopForever, fn)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewCountTimer returns a new Timer containing a function that will be called
@@ -43,25 +42,19 @@ func NewTimer(interval time.Duration, fn timer.Func) *timer.Timer {
 // The duration d must be greater than zero; if not, NewCountTimer will panic.
 // Stop the timer to release associated resources.
 func NewCountTimer(interval time.Duration, count int, fn timer.Func) *timer.Timer {
-	if fn == nil {
-		panic("pitaya/timer: nil timer function")
-	}
-	if interval <= 0 {
-		panic("non-positive interval for NewTimer")
-	}
-
-	t := timer.NewTimer(fn, interval, count)
-	// add to manager
-	timer.Manager.ChCreatedTimer <- t
-	return t
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// add to manager
 
 // NewAfterTimer returns a new Timer containing a function that will be called
 // after duration that specified by the duration argument.
 // The duration d must be greater than zero; if not, NewAfterTimer will panic.
 // Stop the timer to release associated resources.
 func NewAfterTimer(duration time.Duration, fn timer.Func) *timer.Timer {
-	return NewCountTimer(duration, 1, fn)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewCondTimer returns a new Timer containing a function that will be called
@@ -69,28 +62,16 @@ func NewAfterTimer(duration time.Duration, fn timer.Func) *timer.Timer {
 // The duration d must be greater than zero; if not, NewCondTimer will panic.
 // Stop the timer to release associated resources.
 func NewCondTimer(condition timer.Condition, fn timer.Func) (*timer.Timer, error) {
-	if condition == nil {
-		return nil, constants.ErrNilCondition
-	}
-
-	t := NewCountTimer(time.Duration(math.MaxInt64), timer.LoopForever, fn)
-	t.SetCondition(condition)
-	return t, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetTimerPrecision set the ticker precision, and time precision can not less
 // than a Millisecond, and can not change after application running. The default
 // precision is time.Second
-func SetTimerPrecision(precision time.Duration) {
-	if precision < time.Millisecond {
-		panic("time precision can not less than a Millisecond")
-	}
-	timer.Precision = precision
-}
+func SetTimerPrecision(precision time.Duration) { _ = "STUB: not implemented"; return }
 
 // SetTimerBacklog set the timer created/closing channel backlog, A small backlog
 // may cause the logic to be blocked when call NewTimer/NewCountTimer/timer.Stop
 // in main logic gorontine.
-func SetTimerBacklog(c int) {
-	timer.SetTimerBacklog(c)
-}
+func SetTimerBacklog(c int) { _ = "STUB: not implemented"; return }

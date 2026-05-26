@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -22,69 +20,59 @@ type MockReporterMockRecorder struct {
 }
 
 // NewMockReporter creates a new mock instance.
-func NewMockReporter(ctrl *gomock.Controller) *MockReporter {
-	mock := &MockReporter{ctrl: ctrl}
-	mock.recorder = &MockReporterMockRecorder{mock}
-	return mock
-}
+func NewMockReporter(ctrl *gomock.Controller) *MockReporter { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockReporter) EXPECT() *MockReporterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ReportCount mocks base method.
+	return nil
 }
 
-// ReportCount mocks base method.
 func (m *MockReporter) ReportCount(arg0 string, arg1 map[string]string, arg2 float64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportCount", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportCount indicates an expected call of ReportCount.
 func (mr *MockReporterMockRecorder) ReportCount(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportCount", reflect.TypeOf((*MockReporter)(nil).ReportCount), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportGauge mocks base method.
 func (m *MockReporter) ReportGauge(arg0 string, arg1 map[string]string, arg2 float64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportGauge", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportGauge indicates an expected call of ReportGauge.
 func (mr *MockReporterMockRecorder) ReportGauge(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportGauge", reflect.TypeOf((*MockReporter)(nil).ReportGauge), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportHistogram mocks base method.
 func (m *MockReporter) ReportHistogram(arg0 string, arg1 map[string]string, arg2 float64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportHistogram", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportHistogram indicates an expected call of ReportHistogram.
 func (mr *MockReporterMockRecorder) ReportHistogram(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportHistogram", reflect.TypeOf((*MockReporter)(nil).ReportHistogram), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportSummary mocks base method.
 func (m *MockReporter) ReportSummary(arg0 string, arg1 map[string]string, arg2 float64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSummary", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportSummary indicates an expected call of ReportSummary.
 func (mr *MockReporterMockRecorder) ReportSummary(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSummary", reflect.TypeOf((*MockReporter)(nil).ReportSummary), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }

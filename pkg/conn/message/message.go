@@ -22,8 +22,6 @@ package message
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 	"sync"
 )
 
@@ -78,74 +76,23 @@ type Message struct {
 }
 
 // New returns a new message instance
-func New(err ...bool) *Message {
-	m := &Message{}
-	if len(err) > 0 {
-		m.Err = err[0]
-	}
-	return m
-}
+func New(err ...bool) *Message { _ = "STUB: not implemented"; return nil }
 
 // String, implementation of fmt.Stringer interface
-func (m *Message) String() string {
-	return fmt.Sprintf("Type: %s, ID: %d, Route: %s, Compressed: %t, Error: %t, Data: %v, BodyLength: %d",
-		types[m.Type],
-		m.ID,
-		m.Route,
-		m.compressed,
-		m.Err,
-		m.Data,
-		len(m.Data))
-}
+func (m *Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func routable(t Type) bool {
-	return t == Request || t == Notify || t == Push
-}
+func routable(t Type) bool { _ = "STUB: not implemented"; return false }
 
-func invalidType(t Type) bool {
-	return t < Request || t > Push
-
-}
+func invalidType(t Type) bool { _ = "STUB: not implemented"; return false }
 
 // SetDictionary set routes map which be used to compress route.
-func SetDictionary(dict map[string]uint16) error {
-	if dict == nil {
-		return nil
-	}
-	routesCodesMutex.Lock()
-	defer routesCodesMutex.Unlock()
+func SetDictionary(dict map[string]uint16) error { _ = "STUB: not implemented"; return nil }
 
-	for route, code := range dict {
-		r := strings.TrimSpace(route)
+// duplication check
 
-		// duplication check
-		if _, ok := routes[r]; ok {
-			return fmt.Errorf("duplicated route(route: %s, code: %d)", r, code)
-		}
-
-		if _, ok := codes[code]; ok {
-			return fmt.Errorf("duplicated route(route: %s, code: %d)", r, code)
-		}
-
-		// update map, using last value when key duplicated
-		routes[r] = code
-		codes[code] = r
-	}
-
-	return nil
-}
+// update map, using last value when key duplicated
 
 // GetDictionary gets the routes map which is used to compress route.
-func GetDictionary() map[string]uint16 {
-	routesCodesMutex.RLock()
-	defer routesCodesMutex.RUnlock()
-	dict := make(map[string]uint16)
-	for k, v := range routes {
-		dict[k] = v
-	}
-	return dict
-}
+func GetDictionary() map[string]uint16 { _ = "STUB: not implemented"; return nil }
 
-func (t *Type) String() string {
-	return types[*t]
-}
+func (t *Type) String() string { _ = "STUB: not implemented"; return "" }

@@ -21,24 +21,13 @@
 package client
 
 import (
-	"bytes"
-	"compress/gzip"
 	"crypto/tls"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"io"
-	"strings"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	protobuf "github.com/golang/protobuf/protoc-gen-go/descriptor"
 	"github.com/jhump/protoreflect/desc"
-	"github.com/jhump/protoreflect/dynamic"
 	"github.com/sirupsen/logrus"
 	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
-	"github.com/topfreegames/pitaya/v3/pkg/protos"
 )
 
 // Command struct. Save the input and output type and proto descriptor for each
@@ -69,455 +58,108 @@ type ProtoClient struct {
 }
 
 // MsgChannel return the incoming message channel
-func (pc *ProtoClient) MsgChannel() chan *message.Message {
-	return pc.IncomingMsgChan
-}
+func (pc *ProtoClient) MsgChannel() chan *message.Message { _ = "STUB: not implemented"; return nil }
 
 // Receive a compressed byte slice and unpack it to a FileDescriptorProto
 func unpackDescriptor(compressedDescriptor []byte) (*protobuf.FileDescriptorProto, error) {
-	r, err := gzip.NewReader(bytes.NewReader(compressedDescriptor))
-	if err != nil {
-		return nil, err
-	}
-	defer r.Close()
-
-	b, err := io.ReadAll(r)
-	if err != nil {
-		return nil, err
-	}
-
-	var fileDescriptorProto protobuf.FileDescriptorProto
-
-	if err = proto.Unmarshal(b, &fileDescriptorProto); err != nil {
-		return nil, err
-	}
-
-	return &fileDescriptorProto, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Receive an array of descriptors in binary format. The function creates the
 // protobuffer from this data and associates it to the message.
 func (pc *ProtoClient) buildProtosFromDescriptor(descriptorArray []*protobuf.FileDescriptorProto) error {
-
-	descriptorsMap := make(map[string]*desc.MessageDescriptor)
-
-	descriptors, err := desc.CreateFileDescriptors(descriptorArray)
-	if err != nil {
-		return err
-	}
-
-	for name := range pc.descriptorsNames {
-		for _, v := range descriptors {
-			message := v.FindMessage(name)
-			if message != nil {
-				descriptorsMap[name] = message
-			}
-		}
-	}
-
-	for name, cmd := range pc.info.Commands {
-		if msg, ok := descriptorsMap[cmd.input]; ok {
-			pc.info.Commands[name].inputMsgDescriptor = msg
-		}
-		if msg, ok := descriptorsMap[cmd.output]; ok {
-			pc.info.Commands[name].outputMsgDescriptor = msg
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // Receives each entry from the Unmarshal json from the Docs and read the inputs and
 // outputs associated with it. Return the output type, the input and the error.
 func getOutputInputNames(command map[string]interface{}) (string, string, error) {
-	outputName := ""
-	inputName := ""
-
-	in := command["input"]
-	inputDocs, ok := in.(map[string]interface{})
-	if ok {
-		for k := range inputDocs {
-			if strings.Contains(k, "proto") {
-				inputName = strings.Replace(k, "*", "", 1)
-			}
-		}
-	}
-
-	out := command["output"]
-	outputDocsArr := out.([]interface{})
-	// we can have handlers that have no return specified.
-	if len(outputDocsArr) == 0 {
-		return inputName, "", nil
-	}
-
-	outputDocs, ok := outputDocsArr[0].(map[string]interface{})
-	if ok {
-		for k := range outputDocs {
-			if strings.Contains(k, "proto") {
-				outputName = strings.Replace(k, "*", "", 1)
-			}
-		}
-	}
-
-	return inputName, outputName, nil
+	_ = "STUB: not implemented"
+	return "", "", nil
 }
+
+// we can have handlers that have no return specified.
 
 // Get recursively all protos needed in a Unmarshal json.
 func getKeys(info map[string]interface{}, keysSet map[string]bool) {
-	for k, v := range info {
-		if strings.Contains(k, "*") {
-			kew := strings.Replace(k, "*", "", 1)
-			keysSet[kew] = true
-		}
-
-		listofouts, ok := v.([]interface{})
-		if ok {
-			for i := range listofouts {
-				aux, ok := listofouts[i].(map[string]interface{})
-				if !ok {
-					continue
-				}
-				getKeys(aux, keysSet)
-			}
-		}
-
-		if aux, ok := v.(map[string]interface{}); ok {
-			getKeys(aux, keysSet)
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // Receives one json string from the auto documentation, decode it and request
 // to the server the protobuf descriptors. If the the  descriptors route are
 // not set, this function identify the route responsible for providing the
 // protobuf descriptors.
-func (pc *ProtoClient) getDescriptors(data string) error {
-	d := []byte(data)
-	var jsonmap interface{}
-	if err := json.Unmarshal(d, &jsonmap); err != nil {
-		return err
-	}
-	m := jsonmap.(map[string]interface{})
-	keysSet := make(map[string]bool)
-	getKeys(m, keysSet)
+func (pc *ProtoClient) getDescriptors(data string) error { _ = "STUB: not implemented"; return nil }
 
-	// load predefined protos
-	for _, commands := range pc.info.Commands {
-		if commands.input != "" {
-			keysSet[commands.input] = true
-		}
-		if commands.output != "" {
-			keysSet[commands.output] = true
-		}
-	}
+// load predefined protos
 
-	// build commands reference
-	handlers := m["handlers"].(map[string]interface{})
-	for k, v := range handlers {
-		cmdInfo := v.(map[string]interface{})
-		in, out, err := getOutputInputNames(cmdInfo)
-		if err != nil {
-			return fmt.Errorf("failed to get output and input names for '%s' handler: %w", k, err)
-		}
+// build commands reference
 
-		var command Command
-		command.input = in
-		command.output = out
-
-		pc.info.Commands[k] = &command
-		if pc.descriptorsRoute == "" && in == "protos.ProtoNames" && out == "protos.ProtoDescriptors" {
-			pc.descriptorsRoute = k
-		}
-	}
-
-	remotes := m["remotes"].(map[string]interface{})
-	for k, v := range remotes {
-		cmdInfo := v.(map[string]interface{})
-		in, out, err := getOutputInputNames(cmdInfo)
-		if err != nil {
-			return err
-		}
-
-		var command Command
-		command.input = in
-		command.output = out
-
-		pc.info.Commands[k] = &command
-	}
-
-	names := make([]string, 0, len(keysSet))
-	for key := range keysSet {
-		names = append(names, key)
-	}
-
-	protname := &protos.ProtoNames{
-		Name: names,
-	}
-
-	encodedNames, err := proto.Marshal(protname)
-	if err != nil {
-		return fmt.Errorf("failed to encode proto names: %w", err)
-	}
-	_, err = pc.SendRequest(pc.descriptorsRoute, encodedNames)
-	if err != nil {
-		return fmt.Errorf("failed to send proto descriptors request: %w", err)
-	}
-
-	response := <-pc.Client.IncomingMsgChan
-	descriptors := &protos.ProtoDescriptors{}
-	if err := proto.Unmarshal(response.Data, descriptors); err != nil {
-		return fmt.Errorf("failed to unmarshal proto descriptors response: %w", err)
-	}
-
-	// get all proto types
-	descriptorArray := make([]*protobuf.FileDescriptorProto, 0)
-	for i := range descriptors.Desc {
-		fileDescriptorProto, err := unpackDescriptor(descriptors.Desc[i])
-		if err != nil {
-			return fmt.Errorf("failed to unpack descriptor: %w", err)
-		}
-
-		descriptorArray = append(descriptorArray, fileDescriptorProto)
-		pc.descriptorsNames[names[i]] = true
-	}
-
-	if err = pc.buildProtosFromDescriptor(descriptorArray); err != nil {
-		return fmt.Errorf("failed to build proto from descriptor: %w", err)
-	}
-
-	return nil
-}
+// get all proto types
 
 // Return the basic structure for the ProtoClient struct.
 func newProto(docslogLevel logrus.Level, requestTimeout ...time.Duration) *ProtoClient {
-	return &ProtoClient{
-		Client:           *New(docslogLevel, requestTimeout...),
-		descriptorsNames: make(map[string]bool),
-		info: ProtoBufferInfo{
-			Commands: make(map[string]*Command),
-		},
-		docsRoute:        "",
-		descriptorsRoute: "",
-		IncomingMsgChan:  make(chan *message.Message, 10),
-		closeChan:        make(chan bool),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewProto returns a new protoclient with the auto documentation route.
 func NewProto(docsRoute string, docslogLevel logrus.Level, requestTimeout ...time.Duration) *ProtoClient {
-	newclient := newProto(docslogLevel, requestTimeout...)
-	newclient.docsRoute = docsRoute
-	return newclient
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewWithDescriptor returns a new protoclient with the descriptors route and
 // auto documentation route.
 func NewWithDescriptor(descriptorsRoute string, docsRoute string, docslogLevel logrus.Level, requestTimeout ...time.Duration) *ProtoClient {
-	newclient := newProto(docslogLevel, requestTimeout...)
-	newclient.docsRoute = docsRoute
-	newclient.descriptorsRoute = descriptorsRoute
-	return newclient
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LoadServerInfo load commands information from the server. Addr is the
 // server address.
-func (pc *ProtoClient) LoadServerInfo(addr string) error {
-	pc.ready = false
+func (pc *ProtoClient) LoadServerInfo(addr string) error { _ = "STUB: not implemented"; return nil }
 
-	if err := pc.Client.ConnectToWS(addr, "", &tls.Config{
-		InsecureSkipVerify: true,
-	}); err != nil {
-		if err := pc.Client.ConnectToWS(addr, ""); err != nil {
-			if err := pc.Client.ConnectTo(addr, &tls.Config{
-				InsecureSkipVerify: true,
-			}); err != nil {
-				if err := pc.Client.ConnectTo(addr); err != nil {
-					return err
-				}
-			}
-		}
-	}
-
-	// request doc info
-	_, err := pc.SendRequest(pc.docsRoute, make([]byte, 0))
-	if err != nil {
-		return err
-	}
-	response := <-pc.Client.IncomingMsgChan
-
-	docs := &protos.Doc{}
-	if err := proto.Unmarshal(response.Data, docs); err != nil {
-		return fmt.Errorf("failed to unmarshal docs route response: %w", err)
-	}
-
-	if err := pc.getDescriptors(docs.Doc); err != nil {
-		return fmt.Errorf("failed to read proto descriptors: %w", err)
-	}
-
-	pc.Disconnect()
-	pc.ready = true
-
-	return nil
-}
+// request doc info
 
 // Disconnect the client
-func (pc *ProtoClient) Disconnect() {
-	pc.Client.Disconnect()
-	if pc.ready {
-		pc.closeChan <- true
-	}
-}
+func (pc *ProtoClient) Disconnect() { _ = "STUB: not implemented"; return }
 
 // Wait for new messages from the server or the connection end. If the menssage
 // has a response.Route, it decodes based on it. If not, it will try to decode
 // the menssage using the last expected response.
-func (pc *ProtoClient) waitForData() {
-	for {
-		select {
-		case response := <-pc.Client.IncomingMsgChan:
-			inputMsg := dynamic.NewMessage(pc.expectedInputDescriptor)
-
-			msg, ok := pc.info.Commands[response.Route]
-			if ok {
-				inputMsg = dynamic.NewMessage(msg.outputMsgDescriptor)
-			} else {
-				pc.expectedInputDescriptor = nil
-			}
-
-			if response.Err {
-				errMsg := &protos.Error{}
-				err := proto.Unmarshal(response.Data, errMsg)
-				if err != nil {
-					logger.Log.Errorf("Erro decode error data: %s", string(response.Data))
-					continue
-				}
-				response.Data, err = json.Marshal(errMsg)
-				if err != nil {
-					logger.Log.Errorf("error encode error to json: %s", string(response.Data))
-					continue
-				}
-				pc.IncomingMsgChan <- response
-				continue
-			}
-
-			if inputMsg == nil {
-				logger.Log.Errorf("not expected data: %s", string(response.Data))
-				continue
-			}
-
-			err := inputMsg.Unmarshal(response.Data)
-			if err != nil {
-				logger.Log.Errorf("error decode data: %s", string(response.Data))
-				continue
-			}
-
-			data, err2 := inputMsg.MarshalJSON()
-			if err2 != nil {
-				logger.Log.Errorf("error encode data to json: %s", string(response.Data))
-				continue
-			}
-
-			response.Data = data
-			pc.IncomingMsgChan <- response
-		case <-pc.closeChan:
-			return
-		}
-	}
-}
+func (pc *ProtoClient) waitForData() { _ = "STUB: not implemented"; return }
 
 // ConnectTo connects to the server at addr, for now the only supported protocol is tcp
 // this methods blocks as it also handles the messages from the server
 func (pc *ProtoClient) ConnectTo(addr string, tlsConfig ...*tls.Config) error {
-	err := pc.Client.ConnectTo(addr, tlsConfig...)
-	if err != nil {
-		return err
-	}
-
-	if !pc.ready {
-		err = pc.LoadServerInfo(addr)
-		if err != nil {
-			return err
-		}
-	}
-
-	if pc.ready {
-		go pc.waitForData()
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // ExportInformation export supported server commands information
-func (pc *ProtoClient) ExportInformation() *ProtoBufferInfo {
-	if !pc.ready {
-		return nil
-	}
-	return &pc.info
-}
+func (pc *ProtoClient) ExportInformation() *ProtoBufferInfo { _ = "STUB: not implemented"; return nil }
 
 // LoadInfo load commands information form ProtoBufferInfo
-func (pc *ProtoClient) LoadInfo(info *ProtoBufferInfo) error {
-	if info == nil {
-		return errors.New("protobuffer information invalid")
-	}
-	pc.info = *info
-	pc.ready = true
-	return nil
-}
+func (pc *ProtoClient) LoadInfo(info *ProtoBufferInfo) error { _ = "STUB: not implemented"; return nil }
 
 // AddPushResponse add a push response. Must be ladded before LoadInfo.
 func (pc *ProtoClient) AddPushResponse(route string, protoName string) {
-	if route != "" && protoName != "" {
-		var command Command
-		command.input = ""
-		command.output = protoName
-
-		pc.info.Commands[route] = &command
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // SendRequest sends a request to the server
 func (pc *ProtoClient) SendRequest(route string, data []byte) (uint, error) {
-
-	if !pc.ready {
-		return pc.Client.SendRequest(route, data)
-	}
-
-	if cmd, ok := pc.info.Commands[route]; ok {
-		if len(data) < 0 || string(data) == "{}" || cmd.inputMsgDescriptor == nil {
-			pc.expectedInputDescriptor = cmd.outputMsgDescriptor
-			data = data[:0]
-			return pc.Client.SendRequest(route, data)
-		}
-		inputMsg := dynamic.NewMessage(cmd.inputMsgDescriptor)
-		if err := inputMsg.UnmarshalJSON(data); err != nil {
-			return 0, err
-		}
-		realdata, err := inputMsg.Marshal()
-		if err != nil {
-			return 0, err
-		}
-		pc.expectedInputDescriptor = cmd.outputMsgDescriptor
-		return pc.Client.SendRequest(route, realdata)
-	}
-
-	return 0, errors.New("Invalid Route: " + route)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // SendNotify sends a notify to the server
 func (pc *ProtoClient) SendNotify(route string, data []byte) error {
-
-	if cmd, ok := pc.info.Commands[route]; ok {
-		inputMsg := dynamic.NewMessage(cmd.inputMsgDescriptor)
-		err := inputMsg.UnmarshalJSON(data)
-		if err != nil {
-			return err
-		}
-		realdata, err := inputMsg.Marshal()
-		if err != nil {
-			return err
-		}
-		return pc.Client.SendNotify(route, realdata)
-	}
-
-	return errors.New("invalid route")
+	_ = "STUB: not implemented"
+	return nil
 }

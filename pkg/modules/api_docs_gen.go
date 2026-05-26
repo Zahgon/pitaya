@@ -22,7 +22,6 @@ package modules
 
 import (
 	"github.com/topfreegames/pitaya/v3/pkg/component"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // APIDocsGen is a pitaya module that generates api docs for pitaya servers
@@ -34,16 +33,9 @@ type APIDocsGen struct {
 
 // NewAPIDocsGen creates a new APIDocsGen
 func NewAPIDocsGen(basePath string, services []*component.Service) *APIDocsGen {
-	return &APIDocsGen{
-		basePath: basePath,
-		services: services,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init is called on init method
-func (a *APIDocsGen) Init() error {
-	for _, s := range a.services {
-		logger.Log.Infof("loaded svc: %s", s.Name)
-	}
-	return nil
-}
+func (a *APIDocsGen) Init() error { _ = "STUB: not implemented"; return nil }

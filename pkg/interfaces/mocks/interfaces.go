@@ -6,7 +6,6 @@ package mocks
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
 // MockModule is a mock of Module interface
@@ -21,60 +20,41 @@ type MockModuleMockRecorder struct {
 }
 
 // NewMockModule creates a new mock instance
-func NewMockModule(ctrl *gomock.Controller) *MockModule {
-	mock := &MockModule{ctrl: ctrl}
-	mock.recorder = &MockModuleMockRecorder{mock}
-	return mock
-}
+func NewMockModule(ctrl *gomock.Controller) *MockModule { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockModule) EXPECT() *MockModuleMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Init mocks base method
+	return nil
 }
 
-// Init mocks base method
-func (m *MockModule) Init() error {
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockModule) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init
-func (mr *MockModuleMockRecorder) Init() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockModule)(nil).Init))
-}
+func (mr *MockModuleMockRecorder) Init() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // AfterInit mocks base method
-func (m *MockModule) AfterInit() {
-	m.ctrl.Call(m, "AfterInit")
-}
+func (m *MockModule) AfterInit() { _ = "STUB: not implemented"; return }
 
 // AfterInit indicates an expected call of AfterInit
-func (mr *MockModuleMockRecorder) AfterInit() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AfterInit", reflect.TypeOf((*MockModule)(nil).AfterInit))
-}
+func (mr *MockModuleMockRecorder) AfterInit() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // BeforeShutdown mocks base method
-func (m *MockModule) BeforeShutdown() {
-	m.ctrl.Call(m, "BeforeShutdown")
-}
+func (m *MockModule) BeforeShutdown() { _ = "STUB: not implemented"; return }
 
 // BeforeShutdown indicates an expected call of BeforeShutdown
 func (mr *MockModuleMockRecorder) BeforeShutdown() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeforeShutdown", reflect.TypeOf((*MockModule)(nil).BeforeShutdown))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Shutdown mocks base method
-func (m *MockModule) Shutdown() error {
-	ret := m.ctrl.Call(m, "Shutdown")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockModule) Shutdown() error { _ = "STUB: not implemented"; return nil }
 
 // Shutdown indicates an expected call of Shutdown
-func (mr *MockModuleMockRecorder) Shutdown() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Shutdown", reflect.TypeOf((*MockModule)(nil).Shutdown))
-}
+func (mr *MockModuleMockRecorder) Shutdown() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // MockBindingStorage is a mock of BindingStorage interface
 type MockBindingStorage struct {
@@ -89,37 +69,34 @@ type MockBindingStorageMockRecorder struct {
 
 // NewMockBindingStorage creates a new mock instance
 func NewMockBindingStorage(ctrl *gomock.Controller) *MockBindingStorage {
-	mock := &MockBindingStorage{ctrl: ctrl}
-	mock.recorder = &MockBindingStorageMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockBindingStorage) EXPECT() *MockBindingStorageMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetUserFrontendID mocks base method
+	return nil
 }
 
-// GetUserFrontendID mocks base method
 func (m *MockBindingStorage) GetUserFrontendID(uid, frontendType string) (string, error) {
-	ret := m.ctrl.Call(m, "GetUserFrontendID", uid, frontendType)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetUserFrontendID indicates an expected call of GetUserFrontendID
 func (mr *MockBindingStorageMockRecorder) GetUserFrontendID(uid, frontendType interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFrontendID", reflect.TypeOf((*MockBindingStorage)(nil).GetUserFrontendID), uid, frontendType)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PutBinding mocks base method
-func (m *MockBindingStorage) PutBinding(uid string) error {
-	ret := m.ctrl.Call(m, "PutBinding", uid)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockBindingStorage) PutBinding(uid string) error { _ = "STUB: not implemented"; return nil }
 
 // PutBinding indicates an expected call of PutBinding
 func (mr *MockBindingStorageMockRecorder) PutBinding(uid interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutBinding", reflect.TypeOf((*MockBindingStorage)(nil).PutBinding), uid)
+	_ = "STUB: not implemented"
+	return nil
 }

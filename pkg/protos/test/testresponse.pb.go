@@ -3,9 +3,13 @@
 
 package test
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,43 +30,29 @@ type TestResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TestResponse) Reset()         { *m = TestResponse{} }
-func (m *TestResponse) String() string { return proto.CompactTextString(m) }
-func (*TestResponse) ProtoMessage()    {}
-func (*TestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_testresponse_54303195d9d8e908, []int{0}
-}
-func (m *TestResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TestResponse.Unmarshal(m, b)
-}
+func (m *TestResponse) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *TestResponse) String() string            { _ = "STUB: not implemented"; return "" }
+func (*TestResponse) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*TestResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *TestResponse) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *TestResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TestResponse.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *TestResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TestResponse.Merge(dst, src)
-}
-func (m *TestResponse) XXX_Size() int {
-	return xxx_messageInfo_TestResponse.Size(m)
-}
-func (m *TestResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_TestResponse.DiscardUnknown(m)
-}
+
+func (dst *TestResponse) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *TestResponse) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *TestResponse) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_TestResponse proto.InternalMessageInfo
 
-func (m *TestResponse) GetCode() int32 {
-	if m != nil {
-		return m.Code
-	}
-	return 0
-}
+func (m *TestResponse) GetCode() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *TestResponse) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
+func (m *TestResponse) GetMsg() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*TestResponse)(nil), "test.TestResponse")

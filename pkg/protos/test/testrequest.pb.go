@@ -3,9 +3,13 @@
 
 package test
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -25,36 +29,27 @@ type TestRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TestRequest) Reset()         { *m = TestRequest{} }
-func (m *TestRequest) String() string { return proto.CompactTextString(m) }
-func (*TestRequest) ProtoMessage()    {}
-func (*TestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_testrequest_64ede5bd0b1b0648, []int{0}
-}
-func (m *TestRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_TestRequest.Unmarshal(m, b)
-}
+func (m *TestRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *TestRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*TestRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*TestRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *TestRequest) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *TestRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_TestRequest.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *TestRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TestRequest.Merge(dst, src)
-}
-func (m *TestRequest) XXX_Size() int {
-	return xxx_messageInfo_TestRequest.Size(m)
-}
-func (m *TestRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TestRequest.DiscardUnknown(m)
-}
+
+func (dst *TestRequest) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *TestRequest) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *TestRequest) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_TestRequest proto.InternalMessageInfo
 
-func (m *TestRequest) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
+func (m *TestRequest) GetMsg() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*TestRequest)(nil), "test.TestRequest")

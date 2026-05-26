@@ -21,17 +21,12 @@
 package acceptor
 
 import (
-	"crypto/tls"
 	"io"
 	"net"
 	"net/http"
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/topfreegames/pitaya/v3/pkg/conn/codec"
-	"github.com/topfreegames/pitaya/v3/pkg/conn/packet"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // WSAcceptor struct
@@ -45,50 +40,28 @@ type WSAcceptor struct {
 }
 
 // NewWSAcceptor returns a new instance of WSAcceptor
-func NewWSAcceptor(addr string, certs ...string) *WSAcceptor {
-	keyFile := ""
-	certFile := ""
-	if len(certs) != 2 && len(certs) != 0 {
-		panic(constants.ErrInvalidCertificates)
-	} else if len(certs) == 2 {
-		certFile = certs[0]
-		keyFile = certs[1]
-	}
+func NewWSAcceptor(addr string, certs ...string) *WSAcceptor { _ = "STUB: not implemented"; return nil }
 
-	w := &WSAcceptor{
-		addr:     addr,
-		connChan: make(chan PlayerConn),
-		certFile: certFile,
-		keyFile:  keyFile,
-		running:  false,
-	}
-	return w
-}
-
-func (w *WSAcceptor) IsRunning() bool {
-        return w.running
-}
+func (w *WSAcceptor) IsRunning() bool { _ = "STUB: not implemented"; return false }
 
 func (w *WSAcceptor) GetConfiguredAddress() string {
-        return w.addr
-}
+	_ = "STUB: not implemented"
 
-// GetAddr returns the addr the acceptor will listen on
-func (w *WSAcceptor) GetAddr() string {
-	if w.listener != nil {
-		return w.listener.Addr().String()
-	}
+	// GetAddr returns the addr the acceptor will listen on
 	return ""
 }
 
+func (w *WSAcceptor) GetAddr() string { _ = "STUB: not implemented"; return "" }
+
 // GetConnChan gets a connection channel
 func (w *WSAcceptor) GetConnChan() chan PlayerConn {
-	return w.connChan
+	_ = "STUB: not implemented"
+
+	// PROXY protocol support not implemented for WS acceptor
+	return nil
 }
 
-// PROXY protocol support not implemented for WS acceptor
-func (w *WSAcceptor) EnableProxyProtocol() {
-}
+func (w *WSAcceptor) EnableProxyProtocol() { _ = "STUB: not implemented"; return }
 
 type connHandler struct {
 	upgrader *websocket.Upgrader
@@ -96,86 +69,22 @@ type connHandler struct {
 }
 
 func (h *connHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	conn, err := h.upgrader.Upgrade(rw, r, nil)
-	if err != nil {
-		logger.Log.Errorf("Upgrade failure, URI=%s, Error=%s", r.RequestURI, err.Error())
-		return
-	}
-
-	c, err := NewWSConn(conn)
-	if err != nil {
-		logger.Log.Errorf("Failed to create new ws connection: %s", err.Error())
-		return
-	}
-	h.connChan <- c
+	_ = "STUB: not implemented"
+	return
 }
 
-func (w *WSAcceptor) hasTLSCertificates() bool {
-	return w.certFile != "" && w.keyFile != ""
-}
+func (w *WSAcceptor) hasTLSCertificates() bool { _ = "STUB: not implemented"; return false }
 
 // ListenAndServe listens and serve in the specified addr
-func (w *WSAcceptor) ListenAndServe() {
-	if w.hasTLSCertificates() {
-		w.ListenAndServeTLS(w.certFile, w.keyFile)
-		return
-	}
-
-	var upgrader = websocket.Upgrader{
-		ReadBufferSize:  constants.IOBufferBytesSize,
-		WriteBufferSize: constants.IOBufferBytesSize,
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-	}
-
-	listener, err := net.Listen("tcp", w.addr)
-	if err != nil {
-		logger.Log.Fatalf("Failed to listen: %s", err.Error())
-	}
-	w.listener = listener
-	w.running = true
-	w.serve(&upgrader)
-}
+func (w *WSAcceptor) ListenAndServe() { _ = "STUB: not implemented"; return }
 
 // ListenAndServeTLS listens and serve in the specified addr using tls
-func (w *WSAcceptor) ListenAndServeTLS(cert, key string) {
-	var upgrader = websocket.Upgrader{
-		ReadBufferSize:  constants.IOBufferBytesSize,
-		WriteBufferSize: constants.IOBufferBytesSize,
-	}
+func (w *WSAcceptor) ListenAndServeTLS(cert, key string) { _ = "STUB: not implemented"; return }
 
-	crt, err := tls.LoadX509KeyPair(cert, key)
-	if err != nil {
-		logger.Log.Fatalf("Failed to load x509: %s", err.Error())
-	}
-
-	tlsCfg := &tls.Config{Certificates: []tls.Certificate{crt}}
-	listener, err := tls.Listen("tcp", w.addr, tlsCfg)
-	if err != nil {
-		logger.Log.Fatalf("Failed to listen: %s", err.Error())
-	}
-	w.listener = listener
-	w.serve(&upgrader)
-}
-
-func (w *WSAcceptor) serve(upgrader *websocket.Upgrader) {
-	defer w.Stop()
-
-	http.Serve(w.listener, &connHandler{
-		upgrader: upgrader,
-		connChan: w.connChan,
-	})
-}
+func (w *WSAcceptor) serve(upgrader *websocket.Upgrader) { _ = "STUB: not implemented"; return }
 
 // Stop stops the acceptor
-func (w *WSAcceptor) Stop() {
-	w.running = false
-	err := w.listener.Close()
-	if err != nil {
-		logger.Log.Errorf("Failed to stop: %s", err.Error())
-	}
-}
+func (w *WSAcceptor) Stop() { _ = "STUB: not implemented"; return }
 
 // WSConn is an adapter to t.Conn, which implements all t.Conn
 // interface base on *websocket.Conn
@@ -186,88 +95,35 @@ type WSConn struct {
 }
 
 // NewWSConn return an initialized *WSConn
-func NewWSConn(conn *websocket.Conn) (*WSConn, error) {
-	c := &WSConn{conn: conn}
-
-	return c, nil
-}
+func NewWSConn(conn *websocket.Conn) (*WSConn, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetNextMessage reads the next message available in the stream
-func (c *WSConn) GetNextMessage() (b []byte, err error) {
-	_, msgBytes, err := c.conn.ReadMessage()
-	if err != nil {
-		return nil, err
-	}
-	if len(msgBytes) < codec.HeadLength {
-		return nil, packet.ErrInvalidPomeloHeader
-	}
-	header := msgBytes[:codec.HeadLength]
-	msgSize, _, err := codec.ParseHeader(header)
-	if err != nil {
-		return nil, err
-	}
-	dataLen := len(msgBytes[codec.HeadLength:])
-	if dataLen < msgSize {
-		return nil, constants.ErrReceivedMsgSmallerThanExpected
-	} else if dataLen > msgSize {
-		return nil, constants.ErrReceivedMsgBiggerThanExpected
-	}
-	return msgBytes, err
-}
+func (c *WSConn) GetNextMessage() (b []byte, err error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Read reads data from the connection.
 // Read can be made to time out and return an Error with Timeout() == true
 // after a fixed time limit; see SetDeadline and SetReadDeadline.
-func (c *WSConn) Read(b []byte) (int, error) {
-	if c.reader == nil {
-		t, r, err := c.conn.NextReader()
-		if err != nil {
-			return 0, err
-		}
-		c.typ = t
-		c.reader = r
-	}
-	n, err := c.reader.Read(b)
-	if err != nil && err != io.EOF {
-		return n, err
-	} else if err == io.EOF {
-		_, r, err := c.conn.NextReader()
-		if err != nil {
-			return 0, err
-		}
-		c.reader = r
-	}
-
-	return n, nil
-}
+func (c *WSConn) Read(b []byte) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Write writes data to the connection.
 // Write can be made to time out and return an Error with Timeout() == true
 // after a fixed time limit; see SetDeadline and SetWriteDeadline.
-func (c *WSConn) Write(b []byte) (int, error) {
-	err := c.conn.WriteMessage(websocket.BinaryMessage, b)
-	if err != nil {
-		return 0, err
-	}
-
-	return len(b), nil
-}
+func (c *WSConn) Write(b []byte) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Close closes the connection.
 // Any blocked Read or Write operations will be unblocked and return errors.
-func (c *WSConn) Close() error {
-	return c.conn.Close()
-}
+func (c *WSConn) Close() error { _ = "STUB: not implemented"; return nil }
 
 // LocalAddr returns the local network address.
 func (c *WSConn) LocalAddr() net.Addr {
-	return c.conn.LocalAddr()
+	_ = "STUB: not implemented"
+	return *
+
+	// RemoteAddr returns the remote network address.
+	new(net.Addr)
 }
 
-// RemoteAddr returns the remote network address.
-func (c *WSConn) RemoteAddr() net.Addr {
-	return c.conn.RemoteAddr()
-}
+func (c *WSConn) RemoteAddr() net.Addr { _ = "STUB: not implemented"; return *new(net.Addr) }
 
 // SetDeadline sets the read and write deadlines associated
 // with the connection. It is equivalent to calling both
@@ -284,26 +140,16 @@ func (c *WSConn) RemoteAddr() net.Addr {
 // the deadline after successful Read or Write calls.
 //
 // A zero value for t means I/O operations will not time out.
-func (c *WSConn) SetDeadline(t time.Time) error {
-	if err := c.SetReadDeadline(t); err != nil {
-		return err
-	}
-
-	return c.SetWriteDeadline(t)
-}
+func (c *WSConn) SetDeadline(t time.Time) error { _ = "STUB: not implemented"; return nil }
 
 // SetReadDeadline sets the deadline for future Read calls
 // and any currently-blocked Read call.
 // A zero value for t means Read will not time out.
-func (c *WSConn) SetReadDeadline(t time.Time) error {
-	return c.conn.SetReadDeadline(t)
-}
+func (c *WSConn) SetReadDeadline(t time.Time) error { _ = "STUB: not implemented"; return nil }
 
 // SetWriteDeadline sets the deadline for future Write calls
 // and any currently-blocked Write call.
 // Even if write times out, it may return n > 0, indicating that
 // some of the data was successfully written.
 // A zero value for t means Write will not time out.
-func (c *WSConn) SetWriteDeadline(t time.Time) error {
-	return c.conn.SetWriteDeadline(t)
-}
+func (c *WSConn) SetWriteDeadline(t time.Time) error { _ = "STUB: not implemented"; return nil }

@@ -24,13 +24,25 @@ package component
 type Base struct{}
 
 // Init was called to initialize the component.
-func (c *Base) Init() {}
+func (c *Base) Init() {
+	_ = "STUB: not implemented"
 
-// AfterInit was called after the component is initialized.
-func (c *Base) AfterInit() {}
+	// AfterInit was called after the component is initialized.
+	return
+}
 
-// BeforeShutdown was called before the component to shutdown.
-func (c *Base) BeforeShutdown() {}
+func (c *Base) AfterInit() {
+	_ = "STUB: not implemented"
 
-// Shutdown was called to shutdown the component.
-func (c *Base) Shutdown() {}
+	// BeforeShutdown was called before the component to shutdown.
+	return
+}
+
+func (c *Base) BeforeShutdown() {
+	_ = "STUB: not implemented"
+
+	// Shutdown was called to shutdown the component.
+	return
+}
+
+func (c *Base) Shutdown() { _ = "STUB: not implemented"; return }

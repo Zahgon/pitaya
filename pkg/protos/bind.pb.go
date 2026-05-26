@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -26,43 +30,29 @@ type BindMsg struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *BindMsg) Reset()         { *m = BindMsg{} }
-func (m *BindMsg) String() string { return proto.CompactTextString(m) }
-func (*BindMsg) ProtoMessage()    {}
-func (*BindMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_bind_9cf772af172ead7d, []int{0}
-}
-func (m *BindMsg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BindMsg.Unmarshal(m, b)
-}
+func (m *BindMsg) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *BindMsg) String() string            { _ = "STUB: not implemented"; return "" }
+func (*BindMsg) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*BindMsg) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *BindMsg) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *BindMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BindMsg.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *BindMsg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BindMsg.Merge(dst, src)
-}
-func (m *BindMsg) XXX_Size() int {
-	return xxx_messageInfo_BindMsg.Size(m)
-}
-func (m *BindMsg) XXX_DiscardUnknown() {
-	xxx_messageInfo_BindMsg.DiscardUnknown(m)
-}
+
+func (dst *BindMsg) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *BindMsg) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *BindMsg) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_BindMsg proto.InternalMessageInfo
 
-func (m *BindMsg) GetUid() string {
-	if m != nil {
-		return m.Uid
-	}
-	return ""
-}
+func (m *BindMsg) GetUid() string { _ = "STUB: not implemented"; return "" }
 
-func (m *BindMsg) GetFid() string {
-	if m != nil {
-		return m.Fid
-	}
-	return ""
-}
+func (m *BindMsg) GetFid() string { _ = "STUB: not implemented"; return "" }
 
 func init() {
 	proto.RegisterType((*BindMsg)(nil), "protos.BindMsg")

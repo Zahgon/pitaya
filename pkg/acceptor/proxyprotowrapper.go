@@ -3,9 +3,6 @@ package acceptor
 import (
 	"net"
 	"sync"
-
-	"github.com/mailgun/proxyproto"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // Listener is used to wrap an underlying listener,
@@ -19,19 +16,9 @@ type ProxyProtocolListener struct {
 
 // Accept waits for and returns the next connection to the listener.
 func (p *ProxyProtocolListener) Accept() (net.Conn, error) {
+	_ = "STUB: not implemented"
 	// Get the underlying connection
-	conn, err := p.Listener.Accept()
-	if err != nil {
-		return nil, err
-	}
-	connP := &Conn{Conn: conn, proxyProtocolEnabled: p.proxyProtocolEnabled}
-	if *p.proxyProtocolEnabled {
-		err = connP.checkPrefix()
-		if err != nil {
-			return connP, err
-		}
-	}
-	return connP, nil
+	return *new(net.Conn), nil
 }
 
 // Conn is used to wrap and underlying connection which
@@ -45,12 +32,7 @@ type Conn struct {
 	proxyProtocolEnabled *bool
 }
 
-func (p *Conn) LocalAddr() net.Addr {
-	if p.dstAddr != nil {
-		return *p.dstAddr
-	}
-	return p.Conn.LocalAddr()
-}
+func (p *Conn) LocalAddr() net.Addr { _ = "STUB: not implemented"; return *new(net.Addr) }
 
 // RemoteAddr returns the address of the client if the proxy
 // protocol is being used, otherwise just returns the address of
@@ -59,27 +41,6 @@ func (p *Conn) LocalAddr() net.Addr {
 // Once implication of this is that the call could block if the
 // client is slow. Using a Deadline is recommended if this is called
 // before Read()
-func (p *Conn) RemoteAddr() net.Addr {
-	if p.srcAddr != nil {
-		return *p.srcAddr
-	}
-	return p.Conn.RemoteAddr()
-}
+func (p *Conn) RemoteAddr() net.Addr { _ = "STUB: not implemented"; return *new(net.Addr) }
 
-func (p *Conn) checkPrefix() error {
-
-	h, err := proxyproto.ReadHeader(p)
-	if err != nil {
-		logger.Log.Errorf("Failed to read Proxy Protocol TCP header: %s", err.Error())
-		p.Close()
-		return err
-
-	} else if h.Source == nil {
-		p.Close()
-	} else {
-		p.srcAddr = &h.Source
-		p.dstAddr = &h.Destination
-	}
-
-	return nil
-}
+func (p *Conn) checkPrefix() error { _ = "STUB: not implemented"; return nil }

@@ -2,8 +2,6 @@ package services
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 
 	"github.com/topfreegames/pitaya/v3/examples/demo/protos"
 	pitaya "github.com/topfreegames/pitaya/v3/pkg"
@@ -35,85 +33,47 @@ type Response struct {
 }
 
 // NewConnector ctor
-func NewConnector(app pitaya.Pitaya) *Connector {
-	return &Connector{app: app}
-}
+func NewConnector(app pitaya.Pitaya) *Connector { _ = "STUB: not implemented"; return nil }
 
 // NewConnectorRemote ctor
-func NewConnectorRemote(app pitaya.Pitaya) *ConnectorRemote {
-	return &ConnectorRemote{app: app}
-}
+func NewConnectorRemote(app pitaya.Pitaya) *ConnectorRemote { _ = "STUB: not implemented"; return nil }
 
 func reply(code int32, msg string) (*protos.Response, error) {
-	res := &protos.Response{
-		Code: code,
-		Msg:  msg,
-	}
-	return res, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSessionData gets the session data
 func (c *Connector) GetSessionData(ctx context.Context) (*SessionData, error) {
-	s := c.app.GetSessionFromCtx(ctx)
-	res := &SessionData{
-		Data: s.GetData(),
-	}
-	return res, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetSessionData sets the session data
 func (c *Connector) SetSessionData(ctx context.Context, data *SessionData) (*protos.Response, error) {
-	s := c.app.GetSessionFromCtx(ctx)
-	err := s.SetData(data.Data)
-	if err != nil {
-		return nil, pitaya.Error(err, "CN-000", map[string]string{"failed": "set data"})
-	}
-	return reply(200, "success")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NotifySessionData sets the session data
 func (c *Connector) NotifySessionData(ctx context.Context, data *SessionData) {
-	s := c.app.GetSessionFromCtx(ctx)
-	err := s.SetData(data.Data)
-	if err != nil {
-		fmt.Println("got error on notify", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // RemoteFunc is a function that will be called remotely
 func (c *ConnectorRemote) RemoteFunc(ctx context.Context, msg *protos.RPCMsg) (*protos.RPCRes, error) {
-	fmt.Printf("received a remote call with this message: %s\n", msg.GetMsg())
-	return &protos.RPCRes{
-		Msg: msg.GetMsg(),
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Docs returns documentation
 func (c *ConnectorRemote) Docs(ctx context.Context, ddd *pitayaprotos.Doc) (*pitayaprotos.Doc, error) {
-	d, err := c.app.Documentation(true)
-	if err != nil {
-		return nil, err
-	}
-	doc, err := json.Marshal(d)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &pitayaprotos.Doc{Doc: string(doc)}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *ConnectorRemote) Descriptor(ctx context.Context, names *pitayaprotos.ProtoNames) (*pitayaprotos.ProtoDescriptors, error) {
-	descriptors := make([][]byte, len(names.Name))
-
-	for i, protoName := range names.Name {
-		desc, err := pitaya.Descriptor(protoName)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get descriptor for '%s': %w", protoName, err)
-		}
-
-		descriptors[i] = desc
-	}
-
-	return &pitayaprotos.ProtoDescriptors{Desc: descriptors}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

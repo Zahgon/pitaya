@@ -10,12 +10,9 @@ type infoRetriever struct {
 
 // NewInfoRetriever returns a *infoRetriever
 func NewInfoRetriever(config config.InfoRetrieverConfig) InfoRetriever {
-	return &infoRetriever{
-		region: config.Region,
-	}
+	_ = "STUB: not implemented"
+	return *new(InfoRetriever)
 }
 
 // Region gets server's region from config
-func (c *infoRetriever) Region() string {
-	return c.region
-}
+func (c *infoRetriever) Region() string { _ = "STUB: not implemented"; return "" }

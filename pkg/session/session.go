@@ -22,21 +22,12 @@ package session
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"net"
-	"reflect"
 	"sync"
-	"sync/atomic"
-	"time"
 
-	"github.com/golang/protobuf/proto"
 	nats "github.com/nats-io/nats.go"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/logger/interfaces"
 	"github.com/topfreegames/pitaya/v3/pkg/networkentity"
-	"github.com/topfreegames/pitaya/v3/pkg/protos"
 )
 
 type sessionPoolImpl struct {
@@ -102,7 +93,7 @@ type sessionImpl struct {
 	Subscriptions       []*nats.Subscription                  // subscription created on bind when using nats rpc server
 	requestsInFlight    ReqInFlight                           // whether the session is waiting from a response from a remote
 	pool                *sessionPoolImpl
-	logger              interfaces.Logger                     // logger instance for this session
+	logger              interfaces.Logger // logger instance for this session
 }
 
 type ReqInFlight struct {
@@ -169,728 +160,287 @@ type sessionIDService struct {
 	sid int64
 }
 
-func newSessionIDService() *sessionIDService {
-	return &sessionIDService{
-		sid: 0,
-	}
-}
+func newSessionIDService() *sessionIDService { _ = "STUB: not implemented"; return nil }
 
 // SessionID returns the session id
-func (c *sessionIDService) sessionID() int64 {
-	return atomic.AddInt64(&c.sid, 1)
-}
+func (c *sessionIDService) sessionID() int64 { _ = "STUB: not implemented"; return 0 }
 
 // NewSession returns a new session instance
 // a networkentity.NetworkEntity is a low-level network instance
 func (pool *sessionPoolImpl) NewSession(entity networkentity.NetworkEntity, frontend bool, UID ...string) Session {
-	s := &sessionImpl{
-		id:                  pool.sessionIDSvc.sessionID(),
-		entity:              entity,
-		data:                make(map[string]interface{}),
-		handshakeData:       nil,
-		handshakeValidators: pool.handshakeValidators,
-		lastTime:            time.Now().Unix(),
-		OnCloseCallbacks:    []func(){},
-		IsFrontend:          frontend,
-		pool:                pool,
-		requestsInFlight:    ReqInFlight{m: make(map[string]string)},
-		logger:              logger.Log,
-	}
-	if frontend {
-		pool.sessionsByID.Store(s.id, s)
-		atomic.AddInt64(&pool.SessionCount, 1)
-	}
-	s.logger = s.logger.WithField("session_id",s.id)
-	if len(UID) > 0 {
-		s.uid = UID[0]
-		s.logger = s.logger.WithField("uid",s.uid)
-	}
-	return s
+	_ = "STUB: not implemented"
+	return *new(Session)
 }
 
 // NewSessionPool returns a new session pool instance
-func NewSessionPool() SessionPool {
-	return &sessionPoolImpl{
-		sessionBindCallbacks:  make([]func(ctx context.Context, s Session) error, 0),
-		afterBindCallbacks:    make([]func(ctx context.Context, s Session) error, 0),
-		handshakeValidators:   make(map[string]func(data *HandshakeData) error, 0),
-		SessionCloseCallbacks: make([]func(s Session), 0),
-		sessionIDSvc:          newSessionIDService(),
-	}
-}
+func NewSessionPool() SessionPool { _ = "STUB: not implemented"; return *new(SessionPool) }
 
-func (pool *sessionPoolImpl) GetSessionCount() int64 {
-	return pool.SessionCount
-}
+func (pool *sessionPoolImpl) GetSessionCount() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (pool *sessionPoolImpl) GetSessionCloseCallbacks() []func(s Session) {
-	return pool.SessionCloseCallbacks
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetSessionByUID return a session bound to an user id
 func (pool *sessionPoolImpl) GetSessionByUID(uid string) Session {
+	_ = "STUB: not implemented"
 	// TODO: Block this operation in backend servers
-	if val, ok := pool.sessionsByUID.Load(uid); ok {
-		return val.(Session)
-	}
-	return nil
+	return *new(Session)
 }
 
 // GetSessionByID return a session bound to a frontend server id
 func (pool *sessionPoolImpl) GetSessionByID(id int64) Session {
+	_ = "STUB: not implemented"
 	// TODO: Block this operation in backend servers
-	if val, ok := pool.sessionsByID.Load(id); ok {
-		return val.(Session)
-	}
-	return nil
+	return *new(Session)
 }
 
 // OnSessionBind adds a method to be called when a session is bound
 // same function cannot be added twice!
 func (pool *sessionPoolImpl) OnSessionBind(f func(ctx context.Context, s Session) error) {
+	_ = "STUB: not implemented"
 	// Prevents the same function to be added twice in onSessionBind
-	sf1 := reflect.ValueOf(f)
-	for _, fun := range pool.sessionBindCallbacks {
-		sf2 := reflect.ValueOf(fun)
-		if sf1.Pointer() == sf2.Pointer() {
-			return
-		}
-	}
-	pool.sessionBindCallbacks = append(pool.sessionBindCallbacks, f)
+	return
 }
 
 // OnAfterSessionBind adds a method to be called when session is bound and after all sessionBind callbacks
 func (pool *sessionPoolImpl) OnAfterSessionBind(f func(ctx context.Context, s Session) error) {
+	_ = "STUB: not implemented"
 	// Prevents the same function to be added twice in onSessionBind
-	sf1 := reflect.ValueOf(f)
-	for _, fun := range pool.afterBindCallbacks {
-		sf2 := reflect.ValueOf(fun)
-		if sf1.Pointer() == sf2.Pointer() {
-			return
-		}
-	}
-	pool.afterBindCallbacks = append(pool.afterBindCallbacks, f)
+	return
 }
 
 // OnSessionClose adds a method that will be called when every session closes
-func (pool *sessionPoolImpl) OnSessionClose(f func(s Session)) {
-	sf1 := reflect.ValueOf(f)
-	for _, fun := range pool.SessionCloseCallbacks {
-		sf2 := reflect.ValueOf(fun)
-		if sf1.Pointer() == sf2.Pointer() {
-			return
-		}
-	}
-	pool.SessionCloseCallbacks = append(pool.SessionCloseCallbacks, f)
-}
+func (pool *sessionPoolImpl) OnSessionClose(f func(s Session)) { _ = "STUB: not implemented"; return }
 
 // CloseAll calls Close on all sessions
-func (pool *sessionPoolImpl) CloseAll() {
-	logger.Log.Infof("closing all sessions, %d sessions", pool.SessionCount)
-	for pool.SessionCount > 0 {
-		pool.sessionsByID.Range(func(_, value interface{}) bool {
-			s := value.(Session)
-			if s.HasRequestsInFlight() {
-				reqsInFlight := s.GetRequestsInFlight()
-				reqsInFlight.mu.RLock()
-				for _, route := range reqsInFlight.m {
-					logger.Log.Debugf("Session for user %s is waiting on a response for route %s from a remote server. Delaying session close.", s.UID(), route)
-				}
-				reqsInFlight.mu.RUnlock()
-				return false
-			} else {
-				s.Close()
-				return true
-			}
-		})
-		logger.Log.Debugf("%d sessions remaining", pool.SessionCount)
-		if pool.SessionCount > 0 {
-			time.Sleep(100 * time.Millisecond)
-		}
-	}
-	logger.Log.Info("finished closing sessions")
-}
+func (pool *sessionPoolImpl) CloseAll() { _ = "STUB: not implemented"; return }
 
 // AddHandshakeValidator allows adds validation functions that will run when
 // handshake packets are processed. Errors will be raised with the given name.
 func (pool *sessionPoolImpl) AddHandshakeValidator(name string, f func(data *HandshakeData) error) {
-	pool.handshakeValidators[name] = f
+	_ = "STUB: not implemented"
+	return
 }
 
 // GetNumberOfConnectedClients returns the number of connected clients
 func (pool *sessionPoolImpl) GetNumberOfConnectedClients() int64 {
-	return pool.GetSessionCount()
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // ForEachSession iterates through all sessions in the pool and calls f for each one
-func (pool *sessionPoolImpl) ForEachSession(f func(s Session)) {
-	pool.sessionsByID.Range(func(_, value interface{}) bool {
-		s := value.(Session)
-		f(s)
-		return true
-	})
-}
+func (pool *sessionPoolImpl) ForEachSession(f func(s Session)) { _ = "STUB: not implemented"; return }
 
-func (s *sessionImpl) updateEncodedData() error {
-	var b []byte
-	b, err := json.Marshal(s.data)
-	if err != nil {
-		return err
-	}
-	s.encodedData = b
-	return nil
-}
+func (s *sessionImpl) updateEncodedData() error { _ = "STUB: not implemented"; return nil }
 
 // GetOnCloseCallbacks ...
-func (s *sessionImpl) GetOnCloseCallbacks() []func() {
-	return s.OnCloseCallbacks
-}
+func (s *sessionImpl) GetOnCloseCallbacks() []func() { _ = "STUB: not implemented"; return nil }
 
 // GetIsFrontend ...
-func (s *sessionImpl) GetIsFrontend() bool {
-	return s.IsFrontend
-}
+func (s *sessionImpl) GetIsFrontend() bool { _ = "STUB: not implemented"; return false }
 
 // GetSubscriptions ...
 func (s *sessionImpl) GetSubscriptions() []*nats.Subscription {
-	return s.Subscriptions
+	_ = "STUB: not implemented"
+	return nil
+
+	// SetOnCloseCallbacks ...
 }
 
-// SetOnCloseCallbacks ...
-func (s *sessionImpl) SetOnCloseCallbacks(callbacks []func()) {
-	s.OnCloseCallbacks = callbacks
-}
+func (s *sessionImpl) SetOnCloseCallbacks(callbacks []func()) { _ = "STUB: not implemented"; return }
 
 // SetIsFrontend ...
-func (s *sessionImpl) SetIsFrontend(isFrontend bool) {
-	s.IsFrontend = isFrontend
-}
+func (s *sessionImpl) SetIsFrontend(isFrontend bool) { _ = "STUB: not implemented"; return }
 
 // SetSubscriptions ...
 func (s *sessionImpl) SetSubscriptions(subscriptions []*nats.Subscription) {
-	s.Subscriptions = subscriptions
+	_ = "STUB: not implemented"
+	return
 }
 
 // Push message to client
 func (s *sessionImpl) Push(route string, v interface{}) error {
-	return s.entity.Push(route, v)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ResponseMID responses message to client, mid is
 // request message ID
 func (s *sessionImpl) ResponseMID(ctx context.Context, mid uint, v interface{}, err ...bool) error {
-	return s.entity.ResponseMID(ctx, mid, v, err...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ID returns the session id
 func (s *sessionImpl) ID() int64 {
-	return s.id
+	_ = "STUB: not implemented"
+
+	// UID returns uid that bind to current session
+	return 0
 }
 
-// UID returns uid that bind to current session
 func (s *sessionImpl) UID() string {
-	return s.uid
+	_ = "STUB: not implemented"
+
+	// GetData gets the data
+	return ""
 }
 
-// GetData gets the data
-func (s *sessionImpl) GetData() map[string]interface{} {
-	s.RLock()
-	defer s.RUnlock()
-
-	return s.data
-}
+func (s *sessionImpl) GetData() map[string]interface{} { _ = "STUB: not implemented"; return nil }
 
 // SetData sets the whole session data
 func (s *sessionImpl) SetData(data map[string]interface{}) error {
-	s.Lock()
-	defer s.Unlock()
-
-	s.data = data
-	return s.updateEncodedData()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetDataEncoded returns the session data as an encoded value
-func (s *sessionImpl) GetDataEncoded() []byte {
-	return s.encodedData
-}
+func (s *sessionImpl) GetDataEncoded() []byte { _ = "STUB: not implemented"; return nil }
 
 // SetDataEncoded sets the whole session data from an encoded value
 func (s *sessionImpl) SetDataEncoded(encodedData []byte) error {
-	if len(encodedData) == 0 {
-		return nil
-	}
-	var data map[string]interface{}
-	err := json.Unmarshal(encodedData, &data)
-	if err != nil {
-		return err
-	}
-	return s.SetData(data)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetFrontendData sets frontend id and session id
 func (s *sessionImpl) SetFrontendData(frontendID string, frontendSessionID int64) {
-	s.frontendID = frontendID
-	s.frontendSessionID = frontendSessionID
+	_ = "STUB: not implemented"
+	return
 }
 
 // Bind bind UID to current session
 func (s *sessionImpl) Bind(ctx context.Context, uid string) error {
-	if uid == "" {
-		return constants.ErrIllegalUID
-	}
-
-	if s.UID() != "" {
-		s.logger.Debugf("Error trying to bind UID %s. A UID is already bound in this session", uid)
-		return constants.ErrSessionAlreadyBound
-	}
-
-	s.uid = uid
-	for _, cb := range s.pool.sessionBindCallbacks {
-		err := cb(ctx, s)
-		if err != nil {
-			s.logger.Error("Error running session bind callback. Removing uid from session")
-			s.uid = ""
-			return err
-		}
-	}
-
-	// if code running on frontend server
-	if s.IsFrontend {
-		// If a session with the same UID already exists in this frontend server, close it
-		if val, ok := s.pool.sessionsByUID.Load(uid); ok {
-			s.logger.Warn("A session for this UID %s already existed in this frontend, on session ID %v closing it", val.(Session).ID())
-			val.(Session).Close()
-		}
-		s.pool.sessionsByUID.Store(uid, s)
-	} else {
-		// If frontentID is set this means it is a remote call and the current server
-		// is not the frontend server that received the user request
-		err := s.bindInFront(ctx)
-		if err != nil {
-			s.logger.Error("error while trying to push session to front: ", err)
-			s.uid = ""
-			return err
-		}
-	}
-
-	// invoke after callbacks on session bound
-	for _, cb := range s.pool.afterBindCallbacks {
-		err := cb(ctx, s)
-		if err != nil {
-			s.uid = ""
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// if code running on frontend server
+
+// If a session with the same UID already exists in this frontend server, close it
+
+// If frontentID is set this means it is a remote call and the current server
+// is not the frontend server that received the user request
+
+// invoke after callbacks on session bound
+
 // Kick kicks the user
-func (s *sessionImpl) Kick(ctx context.Context) error {
-	err := s.entity.Kick(ctx)
-	if err != nil {
-		return err
-	}
-	return s.entity.Close()
-}
+func (s *sessionImpl) Kick(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // OnClose adds the function it receives to the callbacks that will be called
 // when the session is closed
-func (s *sessionImpl) OnClose(c func()) error {
-	if !s.IsFrontend {
-		return constants.ErrOnCloseBackend
-	}
-	s.OnCloseCallbacks = append(s.OnCloseCallbacks, c)
-	return nil
-}
+func (s *sessionImpl) OnClose(c func()) error { _ = "STUB: not implemented"; return nil }
 
 // Close terminates current session, session related data will not be released,
 // all related data should be cleared explicitly in Session closed callback
-func (s *sessionImpl) Close() {
-	atomic.AddInt64(&s.pool.SessionCount, -1)
-	s.pool.sessionsByID.Delete(s.ID())
-	s.logger.Debug("Closing session")
-	// Only remove session by UID if the session ID matches the one being closed. This avoids problems with removing a valid session after the user has already reconnected before this session's heartbeat times out
-	if val, ok := s.pool.sessionsByUID.Load(s.UID()); ok {
-		if (val.(Session)).ID() == s.ID() {
-			s.pool.sessionsByUID.Delete(s.UID())
-		}
-	}
-	// TODO: this logic should be moved to nats rpc server
-	if s.IsFrontend && s.Subscriptions != nil && len(s.Subscriptions) > 0 {
-		// if the user is bound to an userid and nats rpc server is being used we need to unsubscribe
-		for _, sub := range s.Subscriptions {
-			err := sub.Drain()
-			if err != nil {
-				s.logger.Errorf("error unsubscribing to user's messages channel: %s, this can cause performance and leak issues", err.Error())
-			} else {
-				s.logger.Debug("successfully unsubscribed to user's messages channel")
-			}
-		}
-	}
-	s.entity.Close()
-}
+func (s *sessionImpl) Close() { _ = "STUB: not implemented"; return }
+
+// Only remove session by UID if the session ID matches the one being closed. This avoids problems with removing a valid session after the user has already reconnected before this session's heartbeat times out
+
+// TODO: this logic should be moved to nats rpc server
+
+// if the user is bound to an userid and nats rpc server is being used we need to unsubscribe
 
 // RemoteAddr returns the remote network address.
-func (s *sessionImpl) RemoteAddr() net.Addr {
-	return s.entity.RemoteAddr()
-}
+func (s *sessionImpl) RemoteAddr() net.Addr { _ = "STUB: not implemented"; return *new(net.Addr) }
 
 // Remove delete data associated with the key from session storage
-func (s *sessionImpl) Remove(key string) error {
-	s.Lock()
-	defer s.Unlock()
-
-	delete(s.data, key)
-	return s.updateEncodedData()
-}
+func (s *sessionImpl) Remove(key string) error { _ = "STUB: not implemented"; return nil }
 
 // Set associates value with the key in session storage
 func (s *sessionImpl) Set(key string, value interface{}) error {
-	s.Lock()
-	defer s.Unlock()
-
-	s.data[key] = value
-	return s.updateEncodedData()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasKey decides whether a key has associated value
-func (s *sessionImpl) HasKey(key string) bool {
-	s.RLock()
-	defer s.RUnlock()
-
-	_, has := s.data[key]
-	return has
-}
+func (s *sessionImpl) HasKey(key string) bool { _ = "STUB: not implemented"; return false }
 
 // Get returns a key value
-func (s *sessionImpl) Get(key string) interface{} {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return nil
-	}
-	return v
-}
+func (s *sessionImpl) Get(key string) interface{} { _ = "STUB: not implemented"; return nil }
 
 // Int returns the value associated with the key as a int.
-func (s *sessionImpl) Int(key string) int {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(int)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Int(key string) int { _ = "STUB: not implemented"; return 0 }
 
 // Int8 returns the value associated with the key as a int8.
-func (s *sessionImpl) Int8(key string) int8 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(int8)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Int8(key string) int8 { _ = "STUB: not implemented"; return 0 }
 
 // Int16 returns the value associated with the key as a int16.
-func (s *sessionImpl) Int16(key string) int16 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(int16)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Int16(key string) int16 { _ = "STUB: not implemented"; return 0 }
 
 // Int32 returns the value associated with the key as a int32.
-func (s *sessionImpl) Int32(key string) int32 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(int32)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Int32(key string) int32 { _ = "STUB: not implemented"; return 0 }
 
 // Int64 returns the value associated with the key as a int64.
-func (s *sessionImpl) Int64(key string) int64 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(int64)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Int64(key string) int64 { _ = "STUB: not implemented"; return 0 }
 
 // Uint returns the value associated with the key as a uint.
-func (s *sessionImpl) Uint(key string) uint {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(uint)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Uint(key string) uint { _ = "STUB: not implemented"; return 0 }
 
 // Uint8 returns the value associated with the key as a uint8.
-func (s *sessionImpl) Uint8(key string) uint8 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(uint8)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Uint8(key string) uint8 { _ = "STUB: not implemented"; return 0 }
 
 // Uint16 returns the value associated with the key as a uint16.
-func (s *sessionImpl) Uint16(key string) uint16 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(uint16)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Uint16(key string) uint16 { _ = "STUB: not implemented"; return 0 }
 
 // Uint32 returns the value associated with the key as a uint32.
-func (s *sessionImpl) Uint32(key string) uint32 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(uint32)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Uint32(key string) uint32 { _ = "STUB: not implemented"; return 0 }
 
 // Uint64 returns the value associated with the key as a uint64.
-func (s *sessionImpl) Uint64(key string) uint64 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(uint64)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Uint64(key string) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // Float32 returns the value associated with the key as a float32.
-func (s *sessionImpl) Float32(key string) float32 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(float32)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Float32(key string) float32 { _ = "STUB: not implemented"; return 0 }
 
 // Float64 returns the value associated with the key as a float64.
-func (s *sessionImpl) Float64(key string) float64 {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return 0
-	}
-
-	value, ok := v.(float64)
-	if !ok {
-		return 0
-	}
-	return value
-}
+func (s *sessionImpl) Float64(key string) float64 { _ = "STUB: not implemented"; return 0 }
 
 // String returns the value associated with the key as a string.
-func (s *sessionImpl) String(key string) string {
-	s.RLock()
-	defer s.RUnlock()
-
-	v, ok := s.data[key]
-	if !ok {
-		return ""
-	}
-
-	value, ok := v.(string)
-	if !ok {
-		return ""
-	}
-	return value
-}
+func (s *sessionImpl) String(key string) string { _ = "STUB: not implemented"; return "" }
 
 // Value returns the value associated with the key as a interface{}.
-func (s *sessionImpl) Value(key string) interface{} {
-	s.RLock()
-	defer s.RUnlock()
+func (s *sessionImpl) Value(key string) interface{} { _ = "STUB: not implemented"; return nil }
 
-	return s.data[key]
-}
-
-func (s *sessionImpl) bindInFront(ctx context.Context) error {
-	return s.sendRequestToFront(ctx, constants.SessionBindRoute, false)
-}
+func (s *sessionImpl) bindInFront(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // PushToFront updates the session in the frontend
-func (s *sessionImpl) PushToFront(ctx context.Context) error {
-	if s.IsFrontend {
-		return constants.ErrFrontSessionCantPushToFront
-	}
-	return s.sendRequestToFront(ctx, constants.SessionPushRoute, true)
-}
+func (s *sessionImpl) PushToFront(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Clear releases all data related to current session
-func (s *sessionImpl) Clear() {
-	s.Lock()
-	defer s.Unlock()
-
-	s.uid = ""
-	s.data = map[string]interface{}{}
-	s.updateEncodedData()
-}
+func (s *sessionImpl) Clear() { _ = "STUB: not implemented"; return }
 
 // SetHandshakeData sets the handshake data received by the client.
-func (s *sessionImpl) SetHandshakeData(data *HandshakeData) {
-	s.Lock()
-	defer s.Unlock()
-
-	s.handshakeData = data
-}
+func (s *sessionImpl) SetHandshakeData(data *HandshakeData) { _ = "STUB: not implemented"; return }
 
 // GetHandshakeData gets the handshake data received by the client.
-func (s *sessionImpl) GetHandshakeData() *HandshakeData {
-	return s.handshakeData
-}
+func (s *sessionImpl) GetHandshakeData() *HandshakeData { _ = "STUB: not implemented"; return nil }
 
 // GetHandshakeValidators return the handshake validators associated with the session.
 func (s *sessionImpl) GetHandshakeValidators() map[string]func(data *HandshakeData) error {
-	return s.handshakeValidators
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *sessionImpl) ValidateHandshake(data *HandshakeData) error {
-	for name, fun := range s.handshakeValidators {
-		if err := fun(data); err != nil {
-			return fmt.Errorf("failed to run '%s' validator: %w. SessionId=%d", name, err, s.ID())
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (s *sessionImpl) sendRequestToFront(ctx context.Context, route string, includeData bool) error {
-	log := s.logger.WithField("route", route)
-	sessionData := &protos.Session{
-		Id:  s.frontendSessionID,
-		Uid: s.uid,
-	}
-	if includeData {
-		sessionData.Data = s.encodedData
-	}
-	b, err := proto.Marshal(sessionData)
-	if err != nil {
-		return err
-	}
-	res, err := s.entity.SendRequest(ctx, s.frontendID, route, b)
-	if err != nil {
-		return err
-	}
-	log.Debugf("Got response: %+v", res)
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (s *sessionImpl) HasRequestsInFlight() bool {
-	return len(s.requestsInFlight.m) != 0
-}
+func (s *sessionImpl) HasRequestsInFlight() bool { _ = "STUB: not implemented"; return false }
 
 func (s *sessionImpl) GetRequestsInFlight() ReqInFlight {
-	return s.requestsInFlight
+	_ = "STUB: not implemented"
+	return *new(ReqInFlight)
 }
 
 func (s *sessionImpl) SetRequestInFlight(reqID string, reqData string, inFlight bool) {
-	s.requestsInFlight.mu.Lock()
-	if inFlight {
-		s.requestsInFlight.m[reqID] = reqData
-	} else {
-		if _, ok := s.requestsInFlight.m[reqID]; ok {
-			delete(s.requestsInFlight.m, reqID)
-		}
-	}
-	s.requestsInFlight.mu.Unlock()
+	_ = "STUB: not implemented"
+	return
 }

@@ -2,35 +2,22 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"strings"
-	"time"
 
-	"github.com/spf13/viper"
 	"github.com/topfreegames/pitaya/v3/examples/demo/rate_limiting/services"
 	pitaya "github.com/topfreegames/pitaya/v3/pkg"
 	"github.com/topfreegames/pitaya/v3/pkg/acceptor"
-	"github.com/topfreegames/pitaya/v3/pkg/acceptorwrapper"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
 	"github.com/topfreegames/pitaya/v3/pkg/metrics"
 )
 
 func createAcceptor(port int, reporters []metrics.Reporter) acceptor.Acceptor {
+	_ = "STUB: not implemented"
 
 	// 5 requests in 1 minute. Doesn't make sense, just to test
 	// rate limiting
-	vConfig := viper.New()
-	vConfig.Set("pitaya.conn.ratelimiting.limit", 5)
-	vConfig.Set("pitaya.conn.ratelimiting.interval", time.Minute)
-	pConfig := config.NewConfig(vConfig)
-
-	rateLimitConfig := config.NewPitayaConfig(pConfig).Conn.RateLimiting
-
-	tcp := acceptor.NewTCPAcceptor(fmt.Sprintf(":%d", port))
-	return acceptorwrapper.WithWrappers(
-		tcp,
-		acceptorwrapper.NewRateLimitingWrapper(reporters, rateLimitConfig))
+	return *new(acceptor.Acceptor)
 }
 
 var app pitaya.Pitaya

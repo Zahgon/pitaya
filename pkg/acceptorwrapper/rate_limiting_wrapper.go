@@ -34,17 +34,12 @@ type RateLimitingWrapper struct {
 
 // NewRateLimitingWrapper returns an instance of *RateLimitingWrapper
 func NewRateLimitingWrapper(reporters []metrics.Reporter, c config.RateLimitingConfig) *RateLimitingWrapper {
-	r := &RateLimitingWrapper{}
-
-	r.BaseWrapper = NewBaseWrapper(func(conn acceptor.PlayerConn) acceptor.PlayerConn {
-		return NewRateLimiter(reporters, conn, c.Limit, c.Interval, c.ForceDisable)
-	})
-
-	return r
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Wrap saves acceptor as an attribute
 func (r *RateLimitingWrapper) Wrap(a acceptor.Acceptor) acceptor.Acceptor {
-	r.Acceptor = a
-	return r
+	_ = "STUB: not implemented"
+	return *new(acceptor.Acceptor)
 }

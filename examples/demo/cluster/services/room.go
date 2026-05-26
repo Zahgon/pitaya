@@ -2,10 +2,7 @@ package services
 
 import (
 	"context"
-	"fmt"
-	"time"
 
-	"github.com/google/uuid"
 	"github.com/topfreegames/pitaya/v3/examples/demo/protos"
 	pitaya "github.com/topfreegames/pitaya/v3/pkg"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
@@ -64,135 +61,63 @@ type (
 )
 
 // NewRoom returns a new room
-func NewRoom(app pitaya.Pitaya) *Room {
-	return &Room{
-		app:   app,
-		Stats: &protos.Stats{},
-	}
-}
+func NewRoom(app pitaya.Pitaya) *Room { _ = "STUB: not implemented"; return nil }
 
 // Init runs on service initialization
-func (r *Room) Init() {
-	r.app.GroupCreate(context.Background(), "room")
-}
+func (r *Room) Init() { _ = "STUB: not implemented"; return }
 
 // AfterInit component lifetime callback
-func (r *Room) AfterInit() {
-	r.timer = pitaya.NewTimer(time.Minute, func() {
-		count, err := r.app.GroupCountMembers(context.Background(), "room")
-		println("UserCount: Time=>", time.Now().String(), "Count=>", count, "Error=>", err)
-		println("OutboundBytes", r.Stats.OutboundBytes)
-		println("InboundBytes", r.Stats.OutboundBytes)
-	})
-}
+func (r *Room) AfterInit() { _ = "STUB: not implemented"; return }
 
 // Entry is the entrypoint
 func (r *Room) Entry(ctx context.Context, msg []byte) (*protos.JoinResponse, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx) // The default logger contains a requestId, the route being executed and the sessionId
-	s := r.app.GetSessionFromCtx(ctx)
-
-	err := s.Bind(ctx, uuid.New().String())
-	if err != nil {
-		logger.Error("Failed to bind session")
-		logger.Error(err)
-		return nil, pitaya.Error(err, "RH-000", map[string]string{"failed": "bind"})
-	}
-	return &protos.JoinResponse{Result: "ok"}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// The default logger contains a requestId, the route being executed and the sessionId
 
 // GetSessionData gets the session data
 func (r *Room) GetSessionData(ctx context.Context) (*SessionData, error) {
-	s := r.app.GetSessionFromCtx(ctx)
-	return &SessionData{
-		Data: s.GetData(),
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetSessionData sets the session data
 func (r *Room) SetSessionData(ctx context.Context, data *SessionData) ([]byte, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	s := r.app.GetSessionFromCtx(ctx)
-	err := s.SetData(data.Data)
-	if err != nil {
-		logger.Error("Failed to set session data")
-		logger.Error(err)
-		return nil, err
-	}
-	err = s.PushToFront(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return []byte("success"), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Notify push is a notify route that triggers a push to a session
-func (r *Room) NotifyPush(ctx context.Context) {
-	s := r.app.GetSessionFromCtx(ctx)
-	r.app.SendPushToUsers("testPush", &protos.RPCMsg{Msg: "test"}, []string{s.UID()}, "connector")
-}
+func (r *Room) NotifyPush(ctx context.Context) { _ = "STUB: not implemented"; return }
 
 // Join room
 func (r *Room) Join(ctx context.Context) (*protos.JoinResponse, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	s := r.app.GetSessionFromCtx(ctx)
-	err := r.app.GroupAddMember(ctx, "room", s.UID())
-	if err != nil {
-		logger.Error("Failed to join room")
-		logger.Error(err)
-		return nil, err
-	}
-	members, err := r.app.GroupMembers(ctx, "room")
-	if err != nil {
-		logger.Error("Failed to get members")
-		logger.Error(err)
-		return nil, err
-	}
-	s.Push("onMembers", &protos.AllMembers{Members: members})
-	err = r.app.GroupBroadcast(ctx, "connector", "room", "onNewUser", &protos.NewUser{Content: fmt.Sprintf("New user: %d", s.ID())})
-	if err != nil {
-		logger.Error("Failed to broadcast onNewUser")
-		logger.Error(err)
-		return nil, err
-	}
-	return &protos.JoinResponse{Result: "success"}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Leave room
 func (r *Room) Leave(ctx context.Context) ([]byte, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	s := r.app.GetSessionFromCtx(ctx)
-	err := r.app.GroupRemoveMember(ctx, "room", s.UID())
-	if err != nil {
-		logger.Error(err)
-		return []byte("failed"), err
-	}
-	return []byte("success"), err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Message sync last message to all members
 func (r *Room) Message(ctx context.Context, msg *protos.UserMessage) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	err := r.app.GroupBroadcast(ctx, "connector", "room", "onMessage", msg)
-	if err != nil {
-		logger.Error("Error broadcasting message")
-		logger.Error(err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // SendRPC sends rpc
 func (r *Room) SendRPC(ctx context.Context, msg *protos.SendRPCMsg) (*protos.RPCRes, error) {
-	logger := pitaya.GetDefaultLoggerFromCtx(ctx)
-	ret := &protos.RPCRes{}
-	err := r.app.RPCTo(ctx, msg.ServerId, msg.Route, ret, &protos.RPCMsg{Msg: msg.Msg})
-	if err != nil {
-		logger.Errorf("Failed to execute RPCTo %s - %s", msg.ServerId, msg.Route)
-		logger.Error(err)
-		return nil, pitaya.Error(err, "RPC-000")
-	}
-	return ret, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MessageRemote just echoes the given message
 func (r *Room) MessageRemote(ctx context.Context, msg *protos.UserMessage, b bool, s string) (*protos.UserMessage, error) {
-	return msg, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

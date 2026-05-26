@@ -20,13 +20,6 @@
 
 package serialize
 
-import (
-	"errors"
-
-	"github.com/topfreegames/pitaya/v3/pkg/serialize/json"
-	"github.com/topfreegames/pitaya/v3/pkg/serialize/protobuf"
-)
-
 const (
 	JSON     Type = 1
 	PROTOBUF Type = 2
@@ -60,13 +53,7 @@ type (
 // If serializerType is a JSON, then a JSON serializer is returned.
 // If serializerType is a PROTOBUF, then  a PROTOBUF serializer is returned.
 // Otherwise, if serializerType is not a valid serializer type, then it returns nil.
-func NewSerializer(serializerType Type) (Serializer, error) { //nolint:ireturn
-	switch serializerType {
-	case JSON:
-		return json.NewSerializer(), nil
-	case PROTOBUF:
-		return protobuf.NewSerializer(), nil
-	default:
-		return nil, errors.New("serializer type unknown")
-	}
+func NewSerializer(serializerType Type) (Serializer, error) {
+	_ = "STUB: not implemented" //nolint:ireturn
+	return *new(Serializer), nil
 }

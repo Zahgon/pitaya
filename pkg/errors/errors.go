@@ -20,8 +20,6 @@
 
 package errors
 
-import "errors"
-
 // ErrUnknownCode is a string code representing an unknown error
 // This will be used when no error code is sent by the handler
 const ErrUnknownCode = "PIT-000"
@@ -50,56 +48,18 @@ type Error struct {
 
 // NewError ctor
 func NewError(err error, code string, metadata ...map[string]string) *Error {
-	var pitayaErr *Error
-	if ok := errors.As(err, &pitayaErr); ok {
-		if len(metadata) > 0 {
-			mergeMetadatas(pitayaErr, metadata[0])
-		}
-		return pitayaErr
-	}
-
-	e := &Error{
-		Code:    code,
-		Message: err.Error(),
-	}
-	if len(metadata) > 0 {
-		e.Metadata = metadata[0]
-	}
-	return e
-
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (e *Error) Error() string {
-	return e.Message
-}
+func (e *Error) Error() string { _ = "STUB: not implemented"; return "" }
 
 func mergeMetadatas(pitayaErr *Error, metadata map[string]string) {
-	if pitayaErr.Metadata == nil {
-		pitayaErr.Metadata = metadata
-		return
-	}
-
-	for key, value := range metadata {
-		pitayaErr.Metadata[key] = value
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // CodeFromError returns the code of error.
 // If error is nil, return empty string.
 // If error is not a pitaya error, returns unkown code
-func CodeFromError(err error) string {
-	if err == nil {
-		return ""
-	}
-
-	pitayaErr, ok := err.(*Error)
-	if !ok {
-		return ErrUnknownCode
-	}
-
-	if pitayaErr == nil {
-		return ""
-	}
-
-	return pitayaErr.Code
-}
+func CodeFromError(err error) string { _ = "STUB: not implemented"; return "" }

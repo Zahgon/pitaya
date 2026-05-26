@@ -31,16 +31,8 @@ type (
 )
 
 // WithName used to rename component name
-func WithName(name string) Option {
-	return func(opt *options) {
-		opt.name = name
-	}
-}
+func WithName(name string) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // WithNameFunc override handler name by specific function
 // such as: strings.ToUpper/strings.ToLower
-func WithNameFunc(fn func(string) string) Option {
-	return func(opt *options) {
-		opt.nameFunc = fn
-	}
-}
+func WithNameFunc(fn func(string) string) Option { _ = "STUB: not implemented"; return *new(Option) }

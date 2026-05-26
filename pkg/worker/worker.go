@@ -21,16 +21,9 @@
 package worker
 
 import (
-	"context"
-	"encoding/json"
-	"os"
-	"strconv"
-
 	"github.com/golang/protobuf/proto"
 	workers "github.com/topfreegames/go-workers"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/logger/interfaces"
 )
 
@@ -44,45 +37,18 @@ type Worker struct {
 
 // NewWorker configures and returns a *Worker
 func NewWorker(config config.WorkerConfig, opts config.EnqueueOpts) (*Worker, error) {
-	hostname, err := os.Hostname()
-	if err != nil {
-		return nil, err
-	}
-
-	poolSize, err := strconv.Atoi(config.Redis.Pool)
-	if err != nil {
-		return nil, err
-	}
-
-	workers.Configure(workers.Options{
-		Address:   config.Redis.ServerURL,
-		Password:  config.Redis.Password,
-		Namespace: config.Namespace,
-		ProcessID: hostname,
-		PoolSize:  poolSize,
-	})
-
-	return &Worker{
-		concurrency: config.Concurrency,
-		opts:        &opts,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetLogger overwrites worker logger
-func (w *Worker) SetLogger(logger interfaces.Logger) {
-	workers.Logger = logger
-}
+func (w *Worker) SetLogger(logger interfaces.Logger) { _ = "STUB: not implemented"; return }
 
 // Start starts worker in another gorotine
-func (w *Worker) Start() {
-	go workers.Start()
-	w.started = true
-}
+func (w *Worker) Start() { _ = "STUB: not implemented"; return }
 
 // Started returns true if worker was started
-func (w *Worker) Started() bool {
-	return w != nil && w.started
-}
+func (w *Worker) Started() bool { _ = "STUB: not implemented"; return false }
 
 // EnqueueRPC enqueues rpc job to worker
 func (w *Worker) EnqueueRPC(
@@ -90,13 +56,8 @@ func (w *Worker) EnqueueRPC(
 	metadata map[string]interface{},
 	reply, arg proto.Message,
 ) (jid string, err error) {
-	opts := w.enqueueOptions(w.opts)
-	return workers.EnqueueWithOptions(rpcQueue, class, &rpcInfo{
-		Route:    routeStr,
-		Metadata: metadata,
-		Arg:      arg,
-		Reply:    reply,
-	}, opts)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // EnqueueRPCWithOptions enqueues rpc job to worker
@@ -106,101 +67,28 @@ func (w *Worker) EnqueueRPCWithOptions(
 	reply, arg proto.Message,
 	opts *config.EnqueueOpts,
 ) (jid string, err error) {
-	return workers.EnqueueWithOptions(rpcQueue, class, &rpcInfo{
-		Route:    routeStr,
-		Metadata: metadata,
-		Arg:      arg,
-		Reply:    reply,
-	}, w.enqueueOptions(opts))
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // RegisterRPCJob registers a RPC job
-func (w *Worker) RegisterRPCJob(rpcJob RPCJob) error {
-	if w.registered {
-		return constants.ErrRPCJobAlreadyRegistered
-	}
-
-	job := w.parsedRPCJob(rpcJob)
-	workers.Process(rpcQueue, job, w.concurrency)
-	w.registered = true
-	return nil
-}
+func (w *Worker) RegisterRPCJob(rpcJob RPCJob) error { _ = "STUB: not implemented"; return nil }
 
 func (w *Worker) parsedRPCJob(rpcJob RPCJob) func(*workers.Msg) {
-	return func(jobArg *workers.Msg) {
-		logger.Log.Debug("executing rpc job")
-		bts, rpcRoute, err := w.unmarshalRouteMetadata(jobArg)
-		if err != nil {
-			logger.Log.Errorf("failed to get job arg: %q", err)
-			panic(err)
-		}
-
-		logger.Log.Debug("getting route arg and reply")
-		arg, reply, err := rpcJob.GetArgReply(rpcRoute.Route)
-		if err != nil {
-			logger.Log.Errorf("failed to get methods arg and reply: %q", err)
-			panic(err)
-		}
-		rpcInfo := &rpcInfo{
-			Arg:   arg,
-			Reply: reply,
-		}
-
-		logger.Log.Debug("unmarshalling rpc info")
-		err = json.Unmarshal(bts, rpcInfo)
-		if err != nil {
-			logger.Log.Errorf("failed to unmarshal rpc info: %q", err)
-			panic(err)
-		}
-
-		logger.Log.Debug("choosing server to make rpc")
-		serverID, err := rpcJob.ServerDiscovery(rpcInfo.Route, rpcInfo.Metadata)
-		if err != nil {
-			logger.Log.Errorf("failed get server: %q", err)
-			panic(err)
-		}
-
-		ctx := context.Background()
-
-		logger.Log.Debugf("executing rpc func to %s", rpcInfo.Route)
-		err = rpcJob.RPC(ctx, serverID, rpcInfo.Route, reply, arg)
-		if err != nil {
-			logger.Log.Errorf("failed make rpc: %q", err)
-			panic(err)
-		}
-
-		logger.Log.Debug("finished executing rpc job")
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (w *Worker) enqueueOptions(
 	opts *config.EnqueueOpts,
 ) workers.EnqueueOptions {
-	return workers.EnqueueOptions{
-		Retry:    opts.Enabled,
-		RetryMax: opts.Max,
-		RetryOptions: workers.RetryOptions{
-			Exp:      opts.Exponential,
-			MinDelay: opts.MinDelay,
-			MaxDelay: opts.MaxDelay,
-			MaxRand:  opts.MaxRandom,
-		},
-	}
+	_ = "STUB: not implemented"
+	return *new(workers.EnqueueOptions)
 }
 
 func (w *Worker) unmarshalRouteMetadata(
 	jobArg *workers.Msg,
 ) ([]byte, *rpcRoute, error) {
-	bts, err := jobArg.Args().MarshalJSON()
-	if err != nil {
-		return nil, nil, err
-	}
-
-	rpcRoute := new(rpcRoute)
-	err = json.Unmarshal(bts, rpcRoute)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return bts, rpcRoute, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }

@@ -3,9 +3,13 @@
 
 package protos
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -25,36 +29,27 @@ type DocMsg struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DocMsg) Reset()         { *m = DocMsg{} }
-func (m *DocMsg) String() string { return proto.CompactTextString(m) }
-func (*DocMsg) ProtoMessage()    {}
-func (*DocMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_docmsg_6d699a2b0ab5525e, []int{0}
-}
-func (m *DocMsg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DocMsg.Unmarshal(m, b)
-}
+func (m *DocMsg) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *DocMsg) String() string            { _ = "STUB: not implemented"; return "" }
+func (*DocMsg) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*DocMsg) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
+
+func (m *DocMsg) XXX_Unmarshal(b []byte) error { _ = "STUB: not implemented"; return nil }
+
 func (m *DocMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DocMsg.Marshal(b, m, deterministic)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (dst *DocMsg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DocMsg.Merge(dst, src)
-}
-func (m *DocMsg) XXX_Size() int {
-	return xxx_messageInfo_DocMsg.Size(m)
-}
-func (m *DocMsg) XXX_DiscardUnknown() {
-	xxx_messageInfo_DocMsg.DiscardUnknown(m)
-}
+
+func (dst *DocMsg) XXX_Merge(src proto.Message) { _ = "STUB: not implemented"; return }
+
+func (m *DocMsg) XXX_Size() int { _ = "STUB: not implemented"; return 0 }
+
+func (m *DocMsg) XXX_DiscardUnknown() { _ = "STUB: not implemented"; return }
 
 var xxx_messageInfo_DocMsg proto.InternalMessageInfo
 
-func (m *DocMsg) GetGetProtos() bool {
-	if m != nil {
-		return m.GetProtos
-	}
-	return false
-}
+func (m *DocMsg) GetGetProtos() bool { _ = "STUB: not implemented"; return false }
 
 func init() {
 	proto.RegisterType((*DocMsg)(nil), "protos.DocMsg")

@@ -7,5 +7,6 @@ type baseService struct {
 }
 
 func (h *baseService) SetHandlerHooks(handlerHooks *pipeline.HandlerHooks) {
-	h.handlerHooks = handlerHooks
+	_ = "STUB: not implemented"
+	return
 }

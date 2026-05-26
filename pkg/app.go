@@ -22,11 +22,6 @@ package pitaya
 
 import (
 	"context"
-	"os"
-	"os/signal"
-	"reflect"
-	"strings"
-	"syscall"
 	"time"
 
 	"github.com/golang/protobuf/proto"
@@ -34,24 +29,15 @@ import (
 	"github.com/topfreegames/pitaya/v3/pkg/cluster"
 	"github.com/topfreegames/pitaya/v3/pkg/component"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
-	"github.com/topfreegames/pitaya/v3/pkg/conn/message"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	pcontext "github.com/topfreegames/pitaya/v3/pkg/context"
-	"github.com/topfreegames/pitaya/v3/pkg/docgenerator"
 	"github.com/topfreegames/pitaya/v3/pkg/errors"
 	"github.com/topfreegames/pitaya/v3/pkg/groups"
 	"github.com/topfreegames/pitaya/v3/pkg/interfaces"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	logging "github.com/topfreegames/pitaya/v3/pkg/logger/interfaces"
 	"github.com/topfreegames/pitaya/v3/pkg/metrics"
-	mods "github.com/topfreegames/pitaya/v3/pkg/modules"
-	"github.com/topfreegames/pitaya/v3/pkg/remote"
 	"github.com/topfreegames/pitaya/v3/pkg/router"
 	"github.com/topfreegames/pitaya/v3/pkg/serialize"
 	"github.com/topfreegames/pitaya/v3/pkg/service"
 	"github.com/topfreegames/pitaya/v3/pkg/session"
-	"github.com/topfreegames/pitaya/v3/pkg/timer"
-	"github.com/topfreegames/pitaya/v3/pkg/tracing"
 	"github.com/topfreegames/pitaya/v3/pkg/worker"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -178,308 +164,118 @@ func NewApp(
 	metricsReporters []metrics.Reporter,
 	config config.PitayaConfig,
 ) *App {
-	app := &App{
-		server:            server,
-		config:            config,
-		rpcClient:         rpcClient,
-		rpcServer:         rpcServer,
-		worker:            worker,
-		serviceDiscovery:  serviceDiscovery,
-		remoteService:     remoteService,
-		handlerService:    handlerService,
-		groups:            groups,
-		debug:             false,
-		startAt:           time.Now(),
-		dieChan:           dieChan,
-		acceptors:         acceptors,
-		metricsReporters:  metricsReporters,
-		serverMode:        serverMode,
-		running:           false,
-		serializer:        serializer,
-		router:            router,
-		handlerComp:       make([]regComp, 0),
-		remoteComp:        make([]regComp, 0),
-		modulesMap:        make(map[string]interfaces.Module),
-		modulesArr:        []moduleWrapper{},
-		sessionModulesArr: []sessionModuleWrapper{},
-		sessionPool:       sessionPool,
-	}
-	if app.heartbeat == time.Duration(0) {
-		app.heartbeat = config.Heartbeat.Interval
-	}
-
-	app.initSysRemotes()
-	return app
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetDieChan gets the channel that the app sinalizes when its going to die
 func (app *App) GetDieChan() chan bool {
-	return app.dieChan
+	_ = "STUB: not implemented"
+
+	// SetDebug toggles debug on/off
+	return nil
 }
 
-// SetDebug toggles debug on/off
 func (app *App) SetDebug(debug bool) {
-	app.debug = debug
+	_ = "STUB: not implemented"
+
+	// SetHeartbeatTime sets the heartbeat time
+	return
 }
 
-// SetHeartbeatTime sets the heartbeat time
-func (app *App) SetHeartbeatTime(interval time.Duration) {
-	app.heartbeat = interval
-}
+func (app *App) SetHeartbeatTime(interval time.Duration) { _ = "STUB: not implemented"; return }
 
 // GetServerID returns the generated server id
-func (app *App) GetServerID() string {
-	return app.server.ID
-}
+func (app *App) GetServerID() string { _ = "STUB: not implemented"; return "" }
 
 // GetMetricsReporters gets registered metrics reporters
-func (app *App) GetMetricsReporters() []metrics.Reporter {
-	return app.metricsReporters
-}
+func (app *App) GetMetricsReporters() []metrics.Reporter { _ = "STUB: not implemented"; return nil }
 
 // GetServer gets the local server instance
 func (app *App) GetServer() *cluster.Server {
-	return app.server
+	_ = "STUB: not implemented"
+
+	// GetServerByID returns the server with the specified id
+	return nil
 }
 
-// GetServerByID returns the server with the specified id
 func (app *App) GetServerByID(id string) (*cluster.Server, error) {
-	return app.serviceDiscovery.GetServer(id)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetServersByType get all servers of type
 func (app *App) GetServersByType(t string) (map[string]*cluster.Server, error) {
-	return app.serviceDiscovery.GetServersByType(t)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetServers get all servers
-func (app *App) GetServers() []*cluster.Server {
-	return app.serviceDiscovery.GetServers()
-}
+func (app *App) GetServers() []*cluster.Server { _ = "STUB: not implemented"; return nil }
 
 // IsRunning indicates if the Pitaya app has been initialized. Note: This
 // doesn't cover acceptors, only the pitaya internal registration and modules
 // initialization.
 func (app *App) IsRunning() bool {
-	return app.running
+	_ = "STUB: not implemented"
+
+	// SetLogger logger setter
+	return false
 }
 
-// SetLogger logger setter
-func SetLogger(l logging.Logger) {
-	logger.Log = l
-}
+func SetLogger(l logging.Logger) { _ = "STUB: not implemented"; return }
 
-func (app *App) initSysRemotes() {
-	sys := remote.NewSys(app.sessionPool)
-	app.RegisterRemote(sys,
-		component.WithName("sys"),
-		component.WithNameFunc(strings.ToLower),
-	)
-}
+func (app *App) initSysRemotes() { _ = "STUB: not implemented"; return }
 
-func (app *App) periodicMetrics() {
-	period := app.config.Metrics.Period
-	go metrics.ReportSysMetrics(app.metricsReporters, period)
-
-	if app.worker.Started() {
-		go worker.Report(app.metricsReporters, period)
-	}
-}
+func (app *App) periodicMetrics() { _ = "STUB: not implemented"; return }
 
 // Start starts the app
-func (app *App) Start() {
-	if !app.server.Frontend && len(app.acceptors) > 0 {
-		logger.Log.Fatal("acceptors are not allowed on backend servers")
-	}
+func (app *App) Start() { _ = "STUB: not implemented"; return }
 
-	if app.server.Frontend && len(app.acceptors) == 0 {
-		logger.Log.Fatal("frontend servers should have at least one configured acceptor")
-	}
+// set the service discovery as the last module to be started to ensure
+// all modules have been properly initialized before the server starts
+// receiving requests from other pitaya servers
 
-	if app.serverMode == Cluster {
-		if reflect.TypeOf(app.rpcClient) == reflect.TypeOf(&cluster.GRPCClient{}) {
-			app.serviceDiscovery.AddListener(app.rpcClient.(*cluster.GRPCClient))
-		}
+// stop server
 
-		if err := app.RegisterModuleBefore(app.rpcServer, "rpcServer"); err != nil {
-			logger.Log.Fatal("failed to register rpc server module: %s", err.Error())
-		}
-		if err := app.RegisterModuleBefore(app.rpcClient, "rpcClient"); err != nil {
-			logger.Log.Fatal("failed to register rpc client module: %s", err.Error())
-		}
-		// set the service discovery as the last module to be started to ensure
-		// all modules have been properly initialized before the server starts
-		// receiving requests from other pitaya servers
-		if err := app.RegisterModuleAfter(app.serviceDiscovery, "serviceDiscovery"); err != nil {
-			logger.Log.Fatal("failed to register service discovery module: %s", err.Error())
-		}
-	}
+func (app *App) listen() { _ = "STUB: not implemented"; return }
 
-	app.periodicMetrics()
-
-	app.listen()
-
-	defer func() {
-		timer.GlobalTicker.Stop()
-		app.running = false
-	}()
-
-	sg := make(chan os.Signal, 1)
-	signal.Notify(sg, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
-
-	maxSessionCount := func() int64 {
-		count := app.sessionPool.GetSessionCount()
-		mc := app.maxModuleSessionCount()
-		if mc > count {
-			count = mc
-		}
-		return count
-	}
-
-	// stop server
-	select {
-	case <-app.dieChan:
-		logger.Log.Warn("the app will shutdown in a few seconds")
-	case s := <-sg:
-		logger.Log.Warn("got signal: ", s, ", shutting down...")
-		if app.config.Session.Drain.Enabled && s == syscall.SIGTERM {
-			logger.Log.Info("Session drain is enabled, draining all sessions before shutting down")
-			timeoutTimer := time.NewTimer(app.config.Session.Drain.Timeout)
-			app.startModuleSessionDraining()
-		loop:
-			for {
-				if maxSessionCount() == 0 {
-					logger.Log.Info("All sessions drained")
-					break loop
-				}
-				select {
-				case s := <-sg:
-					logger.Log.Warn("got signal: ", s)
-					if s == syscall.SIGINT {
-						logger.Log.Warnf("Bypassing session draing due to SIGINT. %d sessions will be immediately terminated", maxSessionCount())
-					}
-					break loop
-				case <-timeoutTimer.C:
-					logger.Log.Warnf("Session drain has reached maximum timeout. %d sessions will be immediately terminated", maxSessionCount())
-					break loop
-				case <-time.After(app.config.Session.Drain.Period):
-					logger.Log.Infof("Waiting for all sessions to finish: %d sessions remaining...", maxSessionCount())
-				}
-			}
-		}
-		close(app.dieChan)
-	}
-
-	logger.Log.Warn("server is stopping...")
-
-	app.sessionPool.CloseAll()
-	app.shutdownModules()
-	app.shutdownComponents()
-}
-
-func (app *App) listen() {
-	app.startupComponents()
-	// create global ticker instance, timer precision could be customized
-	// by SetTimerPrecision
-	timer.GlobalTicker = time.NewTicker(timer.Precision)
-
-	logger.Log.Infof("starting server %s:%s", app.server.Type, app.server.ID)
-	for i := 0; i < app.config.Concurrency.Handler.Dispatch; i++ {
-		go app.handlerService.Dispatch(i)
-	}
-	for _, acc := range app.acceptors {
-		a := acc
-		go func() {
-			for conn := range a.GetConnChan() {
-				go app.handlerService.Handle(conn)
-			}
-		}()
-		if app.config.Acceptor.ProxyProtocol {
-			logger.Log.Info("Enabling PROXY protocol for inbound connections")
-			a.EnableProxyProtocol()
-		} else {
-			logger.Log.Debug("PROXY protocol is disabled for inbound connections")
-		}
-		go func() {
-			a.ListenAndServe()
-		}()
-		logger.Log.Infof("Waiting for Acceptor %s to start on addr %s", reflect.TypeOf(a), a.GetConfiguredAddress())
-
-		for !a.IsRunning() {
-		}
-
-		logger.Log.Infof("Acceptor %s on addr %s is now accepting connections", reflect.TypeOf(a), a.GetAddr())
-	}
-
-	if app.serverMode == Cluster && app.server.Frontend && app.config.Session.Unique {
-		unique := mods.NewUniqueSession(app.server, app.rpcServer, app.rpcClient, app.sessionPool)
-		app.remoteService.AddRemoteBindingListener(unique)
-		app.RegisterModule(unique, "uniqueSession")
-	}
-
-	app.startModules()
-
-	logger.Log.Info("all modules started!")
-
-	app.running = true
-}
+// create global ticker instance, timer precision could be customized
+// by SetTimerPrecision
 
 // SetDictionary sets routes map
-func (app *App) SetDictionary(dict map[string]uint16) error {
-	if app.running {
-		return constants.ErrChangeDictionaryWhileRunning
-	}
-	return message.SetDictionary(dict)
-}
+func (app *App) SetDictionary(dict map[string]uint16) error { _ = "STUB: not implemented"; return nil }
 
 // AddRoute adds a routing function to a server type
 func (app *App) AddRoute(
 	serverType string,
 	routingFunction router.RoutingFunc,
 ) error {
-	if app.router != nil {
-		if app.running {
-			return constants.ErrChangeRouteWhileRunning
-		}
-		app.router.AddRoute(serverType, routingFunction)
-	} else {
-		return constants.ErrRouterNotInitialized
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // Shutdown send a signal to let 'pitaya' shutdown itself.
-func (app *App) Shutdown() {
-	select {
-	case <-app.dieChan: // prevent closing closed channel
-	default:
-		close(app.dieChan)
-	}
-}
+func (app *App) Shutdown() { _ = "STUB: not implemented"; return }
+
+// prevent closing closed channel
 
 // Error creates a new error with a code, message and metadata
 func Error(err error, code string, metadata ...map[string]string) *errors.Error {
-	return errors.NewError(err, code, metadata...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetSessionFromCtx retrieves a session from a given context
 func (app *App) GetSessionFromCtx(ctx context.Context) session.Session {
-	sessionVal := ctx.Value(constants.SessionCtxKey)
-	if sessionVal == nil {
-		logger.Log.Debug("ctx doesn't contain a session, are you calling GetSessionFromCtx from inside a remote?")
-		return nil
-	}
-	return sessionVal.(session.Session)
+	_ = "STUB: not implemented"
+	return *new(session.Session)
 }
 
 // GetDefaultLoggerFromCtx returns the default logger from the given context
 func GetDefaultLoggerFromCtx(ctx context.Context) logging.Logger {
-	l := ctx.Value(constants.LoggerCtxKey)
-	if l == nil {
-		return logger.Log
-	}
-
-	return l.(logging.Logger)
+	_ = "STUB: not implemented"
+	return *new(logging.Logger)
 }
 
 // AddMetricTagsToPropagateCtx adds a key and metric tags that will
@@ -489,39 +285,33 @@ func AddMetricTagsToPropagateCtx(
 	ctx context.Context,
 	tags map[string]string,
 ) context.Context {
-	return pcontext.AddToPropagateCtx(ctx, constants.MetricTagsKey, tags)
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }
 
 // AddToPropagateCtx adds a key and value that will be propagated through RPC calls
 func AddToPropagateCtx(ctx context.Context, key string, val interface{}) context.Context {
-	return pcontext.AddToPropagateCtx(ctx, key, val)
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }
 
 // GetFromPropagateCtx adds a key and value that came through RPC calls
 func GetFromPropagateCtx(ctx context.Context, key string) interface{} {
-	return pcontext.GetFromPropagateCtx(ctx, key)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExtractSpan retrieves an OpenTelemetry span context from the given context
 // The span context can be received directly or via an RPC call
 func ExtractSpan(ctx context.Context) (trace.SpanContext, error) {
-	return tracing.ExtractSpan(ctx)
+	_ = "STUB: not implemented"
+	return *new(trace.SpanContext), nil
 }
 
 // Documentation returns handler and remotes documentacion
 func (app *App) Documentation(getPtrNames bool) (map[string]interface{}, error) {
-	handlerDocs, err := app.handlerService.Docs(getPtrNames)
-	if err != nil {
-		return nil, err
-	}
-	remoteDocs, err := app.remoteService.Docs(getPtrNames)
-	if err != nil {
-		return nil, err
-	}
-	return map[string]interface{}{
-		"handlers": handlerDocs,
-		"remotes":  remoteDocs,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddGRPCInfoToMetadata adds host, external host and
@@ -532,69 +322,31 @@ func AddGRPCInfoToMetadata(
 	host, port string,
 	externalHost, externalPort string,
 ) map[string]string {
-	metadata[constants.GRPCHostKey] = host
-	metadata[constants.GRPCPortKey] = port
-	metadata[constants.GRPCExternalHostKey] = externalHost
-	metadata[constants.GRPCExternalPortKey] = externalPort
-	metadata[constants.RegionKey] = region
-	return metadata
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Descriptor returns the protobuf message descriptor for a given message name
-func Descriptor(protoName string) ([]byte, error) {
-	return docgenerator.ProtoDescriptors(protoName)
-}
+func Descriptor(protoName string) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // StartWorker configures, starts and returns pitaya worker
 func (app *App) StartWorker() {
-	app.worker.Start()
+	_ = "STUB: not implemented"
+
+	// RegisterRPCJob registers rpc job to execute jobs with retries
+	return
 }
 
-// RegisterRPCJob registers rpc job to execute jobs with retries
-func (app *App) RegisterRPCJob(rpcJob worker.RPCJob) error {
-	err := app.worker.RegisterRPCJob(rpcJob)
-	return err
-}
+func (app *App) RegisterRPCJob(rpcJob worker.RPCJob) error { _ = "STUB: not implemented"; return nil }
 
 // GetNumberOfConnectedClients returns the number of connected clients
-func (app *App) GetNumberOfConnectedClients() int64 {
-	return app.sessionPool.GetSessionCount()
-}
+func (app *App) GetNumberOfConnectedClients() int64 { _ = "STUB: not implemented"; return 0 }
 
 // IsReady checks if pitaya is ready and able to serve requests
-func (app *App) IsReady(ctx context.Context) bool {
-	if !app.IsRunning() {
-		return false
-	}
+func (app *App) IsReady(ctx context.Context) bool { _ = "STUB: not implemented"; return false }
 
-	// Check NATS RPC Client connection
-	if app.rpcClient != nil {
-		if natsClient, ok := app.rpcClient.(*cluster.NatsRPCClient); ok {
-			if !natsClient.IsConnected() {
-				logger.Log.Info("pitaya is not ready")
-				return false
-			}
-		}
-	}
+// Check NATS RPC Client connection
 
-	// Check NATS RPC Server connection
-	if app.rpcServer != nil {
-		if natsServer, ok := app.rpcServer.(*cluster.NatsRPCServer); ok {
-			if !natsServer.IsConnected() {
-				logger.Log.Info("pitaya is not ready")
-				return false
-			}
-		}
-	}
+// Check NATS RPC Server connection
 
-	// Check ETCD connection
-	if app.serviceDiscovery != nil {
-		if !app.serviceDiscovery.IsConnected(ctx) {
-			logger.Log.Info("pitaya is not ready")
-			return false
-		}
-	}
-
-	logger.Log.Info("pitaya is ready")
-	return true
-}
+// Check ETCD connection

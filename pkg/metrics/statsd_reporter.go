@@ -21,13 +21,7 @@
 package metrics
 
 import (
-	"fmt"
-
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-
-	"github.com/DataDog/datadog-go/statsd"
 	"github.com/topfreegames/pitaya/v3/pkg/config"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 )
 
 // Client is the interface to required dogstatsd functions
@@ -52,96 +46,43 @@ func NewStatsdReporter(
 	serverType string,
 	clientOrNil ...Client,
 ) (*StatsdReporter, error) {
-	return newStatsdReporter(config, serverType, clientOrNil...)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func newStatsdReporter(
 	config config.MetricsConfig,
 	serverType string,
 	clientOrNil ...Client) (*StatsdReporter, error) {
-	sr := &StatsdReporter{
-		rate:       config.Statsd.Rate,
-		serverType: serverType,
-	}
-
-	sr.buildDefaultTags(config.ConstLabels)
-
-	if len(clientOrNil) > 0 {
-		sr.client = clientOrNil[0]
-	} else {
-		c, err := statsd.New(config.Statsd.Host)
-		if err != nil {
-			return nil, err
-		}
-		c.Namespace = config.Statsd.Prefix
-		sr.client = c
-	}
-	return sr, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (s *StatsdReporter) buildDefaultTags(tagsMap map[string]string) {
-	defaultTags := make([]string, len(tagsMap)+1)
-
-	defaultTags[0] = fmt.Sprintf("serverType:%s", s.serverType)
-
-	idx := 1
-	for k, v := range tagsMap {
-		defaultTags[idx] = fmt.Sprintf("%s:%s", k, v)
-		idx++
-	}
-
-	s.defaultTags = defaultTags
+	_ = "STUB: not implemented"
+	return
 }
 
 // ReportCount sends count reports to statsd
 func (s *StatsdReporter) ReportCount(metric string, tagsMap map[string]string, count float64) error {
-	fullTags := s.defaultTags
-
-	for k, v := range tagsMap {
-		fullTags = append(fullTags, fmt.Sprintf("%s:%s", k, v))
-	}
-
-	err := s.client.Count(metric, int64(count), fullTags, s.rate)
-	if err != nil {
-		logger.Log.Errorf("failed to report count: %q", err)
-	}
-
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportGauge sents the gauge value and reports to statsd
 func (s *StatsdReporter) ReportGauge(metric string, tagsMap map[string]string, value float64) error {
-	fullTags := s.defaultTags
-
-	for k, v := range tagsMap {
-		fullTags = append(fullTags, fmt.Sprintf("%s:%s", k, v))
-	}
-
-	err := s.client.Gauge(metric, value, fullTags, s.rate)
-	if err != nil {
-		logger.Log.Errorf("failed to report gauge: %q", err)
-	}
-
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportSummary observes the summary value and reports to statsd
 func (s *StatsdReporter) ReportSummary(metric string, tagsMap map[string]string, value float64) error {
-	fullTags := s.defaultTags
-
-	for k, v := range tagsMap {
-		fullTags = append(fullTags, fmt.Sprintf("%s:%s", k, v))
-	}
-
-	err := s.client.TimeInMilliseconds(metric, float64(value), fullTags, s.rate)
-	if err != nil {
-		logger.Log.Errorf("failed to report summary: %q", err)
-	}
-
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReportHistogram observes the histogram value and reports to statsd
 func (s *StatsdReporter) ReportHistogram(metric string, tagsMap map[string]string, value float64) error {
-	return constants.ErrNotImplemented
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -25,8 +25,6 @@ import (
 	"time"
 
 	"github.com/topfreegames/pitaya/v3/pkg/acceptor"
-	"github.com/topfreegames/pitaya/v3/pkg/constants"
-	"github.com/topfreegames/pitaya/v3/pkg/logger"
 	"github.com/topfreegames/pitaya/v3/pkg/metrics"
 )
 
@@ -56,56 +54,16 @@ func NewRateLimiter(
 	interval time.Duration,
 	forceDisable bool,
 ) *RateLimiter {
-	r := &RateLimiter{
-		PlayerConn:   conn,
-		reporters:    reporters,
-		limit:        limit,
-		interval:     interval,
-		forceDisable: forceDisable,
-	}
-
-	r.times.Init()
-
-	return r
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetNextMessage gets the next message in the connection
 func (r *RateLimiter) GetNextMessage() (msg []byte, err error) {
-	if r.forceDisable {
-		return r.PlayerConn.GetNextMessage()
-	}
-
-	for {
-		msg, err := r.PlayerConn.GetNextMessage()
-		if err != nil {
-			return nil, err
-		}
-
-		now := time.Now()
-		if r.shouldRateLimit(now) {
-			logger.Log.Errorf("Data=%s, Error=%s", msg, constants.ErrRateLimitExceeded)
-			metrics.ReportExceededRateLimiting(r.reporters)
-			continue
-		}
-
-		return msg, err
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // shouldRateLimit saves the now as time taken or returns an error if
 // in the limit of rate limiting
-func (r *RateLimiter) shouldRateLimit(now time.Time) bool {
-	if r.times.Len() < r.limit {
-		r.times.PushBack(now)
-		return false
-	}
-
-	front := r.times.Front()
-	if diff := now.Sub(front.Value.(time.Time)); diff < r.interval {
-		return true
-	}
-
-	front.Value = now
-	r.times.MoveToBack(front)
-	return false
-}
+func (r *RateLimiter) shouldRateLimit(now time.Time) bool { _ = "STUB: not implemented"; return false }

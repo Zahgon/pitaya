@@ -6,6 +6,4 @@ type Response struct {
 }
 
 // OKResponse returns a response with code 200
-func OKResponse() *Response {
-	return &Response{Code: 200}
-}
+func OKResponse() *Response { _ = "STUB: not implemented"; return nil }

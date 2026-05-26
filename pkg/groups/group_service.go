@@ -23,10 +23,6 @@ type (
 )
 
 func elementIndex(slice []string, element string) (int, bool) {
-	for i, sliceElement := range slice {
-		if element == sliceElement {
-			return i, true
-		}
-	}
+	_ = "STUB: not implemented"
 	return 0, false
 }
